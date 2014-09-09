@@ -24,7 +24,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "KontaktSidan";
+            ViewBag.Message = "Kontakt";
 
             return View();
         }
