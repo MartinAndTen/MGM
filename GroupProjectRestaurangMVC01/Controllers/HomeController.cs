@@ -17,14 +17,14 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
+            ViewBag.Message = "Vår OM-Sida";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "KontaktSidan";
 
             return View();
         }
