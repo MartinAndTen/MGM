@@ -1,0 +1,33 @@
+RestaurangProjekt MVC
+
+
+----------------
+MARTIN AGNÄLV	
+
+Registrering samt skapa restaurang
+
+Lägga till enr ad för restaurangens namn
+Mail autent med länk för att aktivera kontont
+
+Redirectas till Restarant-sidan
+
+
+----------------
+MARTIN ANDERSSON-TENNINGE
+
+ReservationController
+Hur man bokar bord få ett bekräftelsemail 
+med avbokningslänk
+
+
+
+
+----------------
+GURRA G NILSSON
+
+RestaurantSidan- med info bord mm
+
+
+
+
+----------------
