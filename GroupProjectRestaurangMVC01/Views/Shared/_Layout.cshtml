@@ -2,9 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title - MGM RestaurantBooking</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
+        <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
@@ -12,40 +14,39 @@
         @Scripts.Render("~/bundles/bootstrap")
     </head>
     <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
-        </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
-                </div>
-            </div>
-        </footer>
+        <div class="container">
+                  <div class="row" id="header">
+                          <div class="col-md-6">
+                              <p><a href='@Url.Action("Index", "Home")' id="LogoLink">MGM Restaurant Booking</a></p>
+                          </div>
+                          <div class="col-md-6">
+                              <section id="login">
+                                  @Html.Partial("_LoginPartial")
+                              </section>
+                              <nav>
+                                  <ul id="menu">
+                                      <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                      <li>@Html.ActionLink("About", "About", "Home")</li>
+                                      <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                  </ul>
+                              </nav>
+                          </div>
+                  </div>
+                  <div class="row">
+                      @RenderSection("featured", required: false)
+                      <section class="col-md-12" id="content">
+                          @RenderBody()
+                      </section>
+                  </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <p>&copy; @DateTime.Now.Year - MGM RestaurantBooking</p>
+                          </div>
+                      </div>
+                  
 
-       
-        @RenderSection("scripts", required: false)
+
+                  @RenderSection("scripts", required: false)
+              </div>
     </body>
 </html>

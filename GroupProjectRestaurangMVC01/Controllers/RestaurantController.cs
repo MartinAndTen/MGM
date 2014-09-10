@@ -17,7 +17,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
         public ActionResult Index(Guid id)
         {
-            RestaurangViewModel viewModel = new RestaurangViewModel();
+            RestaurantViewModel viewModel = new RestaurantViewModel();
             viewModel.Restaurant = _restaurantRepository.GetRestaurantById(id);
             return View(viewModel);
         }
