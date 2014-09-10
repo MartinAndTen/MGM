@@ -5,9 +5,16 @@
 }
 
 <h2>Index</h2>
+@if (Model.Restaurant == null)
+{
+    <div class="col-md-6">
+        RESTAURANG
+    </div>
+}
+else
+{
+    <div class="col-md-6">
+        RESTAURANGER
+    </div>
+}
 
-<fieldset>
-    <legend>RestaurangViewModel</legend>
-    
-    @Model.Restaurant.Name
-</fieldset>
