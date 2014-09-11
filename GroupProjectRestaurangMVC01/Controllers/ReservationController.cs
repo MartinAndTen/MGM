@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GroupProjectRestaurangMVC01.Repository;
+using GroupProjectRestaurangMVC01.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +12,13 @@ namespace GroupProjectRestaurangMVC01.Controllers
     {
         //
         // GET: /Booking/
-
+        private ReservationRepository _reservationRepository;
         public ActionResult Index()
         {
-            return View();
+            ReservationViewModel viewModel = new ReservationViewModel();
+
+            viewModel.Reservations = _reservationRepository.GetAllReservationsToList();
+            return View(viewModel);
         }
 
     }

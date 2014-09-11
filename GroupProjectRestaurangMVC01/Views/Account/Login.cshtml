@@ -1,4 +1,5 @@
-﻿@model GroupProjectRestaurangMVC01.Models.LoginModel
+﻿@using System.Web.UI.WebControls
+@model GroupProjectRestaurangMVC01.Models.LoginModel
 
 @{
     ViewBag.Title = "Log in";
@@ -32,7 +33,7 @@
                 @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
             </li>
         </ol>
-        <input type="submit" value="Log in" />
+        <input type="submit" value="Log in"class="btn btn-success" />
     </fieldset>
     <p>
         @Html.ActionLink("Register", "Register") if you don't have an account.
