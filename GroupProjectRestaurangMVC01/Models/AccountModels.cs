@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using Postal;
 
 namespace GroupProjectRestaurangMVC01.Models
 {
@@ -86,6 +87,11 @@ namespace GroupProjectRestaurangMVC01.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
     }
 
     public class ExternalLogin
@@ -94,4 +100,17 @@ namespace GroupProjectRestaurangMVC01.Models
         public string ProviderDisplayName { get; set; }
         public string ProviderUserId { get; set; }
     }
-}
+    
+    
+        public class ExampleEmail : Email
+        {
+            public string To { get; set; }
+            public string Message { get; set; }
+
+
+  }
+
+
+    }
+
+
