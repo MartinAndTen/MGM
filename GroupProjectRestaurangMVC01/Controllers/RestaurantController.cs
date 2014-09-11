@@ -20,12 +20,17 @@ namespace GroupProjectRestaurangMVC01.Controllers
             RestaurantViewModel viewModel = new RestaurantViewModel();
             if (id.HasValue)
             {
-                viewModel.Restaurant = _restaurantRepository.GetRestaurantById(id.Value);
-                return View(viewModel);
+                Restaurant restaurant = _restaurantRepository.GetRestaurantById(id.Value);
+                if (restaurant != null)
+                {
+                    viewModel.Restaurant = restaurant;
+                    return View(viewModel);
+                }
             }
 
-            viewModel.Restaurants = _restaurantRepository.GetAllRestaurantsToList();
-            return View(viewModel);
+            List<Restaurant> restaurants = _restaurantRepository.GetAllRestaurantsToList();
+            
+            return View();
         }
 
     }
