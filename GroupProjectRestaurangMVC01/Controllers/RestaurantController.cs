@@ -13,7 +13,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
     {
         //
         // GET: /Restaurant/
-        private RestaurantRepository _restaurantRepository;
+        private readonly RestaurantRepository _restaurantRepository = new RestaurantRepository();
 
         public ActionResult Index(Guid? id)
         {
@@ -29,8 +29,8 @@ namespace GroupProjectRestaurangMVC01.Controllers
             }
 
             List<Restaurant> restaurants = _restaurantRepository.GetAllRestaurantsToList();
-            
-            return View();
+            viewModel.Restaurants = restaurants;
+            return View(viewModel);
         }
 
     }

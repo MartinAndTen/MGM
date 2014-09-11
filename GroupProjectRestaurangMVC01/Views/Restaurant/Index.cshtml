@@ -5,16 +5,15 @@
 }
 
 <h2>Index</h2>
-@if (Model.Restaurant == null)
-{
-    <div class="col-md-6">
-        RESTAURANG
-    </div>
+@if(Model.Restaurant != null)
+{ 
+    @Model.Restaurant.Name
 }
 else
 {
-    <div class="col-md-6">
-        RESTAURANGER
-    </div>
+    foreach (var restaurant in Model.Restaurants)
+     {
+         @restaurant.Name<br/>
+     }
 }
 
