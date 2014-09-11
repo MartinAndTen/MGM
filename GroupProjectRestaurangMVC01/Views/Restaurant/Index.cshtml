@@ -3,18 +3,55 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-@if (Model.Restaurant == null)
-{
-    <div class="col-md-6">
-        RESTAURANG
-    </div>
+@if(Model.Restaurant != null)
+{ 
+    @Model.Restaurant.Name
 }
 else
 {
-    <div class="col-md-6">
-        RESTAURANGER
-    </div>
+    foreach (var restaurant in Model.Restaurants)
+    {
+        <div class="col-md-6"><strong>@restaurant.Name</strong>
+            <div class="row" >
+                <div class="col-md-6">
+                    <img src="~/Assets/Images/800px-No_Image_Wide.png" class="RestaurantImage" />
+                </div>
+                <div class="col-md-6 text-left" >
+                    <small>alkwjdhaada wlkdjawhdlkjawhdlk awjhdawlkjdhawlkdja hldkjawhdlkajw hdlakwjdhawlkdjhlök jö lkj ölkj öl kj ölkj </small>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col-md-5">
+                    <table id="restaurantTable">
+                        <tr>
+                            <td><strong>Email:</strong></td>
+                            <td>@restaurant.Email</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phone:</strong></td>
+                            <td>@restaurant.Phone</td>
+                        </tr>
+                        <tr>
+                            <td><strong>City:</strong></td>
+                            <td>@restaurant.City</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Address:</strong></td>
+                            <td>@restaurant.Address</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZipCode:</strong></td>
+                            <td>@restaurant.Zipcode</td>
+                        </tr>
+                    </table>
+                   
+                    
+                    
+                </div>
+            </div>
+        </div>
+
+    }
 }
 
