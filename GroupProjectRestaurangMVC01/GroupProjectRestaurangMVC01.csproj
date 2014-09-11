@@ -257,6 +257,7 @@
     <Compile Include="ViewModels\TableViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\800px-No_Image_Wide.png" />
     <Content Include="Assets\Images\background.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

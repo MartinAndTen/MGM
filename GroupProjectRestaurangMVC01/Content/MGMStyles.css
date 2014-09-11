@@ -2,6 +2,7 @@
     margin-top: 10px;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
+    line-height: 120%;
     background: url('../Assets/Images/background.jpg');
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -98,3 +99,17 @@ ul#menu {
             color: #151515;
             text-decoration: underline;
         }
+
+
+.RestaurantImage {
+    width: 250px;
+    height: auto;
+    display: block;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+#restaurantTable {
+    width: 100%;
+    margin: 0;
+}
