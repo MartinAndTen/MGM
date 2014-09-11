@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @if(Model.Restaurant != null)
 { 
@@ -11,13 +12,13 @@ else
 {
     foreach (var restaurant in Model.Restaurants)
     {
-        <div class="col-md-6"><strong>@restaurant.Name</strong>
+        <div class="col-md-6"><strong>@Html.ActionLink(@restaurant.Name,"Index", "Restaurant", new {id = restaurant.Id})</strong>
             <div class="row" >
                 <div class="col-md-6">
                     <img src="~/Assets/Images/800px-No_Image_Wide.png" class="RestaurantImage" />
                 </div>
                 <div class="col-md-6 text-left" >
-                    <small>alkwjdhaada wlkdjawhdlkjawhdlk awjhdawlkjdhawlkdja hldkjawhdlkajw hdlakwjdhawlkdjhlök jö lkj ölkj öl kj ölkj </small>
+                    <small>@restaurant.Description</small>
                 </div>
             </div>
             <div class="row">

@@ -28,6 +28,7 @@ namespace GroupProjectRestaurangMVC01.Models
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
+        public string RestaurantName { get; set; }
     }
 
     public class RegisterExternalLoginModel
