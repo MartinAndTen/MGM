@@ -9,5 +9,6 @@ namespace GroupProjectRestaurangMVC01.ViewModels
     public class RestaurantViewModel
     {
         public Restaurant Restaurant { get; set; }
+        public List<Restaurant> Restaurants { get; set; }
     }
 }

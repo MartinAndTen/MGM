@@ -15,10 +15,16 @@ namespace GroupProjectRestaurangMVC01.Controllers
         // GET: /Restaurant/
         private RestaurantRepository _restaurantRepository;
 
-        public ActionResult Index(Guid id)
+        public ActionResult Index(Guid? id)
         {
             RestaurantViewModel viewModel = new RestaurantViewModel();
-            viewModel.Restaurant = _restaurantRepository.GetRestaurantById(id);
+            if (id.HasValue)
+            {
+                viewModel.Restaurant = _restaurantRepository.GetRestaurantById(id.Value);
+                return View(viewModel);
+            }
+
+            viewModel.Restaurants = _restaurantRepository.GetAllRestaurantsToList();
             return View(viewModel);
         }
 

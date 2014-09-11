@@ -20,5 +20,17 @@ namespace GroupProjectRestaurangMVC01.Repository
                 return result;
             }
         }
+
+        public List<Restaurant> GetAllRestaurantsToList()
+        {
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                List<Restaurant> result = db.Restaurants.Include("ClosedForBookings")
+                    .Include("OpenForBookings")
+                    .Include("Reservations")
+                    .Include("Tables").ToList();
+                return result;
+            }
+        }
     }
 }
