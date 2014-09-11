@@ -10,9 +10,23 @@ namespace GroupProjectRestaurangMVC01.Tests.Controllers
     {
         RestaurantRepository _restaurantRepository = new RestaurantRepository();
 
+        [TestInitialize]
+        public void SetUp()
+        {
+            _restaurantRepository.AddOrUpdateRestaurant(CreateTestRestaurant());
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            _restaurantRepository.DeleteRestaurant(Helpers.RestaurangTestHelper.TestRestaurantId);
+        }
+
         [TestMethod]
         public void CanCreateRestaurant()
         {
+            _restaurantRepository.DeleteRestaurant(Helpers.RestaurangTestHelper.TestRestaurantId);
+
             bool result = _restaurantRepository.AddOrUpdateRestaurant(CreateTestRestaurant());
             Assert.IsTrue(result);
         }
@@ -20,7 +34,7 @@ namespace GroupProjectRestaurangMVC01.Tests.Controllers
         [TestMethod]
         public void CanGetRestaurantById()
         {
-            Restaurant result = _restaurantRepository.GetRestaurantById(new Guid("a60c9f39-35ee-4ef4-9515-53200c0b4db0"));
+            Restaurant result = _restaurantRepository.GetRestaurantById(Helpers.RestaurangTestHelper.TestRestaurantId);
             Assert.IsNotNull(result);
             StringAssert.StartsWith(result.Name, Helpers.RestaurangTestHelper.TestRestaurantStrings);
         }
@@ -35,6 +49,7 @@ namespace GroupProjectRestaurangMVC01.Tests.Controllers
         private Restaurant CreateTestRestaurant()
         {
             Restaurant newRestaurant = new Restaurant();
+            newRestaurant.UserId = 1;
             newRestaurant.Id = Helpers.RestaurangTestHelper.TestRestaurantId;
             newRestaurant.Name = Helpers.RestaurangTestHelper.TestRestaurantStrings;
             newRestaurant.Description = Helpers.RestaurangTestHelper.TestRestaurantStrings;
