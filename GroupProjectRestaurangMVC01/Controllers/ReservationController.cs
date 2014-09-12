@@ -13,11 +13,19 @@ namespace GroupProjectRestaurangMVC01.Controllers
         //
         // GET: /Booking/
         private ReservationRepository _reservationRepository;
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             ReservationViewModel viewModel = new ReservationViewModel();
-
-            viewModel.Reservations = _reservationRepository.GetAllReservationsToList();
+            if (id.HasValue)
+            {
+                var id2 = (int)id;
+                viewModel.Reservation = _reservationRepository.GetReservationsByID(id2);
+            }
+            else
+            {
+                viewModel.Reservations = _reservationRepository.GetAllReservationsToList();
+            }
+            
             return View(viewModel);
         }
 
