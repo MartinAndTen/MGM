@@ -247,6 +247,7 @@
       <DependentUpon>RestaurantEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AccountRepository.cs" />
     <Compile Include="Repository\HomeRepository.cs" />
     <Compile Include="Repository\ReservationRepository.cs" />
     <Compile Include="Repository\RestaurantRepository.cs" />

@@ -15,6 +15,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
         //
         // GET: /Restaurant/
         private readonly RestaurantRepository _restaurantRepository = new RestaurantRepository();
+        private readonly AccountRepository _accountRepository = new AccountRepository();
 
         public ActionResult Index(Guid? id)
         {
@@ -39,7 +40,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             RestaurantViewModel viewModel = new RestaurantViewModel();
             var userId = WebSecurity.CurrentUserId;
-            UserProfile userProfile = _restaurantRepository.GetUserProfileByUserId(userId);
+            UserProfile userProfile = _accountRepository.GetUserProfileByUserId(userId);
             Restaurant restaurant = _restaurantRepository.GetRestaurantByUserId(userId);
             if (restaurant != null)
             {

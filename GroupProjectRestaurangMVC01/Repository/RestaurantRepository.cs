@@ -92,13 +92,6 @@ namespace GroupProjectRestaurangMVC01.Repository
             }
         }
 
-        public UserProfile GetUserProfileByUserId(int userId)
-        {
-            using (UsersContext userDb = new UsersContext())
-            {
-                UserProfile result = userDb.UserProfiles.FirstOrDefault(c => c.UserId.Equals(userId));
-                return result;
-            }
-        }
+        
     }
 }
