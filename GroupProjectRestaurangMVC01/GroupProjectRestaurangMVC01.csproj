@@ -392,6 +392,13 @@
     <Content Include="Views\Account\ConfirmationSuccess.cshtml" />
     <Content Include="Views\Account\ConfirmationFailure.cshtml" />
     <Content Include="Views\Restaurant\Create.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\ResetPwStepTwo.cshtml" />
+    <Content Include="Views\Account\InvalidUserName.cshtml" />
+    <Content Include="Views\Account\PasswordResetSuccess.cshtml" />
+    <Content Include="Views\Account\PasswordResetFailure.cshtml" />
+    <Content Include="Views\Emails\ChngPasswordEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
