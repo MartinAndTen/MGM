@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -60,10 +61,35 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(RestaurantViewModel model)
+        public ActionResult Create([Bind(Include="Name,Description,Address,Zipcode,Phone,City,TotalSeats,Capacity,MaxSeatPerBooking,Rating,Photo,Email,Activated")]RestaurantViewModel model, HttpPostedFileBase file)
         {
+            if (ModelState.IsValid)
+            {
 
+                string photo = String.Empty;
+                //Add Image To Library
+                if (file != null)
+                {
+                    string fileExtention = Path.GetExtension(file.FileName);
+                    //Creating filename to avoid file name conflicts
+                    string fileName = Guid.NewGuid().ToString();
+                    string pic = fileName + fileExtention;
+                    string path = Path.Combine(Server.MapPath("~Assets/UserAssets/Images"), pic);
 
+                    //Nu är filen uppladdad och ska sparas ner
+                    file.SaveAs(path);
+                    photo = Path.GetFileName(path);
+                }
+
+                int userId = WebSecurity.CurrentUserId;
+                bool restaurantCreatedSuccessfully = _restaurantRepository.CreateRestaurant(userId, model.Name,model.Description,model.Address,model.Zipcode,model.Phone,model.City,model.TotalSeats,model.Capacity,model.MaxSeatPerBooking,model.Rating,photo,model.Email,model.Activated);
+
+                if (restaurantCreatedSuccessfully)
+                {
+                    Restaurant theNewRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
+                    return RedirectToAction("Index", "Restaurant", new {id = theNewRestaurant.Id});
+                }
+            }
             return View(model);
             //return RedirectToAction("Index", new {id = model.Restaurant.Id});
         }
