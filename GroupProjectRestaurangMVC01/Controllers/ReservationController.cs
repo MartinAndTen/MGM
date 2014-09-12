@@ -1,4 +1,5 @@
-﻿using GroupProjectRestaurangMVC01.Repository;
+﻿using GroupProjectRestaurangMVC01.Models;
+using GroupProjectRestaurangMVC01.Repository;
 using GroupProjectRestaurangMVC01.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,19 @@ namespace GroupProjectRestaurangMVC01.Controllers
     {
         //
         // GET: /Booking/
-        private ReservationRepository _reservationRepository;
+        private readonly ReservationRepository _reservationRepository = new ReservationRepository();
         public ActionResult Index(int? id)
         {
             ReservationViewModel viewModel = new ReservationViewModel();
             if (id.HasValue)
             {
                 var id2 = (int)id;
-                viewModel.Reservation = _reservationRepository.GetReservationsByID(id2);
+                Reservation reservation;
+                reservation = _reservationRepository.GetReservationsByID(id2);
+                if (reservation != null)
+                {
+                    viewModel.Reservation = reservation;
+                }
             }
             else
             {
@@ -27,6 +33,11 @@ namespace GroupProjectRestaurangMVC01.Controllers
             }
             
             return View(viewModel);
+        }
+
+        public ActionResult Create(RestaurantViewModel model)
+        {
+            return View();
         }
 
     }

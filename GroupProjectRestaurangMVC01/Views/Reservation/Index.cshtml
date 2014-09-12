@@ -4,8 +4,14 @@
 }
 
 <h2>Index</h2>
-<fieldset>
-    <legend>ReservationViewModel</legend>
-
-    @Model.Reservation.CustomerName
-</fieldset>
+@if (Model.Reservation != null)
+{
+    <div>@Model.Reservation.CustomerName</div>
+}
+else
+{
+    
+}
+<div>
+    
+</div>
