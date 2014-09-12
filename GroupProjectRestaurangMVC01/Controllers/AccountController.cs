@@ -127,6 +127,72 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPasswordModel model)
+        {
+            string emailAddress = (model.Email);
+            if (!string.IsNullOrEmpty(emailAddress))
+            {
+                string confirmationToken =
+                    WebSecurity.GeneratePasswordResetToken(model.UserName);
+                dynamic email = new Email("ChngPasswordEmail");
+                email.To = model.Email;
+                email.UserName = model.UserName;
+                email.ConfirmationToken = confirmationToken;
+                email.Send();
+
+                return RedirectToAction("ResetPwStepTwo");
+            }
+
+            return RedirectToAction("InvalidUserName");
+        }
+
+          [AllowAnonymous]
+        public ActionResult ResetPwStepTwo()
+        {
+            return View();
+        }
+          [AllowAnonymous]
+        public ActionResult InvalidUserName()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPasswordConfirmation(string Id)
+        {
+            ResetPasswordConfirmModel model = new ResetPasswordConfirmModel() { Token = Id };
+            return View(model);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ResetPasswordConfirmation(ResetPasswordConfirmModel model)
+        {
+            if (WebSecurity.ResetPassword(model.Token, model.NewPassword))
+            {
+                return RedirectToAction("PasswordResetSuccess");
+            }
+            return RedirectToAction("PasswordResetFailure");
+        }
+        public ActionResult PasswordResetSuccess()
+        {
+            return View();
+        }
+        public ActionResult PasswordResetFailure()
+        {
+            return View();
+        }
+
+
+
         //
         // POST: /Account/Disassociate
 
@@ -436,13 +502,17 @@ namespace GroupProjectRestaurangMVC01.Controllers
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
         }
+
+      
+
         #endregion
 
 
         //Martins egna Försök för en LostPassword//
 
-    
 
+      
+        
 
     }
 }

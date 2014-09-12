@@ -32,6 +32,7 @@
                 @Html.CheckBoxFor(m => m.RememberMe)
                 @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
             </li>
+            <li>FUCKING FULT</li>
         </ol>
         <input type="submit" value="Log in"class="btn btn-success" />
     </fieldset>
@@ -39,7 +40,7 @@
         @Html.ActionLink("Register", "Register") if you don't have an account.
     </p>
     <p>
-        @Html.ActionLink("Forgot Password?", "") 
+        @Html.ActionLink("Forgot Password?", "ResetPassword", "Account")
     </p>
 }
 </section>

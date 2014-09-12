@@ -383,7 +383,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Restaurant\Index.cshtml" />
-    <Content Include="Views\Reservation\Index.cshtml" />
     <Content Include="Views\Emails\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -393,10 +392,18 @@
     <Content Include="Views\Account\ConfirmationSuccess.cshtml" />
     <Content Include="Views\Account\ConfirmationFailure.cshtml" />
     <Content Include="Views\Restaurant\Create.cshtml" />
-    <Content Include="Views\Reservation\Create.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\ResetPwStepTwo.cshtml" />
+    <Content Include="Views\Account\InvalidUserName.cshtml" />
+    <Content Include="Views\Account\PasswordResetSuccess.cshtml" />
+    <Content Include="Views\Account\PasswordResetFailure.cshtml" />
+    <Content Include="Views\Emails\ChngPasswordEmail.cshtml" />
+    <Content Include="Views\Home\UserAgreements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\UserAssets\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

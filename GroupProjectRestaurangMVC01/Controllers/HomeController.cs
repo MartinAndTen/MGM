@@ -28,5 +28,12 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
             return View();
         }
+
+        public ActionResult UserAgreements()
+        {
+            ViewBag.Message = "User Agreements";
+
+            return View();
+        }
     }
 }
