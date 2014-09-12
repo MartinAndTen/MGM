@@ -399,6 +399,7 @@
     <Content Include="Views\Account\PasswordResetSuccess.cshtml" />
     <Content Include="Views\Account\PasswordResetFailure.cshtml" />
     <Content Include="Views\Emails\ChngPasswordEmail.cshtml" />
+    <Content Include="Views\Home\UserAgreements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
