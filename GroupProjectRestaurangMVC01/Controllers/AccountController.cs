@@ -83,14 +83,12 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 try
                 {
                     string confirmationToken =
-                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Email = model.Email }, true);
+                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Email = model.Email, RestaurantName = model.RestaurantName }, true);
                     dynamic email = new Email("RegEmail");
                     email.To = model.Email;
                     email.UserName = model.UserName;
                     email.ConfirmationToken = confirmationToken;
                     email.Send();
-                    
-
                     return RedirectToAction("RegisterStepTwo", "Account");
                 }
                 catch (MembershipCreateUserException e)
@@ -441,8 +439,10 @@ namespace GroupProjectRestaurangMVC01.Controllers
         #endregion
 
 
-        //Martins egna Försök för en CONFIRMATION//
+        //Martins egna Försök för en LostPassword//
 
-       
+    
+
+
     }
 }

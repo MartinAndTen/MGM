@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -26,6 +27,8 @@ namespace GroupProjectRestaurangMVC01.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
+        public string RestaurantName { get; set; }
     }
 
     public class RegisterExternalLoginModel
@@ -92,6 +95,11 @@ namespace GroupProjectRestaurangMVC01.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Required]
+        [Display(Name = "Restaurant Name")]
+        public string RestaurantName { get; set; }
+
+
     }
 
     public class ExternalLogin
@@ -109,6 +117,14 @@ namespace GroupProjectRestaurangMVC01.Models
 
 
   }
+
+        public class LostPasswordModel
+        {
+            [Required(ErrorMessage = "We need your email to send you a reset link!")]
+            [Display(Name = "Your account email")]
+            [EmailAddress(ErrorMessage = "Not a valid email--what are you trying to do here?")]
+            public string UserName { get; set; }
+        }
 
 
     }
