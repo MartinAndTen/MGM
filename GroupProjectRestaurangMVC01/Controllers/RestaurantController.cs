@@ -50,18 +50,21 @@ namespace GroupProjectRestaurangMVC01.Controllers
             }
             if (userProfile != null)
             {
-                Restaurant newRestaurant = new Restaurant();
-                newRestaurant.Name = userProfile.RestaurantName;
-                viewModel.Restaurant = newRestaurant;
+                //Restaurant newRestaurant = new Restaurant();
+                viewModel.Name = userProfile.RestaurantName;
                 return View(viewModel);
             }
-            
+
             return View(viewModel);
         }
 
+
+        //[Bind(Include = "Name,Description,Address,Zipcode,Phone,City,TotalSeats,Capacity,MaxSeatPerBooking,Rating,Photo,Email,Activated")]
+
         [Authorize]
         [HttpPost]
-        public ActionResult Create([Bind(Include="Name,Description,Address,Zipcode,Phone,City,TotalSeats,Capacity,MaxSeatPerBooking,Rating,Photo,Email,Activated")]RestaurantViewModel model, HttpPostedFileBase file)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(RestaurantViewModel model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -70,24 +73,32 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 //Add Image To Library
                 if (file != null)
                 {
-                    string fileExtention = Path.GetExtension(file.FileName);
-                    //Creating filename to avoid file name conflicts
-                    string fileName = Guid.NewGuid().ToString();
-                    string pic = fileName + fileExtention;
-                    string path = Path.Combine(Server.MapPath("~Assets/UserAssets/Images"), pic);
 
-                    //Nu är filen uppladdad och ska sparas ner
-                    file.SaveAs(path);
-                    photo = Path.GetFileName(path);
+                    var result = _restaurantRepository.UploadImageToRestaurant(file);
+
+                    //string fileExtention = Path.GetExtension(file.FileName);
+                    ////Creating filename to avoid file name conflicts
+                    //string fileName = Guid.NewGuid().ToString();
+                    //string pic = fileName + fileExtention;
+                    //string path = Path.Combine(Server.MapPath("~/Assets/UserAssets/Images"), pic);
+
+                    ////Nu är filen uppladdad och ska sparas ner
+                    //file.SaveAs(path);
+                    //photo = Path.GetFileName(path);
+                    photo = result.Photo;
+                }
+                else
+                {
+                    photo = "~/Assets/Images/800px-No_Image_Wide.png";
                 }
 
                 int userId = WebSecurity.CurrentUserId;
-                bool restaurantCreatedSuccessfully = _restaurantRepository.CreateRestaurant(userId, model.Name,model.Description,model.Address,model.Zipcode,model.Phone,model.City,model.TotalSeats,model.Capacity,model.MaxSeatPerBooking,model.Rating,photo,model.Email,model.Activated);
+                bool restaurantCreatedSuccessfully = _restaurantRepository.CreateRestaurant(userId, model.Name, model.Description, model.Address, model.Zipcode, model.Phone, model.City, model.TotalSeats, model.Capacity, model.MaxSeatPerBooking, model.Rating, photo, model.Email, model.Activated);
 
                 if (restaurantCreatedSuccessfully)
                 {
                     Restaurant theNewRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
-                    return RedirectToAction("Index", "Restaurant", new {id = theNewRestaurant.Id});
+                    return RedirectToAction("Index", "Restaurant", new { id = theNewRestaurant.Id });
                 }
             }
             return View(model);

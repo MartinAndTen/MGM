@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using GroupProjectRestaurangMVC01.Models;
 
@@ -92,7 +94,21 @@ namespace GroupProjectRestaurangMVC01.Repository
             }
         }
 
-        public bool CreateRestaurant(int userId,string name, string description, string address, int zipcode, string phone,
+        public Restaurant UploadImageToRestaurant(HttpPostedFileBase file)
+        {
+            string fileExtention = Path.GetExtension(file.FileName);
+            //Creating filename to avoid filename conflicts
+            string filename = Guid.NewGuid().ToString();
+            string pic = filename + fileExtention;
+            string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Assets/UserAssets/Images"), pic);
+            Restaurant restaurantPhotoUrl = new Restaurant();
+            file.SaveAs(path);
+            restaurantPhotoUrl.Photo = Path.GetFileName(path);
+            return restaurantPhotoUrl;
+        }
+
+
+        public bool CreateRestaurant(int userId, string name, string description, string address, int zipcode, string phone,
             string city, int? totalSeats, int? capacity, int? maxSeatPerBooking, string rating, string photo,
             string email, bool activated)
         {
@@ -103,7 +119,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                 {
                     Restaurant newRestaurant = new Restaurant();
                     newRestaurant.UserId = userId;
-                    newRestaurant.Id = new Guid();
+                    newRestaurant.Id = Guid.NewGuid();
                     newRestaurant.Name = name;
                     newRestaurant.Description = description;
                     newRestaurant.Address = address;
@@ -131,7 +147,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                     db.SaveChanges();
                     resultValue = true;
                 }
-                
+
             }
             catch (Exception ex)
             {
