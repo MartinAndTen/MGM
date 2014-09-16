@@ -103,7 +103,7 @@ namespace GroupProjectRestaurangMVC01.Repository
             string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Assets/UserAssets/Images"), pic);
             Restaurant restaurantPhotoUrl = new Restaurant();
             file.SaveAs(path);
-            restaurantPhotoUrl.Photo = Path.GetFileName(path);
+            restaurantPhotoUrl.Photo = "../../Assets/UserAssets/Images/"+Path.GetFileName(path);
             return restaurantPhotoUrl;
         }
 

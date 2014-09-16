@@ -47,8 +47,8 @@ namespace GroupProjectRestaurangMVC01.Controllers
             Restaurant restaurant = _restaurantRepository.GetRestaurantByUserId(userId);
             if (restaurant != null)
             {
-                viewModel.Restaurant = restaurant;
-                return View(viewModel);
+                //viewModel.Restaurant = restaurant;
+                return RedirectToAction("Index", "Restaurant", new {id = restaurant.Id});
             }
             if (userProfile != null)
             {
