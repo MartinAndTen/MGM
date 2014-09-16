@@ -7,10 +7,10 @@
 
 @using (Html.BeginForm("Index", "Search", FormMethod.Post))
 {
-    @Html.TextBoxFor(c=>c.Name)
+    @Html.TextBoxFor(c=>c.SearchName)
   
     <br/>
-    @Html.TextBoxFor(c=>c.City)
+    @Html.TextBoxFor(c=>c.SearchCity)
     <br/>
     <input type="submit" class="btn btn-info" value="Search" />
 }

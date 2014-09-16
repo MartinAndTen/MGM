@@ -25,11 +25,13 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
-                if (model.Name!=null)
+                if (model.SearchName!=null)
                 {
                     List<Restaurant> searchResult =
-                         db.Restaurants.Where(c => c.Name.Contains(model.Name)).ToList();
+                         db.Restaurants.Where(c => c.Name.Contains(model.SearchName)).ToList();
+                    model.Restaurants = searchResult;
                 }
+
            
 
                 return View(model);

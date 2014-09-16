@@ -63,5 +63,9 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         public bool Activated { get; set; }
 
         public List<Restaurant> Restaurants { get; set; }
+
+        public string SearchName { get; set; }
+
+        public string SearchCity { get; set; }
     }
 }

@@ -1,6 +1,10 @@
 ﻿@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
-           @if (Model.Restaurants!=null)
+
+<h2>SearchResult HEJEHJ</h2>
+
+@if (Model.Restaurants!=null)
            {
+               
                foreach (var restaurant in Model.Restaurants)
                {
                    @restaurant.Name
@@ -8,4 +12,6 @@
  
                    
                }
+               
+               
            }
