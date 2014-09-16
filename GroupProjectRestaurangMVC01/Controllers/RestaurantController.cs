@@ -48,7 +48,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
             if (restaurant != null)
             {
                 //viewModel.Restaurant = restaurant;
-                return RedirectToAction("Index", "Restaurant", new {id = restaurant.Id});
+                return RedirectToAction("Edit", "Restaurant", new {id = restaurant.Id});
             }
             if (userProfile != null)
             {
@@ -58,9 +58,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
             return View(viewModel);
         }
-
-
-        //[Bind(Include = "Name,Description,Address,Zipcode,Phone,City,TotalSeats,Capacity,MaxSeatPerBooking,Rating,Photo,Email,Activated")]
 
         [Authorize]
         [HttpPost]
@@ -94,5 +91,28 @@ namespace GroupProjectRestaurangMVC01.Controllers
             return View(model);
         }
 
+
+        public ActionResult Edit(Guid id)
+        {
+            RestaurantViewModel viewModel = new RestaurantViewModel();
+            if (Request.IsAuthenticated)
+            {
+                int userId = WebSecurity.CurrentUserId;
+                Restaurant restaurantToEdit = _restaurantRepository.GetRestaurantByUserId(userId);
+                viewModel.Restaurant = restaurantToEdit;
+                viewModel.Name = restaurantToEdit.Name;
+                viewModel.Description = restaurantToEdit.Description;
+                viewModel.Address = restaurantToEdit.Address;
+                viewModel.Zipcode = restaurantToEdit.Zipcode;
+                viewModel.Phone = restaurantToEdit.Phone;
+                viewModel.City = restaurantToEdit.City;
+                viewModel.TotalSeats = restaurantToEdit.TotalSeats;
+                viewModel.Capacity = restaurantToEdit.Capacity;
+                viewModel.MaxSeatPerBooking = restaurantToEdit.MaxSeatPerBooking;
+                viewModel.Email = restaurantToEdit.Email;
+                viewModel.Activated = restaurantToEdit.Activated;
+            }
+            return View(viewModel);
+        }
     }
 }

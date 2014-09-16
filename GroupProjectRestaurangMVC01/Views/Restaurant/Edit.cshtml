@@ -1,0 +1,87 @@
+﻿@using Microsoft.Ajax.Utilities
+@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit @Model.Restaurant.Name</h2>
+@using (Html.BeginForm("Create", "Restaurant", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="col-md-7">
+        <div class="form-group">
+            @Html.LabelFor(c => c.Name, new { @class = "control-label" })
+            @Html.TextBoxFor(c => c.Name, new { @Value = @Model.Restaurant.Name, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Restaurant.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Email, new { @class = "control-label" })
+            @Html.TextBoxFor(c => c.Email, new { @Value = @Model.Restaurant.Email, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Restaurant.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Photo, new { @class = "control-label" })
+            <input type="file" name="file" id="file" class="form-control" />
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Description, new { @class = "control-label" })
+            @Html.TextAreaFor(c => c.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Description)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Address, new { @class = "control-label" })
+            @Html.TextBoxFor(c => c.Address, new { @Value = @Model.Restaurant.Address, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Address)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Zipcode, new { @class = "control-label" })
+            @Html.TextBoxFor(c => c.Zipcode, new {@Value = @Model.Restaurant.Zipcode, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Zipcode)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Phone, new {@Value = @Model.Restaurant.Name, @class = "control-label" })
+            
+            @Html.TextBoxFor(c => c.Phone, new { @Value = @Model.Restaurant.Phone, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Phone)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.City, new { @class = "control-label" })
+            @Html.TextBoxFor(c => c.City, new { @Value = @Model.Restaurant.City, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.City)
+        </div>
+            @Html.LabelFor(c => c.TotalSeats, new { @class = "control-label" })
+        <div class="form-group">
+            @Html.TextBoxFor(c => c.TotalSeats, new { @Value = @Model.Restaurant.TotalSeats, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.TotalSeats)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Capacity, new { @class = "control-label" })
+            @Html.TextBoxFor(c => c.Capacity, new { @Value = @Model.Restaurant.Capacity, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Capacity)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.MaxSeatPerBooking, new { @class = "control-label" })
+            @Html.TextBoxFor(c => c.MaxSeatPerBooking, new { @Value = @Model.Restaurant.MaxSeatPerBooking, @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.MaxSeatPerBooking)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Activated, new { @class = "control-label" })
+            @if (@Model.Restaurant.Activated)
+            {
+                @Html.CheckBoxFor(c => c.Activated, new { @class = "checkbox", @checked = true })
+            }
+            else
+            {
+                @Html.CheckBoxFor(c => c.Activated, new { @class = "checkbox"})
+            }
+            @*@Html.CheckBoxFor(c => c.Activated, new { @Value = @Model.Restaurant.Activated, @class = "checkbox" })*@
+            @Html.ValidationMessageFor(c => c.Activated)
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+            <input type="submit" value="Create" class="btn btn-info col-md-12" />
+        </div>
+    </div>
+}

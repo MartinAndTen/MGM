@@ -401,6 +401,7 @@
     <Content Include="Views\Account\PasswordResetFailure.cshtml" />
     <Content Include="Views\Emails\ChngPasswordEmail.cshtml" />
     <Content Include="Views\Home\UserAgreements.cshtml" />
+    <Content Include="Views\Restaurant\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
