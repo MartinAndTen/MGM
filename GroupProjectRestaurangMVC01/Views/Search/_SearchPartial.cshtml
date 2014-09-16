@@ -1,0 +1,11 @@
+﻿@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
+           @if (Model.Restaurants!=null)
+           {
+               foreach (var restaurant in Model.Restaurants)
+               {
+                   @restaurant.Name
+               <br/>
+ 
+                   
+               }
+           }

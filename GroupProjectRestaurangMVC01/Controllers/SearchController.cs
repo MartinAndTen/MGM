@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GroupProjectRestaurangMVC01.Models;
+using GroupProjectRestaurangMVC01.ViewModels;
 
 namespace GroupProjectRestaurangMVC01.Controllers
 {
@@ -13,8 +15,27 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            RestaurantViewModel viewModel = new RestaurantViewModel();
+
+            return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult Index(RestaurantViewModel model)
+        {
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                if (model.Name!=null)
+                {
+                    List<Restaurant> searchResult =
+                         db.Restaurants.Where(c => c.Name.Contains(model.Name)).ToList();
+                }
+           
+
+                return View(model);
+            }
+
+        }
     }
 }
+
