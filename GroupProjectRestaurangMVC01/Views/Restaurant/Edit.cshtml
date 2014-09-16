@@ -1,5 +1,4 @@
-﻿@using Microsoft.Ajax.Utilities
-@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
+﻿@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,7 +20,9 @@
             @Html.TextBoxFor(c => c.Email, new { @Value = @Model.Restaurant.Email, @class = "form-control" })
             @Html.ValidationMessageFor(c => c.Restaurant.Email)
         </div>
+        <img src="@Model.Restaurant.Photo" alt="RestaurantImage"/>
         <div class="form-group">
+            <label>Change</label>
             @Html.LabelFor(c => c.Photo, new { @class = "control-label" })
             <input type="file" name="file" id="file" class="form-control" />
         </div>

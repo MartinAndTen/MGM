@@ -66,8 +66,9 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                string photo = String.Empty;
+                if (Request.IsAuthenticated)
+                {
+                string photo;
                 //Add Image To Library
                 if (file != null)
                 {
@@ -76,7 +77,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 }
                 else
                 {
-                    photo = "~/Assets/Images/800px-No_Image_Wide.png";
+                    photo = "../../Assets/Images/800px-No_Image_Wide.png";
                 }
 
                 int userId = WebSecurity.CurrentUserId;
@@ -87,11 +88,12 @@ namespace GroupProjectRestaurangMVC01.Controllers
                     Restaurant theNewRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
                     return RedirectToAction("Index", "Restaurant", new { id = theNewRestaurant.Id });
                 }
+                }
             }
             return View(model);
         }
 
-
+        [Authorize]
         public ActionResult Edit(Guid id)
         {
             RestaurantViewModel viewModel = new RestaurantViewModel();
@@ -113,6 +115,28 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 viewModel.Activated = restaurantToEdit.Activated;
             }
             return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(RestaurantViewModel model, HttpPostedFileBase file)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Request.IsAuthenticated)
+                {
+                string photo = model.Restaurant.Photo;
+                //Add Image To Library if changed
+                if (file != null)
+                {
+                    var result = _restaurantRepository.UploadImageToRestaurant(file);
+                    photo = result.Photo;
+                }
+                }
+            }
+
+            return RedirectToAction("Index","Restaurant");
         }
     }
 }
