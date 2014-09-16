@@ -10,46 +10,44 @@
 </hgroup>
 
 <section id="loginForm">
-<h2>Use a local account to log in.</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Log in Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>
-            <li>
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            </li>
-            <li>FUCKING FULT</li>
-        </ol>
-        <input type="submit" value="Log in"class="btn btn-success" />
-    </fieldset>
-    <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
-    <p>
-        @Html.ActionLink("Forgot Password?", "ResetPassword", "Account")
-    </p>
+    <div class="form-group col-md-7">
+        
+                @Html.LabelFor(m => m.UserName, new {@class="col-md-3 control-label"})
+        <div class="col-md-9">
+            @Html.TextBoxFor(m => m.UserName, new {@class="form-control"})
+        </div>
+            @Html.ValidationMessageFor(m => m.UserName)
+
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Password)
+        @Html.LabelFor(m => m.RememberMe, new { @class = "col-md-3 checkbox" })
+        <div class="col-md-9">
+            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "checkbox" })
+        </div>
+           
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+            <input type="submit" value="Log in" class="btn btn-success col-md-12" />
+        </div>
+        </div>
+    <div class="row"></div>
+    <div class="col-md-7">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+            @Html.ActionLink("Register", "Register", null, new { @class = "btn btn-info col-md-5" })
+            @Html.ActionLink("Forgot Password?", "ResetPassword", "Account", new { @class = "btn btn-danger col-md-5 col-md-push-2" })
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 15px;"></div>
 }
 </section>
-
-<section class="social" id="socialLoginForm">
-    <h2>Use another service to log in.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
