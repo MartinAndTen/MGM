@@ -50,7 +50,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
             }
             if (userProfile != null)
             {
-                //Restaurant newRestaurant = new Restaurant();
                 viewModel.Name = userProfile.RestaurantName;
                 return View(viewModel);
             }
@@ -73,18 +72,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 //Add Image To Library
                 if (file != null)
                 {
-
                     var result = _restaurantRepository.UploadImageToRestaurant(file);
-
-                    //string fileExtention = Path.GetExtension(file.FileName);
-                    ////Creating filename to avoid file name conflicts
-                    //string fileName = Guid.NewGuid().ToString();
-                    //string pic = fileName + fileExtention;
-                    //string path = Path.Combine(Server.MapPath("~/Assets/UserAssets/Images"), pic);
-
-                    ////Nu är filen uppladdad och ska sparas ner
-                    //file.SaveAs(path);
-                    //photo = Path.GetFileName(path);
                     photo = result.Photo;
                 }
                 else
@@ -102,7 +90,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 }
             }
             return View(model);
-            //return RedirectToAction("Index", new {id = model.Restaurant.Id});
         }
 
     }

@@ -15,7 +15,7 @@ else
         <div class="col-md-6"><strong>@Html.ActionLink(@restaurant.Name,"Index", "Restaurant", new {id = restaurant.Id})</strong>
             <div class="row" >
                 <div class="col-md-6">
-                    <img src="~/Assets/Images/800px-No_Image_Wide.png" class="RestaurantImage" />
+                    <img src="@restaurant.Photo" class="RestaurantImage" />
                 </div>
                 <div class="col-md-6 text-left" >
                     <small>@restaurant.Description</small>
