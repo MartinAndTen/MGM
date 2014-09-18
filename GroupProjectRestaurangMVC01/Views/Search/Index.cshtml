@@ -2,17 +2,33 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<style>
+    .form-control {
+        max-width: 40%;
+    }
+</style>
 <h2>Index</h2>
 
-@using (Html.BeginForm("Index", "Search", FormMethod.Post))
+@using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.TextBoxFor(c=>c.SearchName)
-  
+    <div class="form-group">
+        @Html.LabelFor(m => m.SearchName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.SearchName, new { @class = "form-control" })
+        </div>
+    </div>
     <br/>
-    @Html.TextBoxFor(c=>c.SearchCity)
+    <div class="form-group">
+        @Html.LabelFor(m => m.SearchCity, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.SearchCity, new { @class = "form-control" })
+        </div>
+    </div>
     <br/>
     <input type="submit" class="btn btn-info" value="Search" />
+
+   
+
 }
 
 
