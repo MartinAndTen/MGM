@@ -1,17 +1,53 @@
 ﻿@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
 
-<h2>SearchResult HEJEHJ</h2>
+<h2>SearchResult</h2>
+<br/>
+@if (Model.Restaurants != null)
+{
 
-@if (Model.Restaurants!=null)
-           {
-               
-               foreach (var restaurant in Model.Restaurants)
-               {
-                   @restaurant.Name
-               <br/>
- 
-                   
-               }
-               
-               
-           }
+    foreach (var restaurant in Model.Restaurants)
+    {
+        <div class="col-md-6">
+            <strong>@Html.ActionLink(@restaurant.Name, "Index", "Restaurant", new { id = restaurant.Id })</strong>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="@restaurant.Photo" class="RestaurantImage" />
+                </div>
+                <div class="col-md-6 text-left">
+                    <small>@restaurant.Description</small>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-5">
+                    <table id="restaurantTable">
+                        <tr>
+                            <td><strong>Email:</strong></td>
+                            <td>@restaurant.Email</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phone:</strong></td>
+                            <td>@restaurant.Phone</td>
+                        </tr>
+                        <tr>
+                            <td><strong>City:</strong></td>
+                            <td>@restaurant.City</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Address:</strong></td>
+                            <td>@restaurant.Address</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZipCode:</strong></td>
+                            <td>@restaurant.Zipcode</td>
+                        </tr>
+                    </table>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    }
+}
