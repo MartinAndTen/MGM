@@ -25,5 +25,11 @@ namespace GroupProjectRestaurangMVC01.Repository
                 return result;
             }
         }
+
+        public Reservation CreateReservation(Guid restaurantId, int tableId, DateTime date, string day, string customerName, string customerPhoneNumber, string ContactEmail)
+        {
+            Reservation reservation = new Reservation();
+
+        }
     }
 }
