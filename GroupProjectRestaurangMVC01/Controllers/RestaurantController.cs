@@ -102,18 +102,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 int userId = WebSecurity.CurrentUserId;
                 Restaurant restaurantToEdit = _restaurantRepository.GetRestaurantByUserId(userId);
                 viewModel = _restaurantRepository.AddRestaurantToViewModel(restaurantToEdit);
-                //viewModel.Restaurant = restaurantToEdit;
-                //viewModel.Name = restaurantToEdit.Name;
-                //viewModel.Description = restaurantToEdit.Description;
-                //viewModel.Address = restaurantToEdit.Address;
-                //viewModel.Zipcode = restaurantToEdit.Zipcode;
-                //viewModel.Phone = restaurantToEdit.Phone;
-                //viewModel.City = restaurantToEdit.City;
-                //viewModel.TotalSeats = restaurantToEdit.TotalSeats;
-                //viewModel.Capacity = restaurantToEdit.Capacity;
-                //viewModel.MaxSeatPerBooking = restaurantToEdit.MaxSeatPerBooking;
-                //viewModel.Email = restaurantToEdit.Email;
-                //viewModel.Activated = restaurantToEdit.Activated;
             }
             return View(viewModel);
         }
@@ -127,20 +115,15 @@ namespace GroupProjectRestaurangMVC01.Controllers
             {
                 if (Request.IsAuthenticated)
                 {
-                string photo = model.Restaurant.Photo;
-                //Add Image To Library if changed
-                if (file != null)
-                {
-                    if ()
+                    int userId = WebSecurity.CurrentUserId;
+                    bool updateResult = _restaurantRepository.UpdateRestaurant(userId, model, file);
+                    if (updateResult)
                     {
-                        
+                        Restaurant theNewRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
+                        return RedirectToAction("Index", "Restaurant", new { id = theNewRestaurant.Id });
                     }
-                    var result = _restaurantRepository.UploadImageToRestaurant(file);
-                    photo = result.Photo;
-                }
                 }
             }
-
             return RedirectToAction("Index","Restaurant");
         }
     }

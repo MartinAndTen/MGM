@@ -14,14 +14,50 @@ namespace GroupProjectRestaurangMVC01.Repository
 {
     public class RestaurantRepository
     {
-        public bool AddOrUpdateRestaurant(Restaurant restaurant)
+        private string defaultNoImageLocation = "../../Assets/Images/800px-No_Image_Wide.png";
+
+
+        public bool UpdateRestaurant(int userId,RestaurantViewModel restaurant, HttpPostedFileBase file)
         {
             bool returnValue = false;
             try
             {
+                Restaurant restaurantToUpdate = GetRestaurantByUserId(userId);
+                string photo = restaurantToUpdate.Photo;
+
+                if (file != null)
+                {
+                    bool deleteImageResult;
+                    if (photo != defaultNoImageLocation)
+                    {
+                        deleteImageResult = DeleteThisImage(photo);
+                    }
+                    else
+                    {
+                        deleteImageResult = true;
+                    }
+                    if (deleteImageResult)
+                    {
+                        var result = UploadImageToRestaurant(file);
+                        photo = result.Photo;
+                    }
+                }
+
+                restaurantToUpdate.Name = restaurant.Name;
+                restaurantToUpdate.Description = restaurant.Description;
+                restaurantToUpdate.Address = restaurant.Address;
+                restaurantToUpdate.Zipcode = restaurant.Zipcode;
+                restaurantToUpdate.Phone = restaurant.Phone;
+                restaurantToUpdate.City = restaurant.City;
+                restaurantToUpdate.TotalSeats = restaurant.TotalSeats;
+                restaurantToUpdate.Capacity = restaurant.Capacity;
+                restaurantToUpdate.Photo = photo;
+                restaurantToUpdate.Email = restaurant.Email;
+                restaurantToUpdate.Activated = restaurant.Activated;
+
                 using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
-                    db.Restaurants.AddOrUpdate(restaurant);
+                    db.Restaurants.AddOrUpdate(restaurantToUpdate);
                     db.SaveChanges();
                     returnValue = true;
                 }
@@ -117,6 +153,27 @@ namespace GroupProjectRestaurangMVC01.Repository
             return restaurantPhotoUrl;
         }
 
+        public bool DeleteThisImage(string imageString)
+        {
+            bool returnValue = false;
+            try
+            {
+                string path = System.Web.HttpContext.Current.Server.MapPath(imageString);
+                FileInfo fileInfo = new FileInfo(path);
+                if (fileInfo.Exists)
+                {
+                    fileInfo.Delete();
+                    returnValue = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return returnValue;
+        }
 
         public bool CreateRestaurant(int userId, string name, string description, string address, int zipcode, string phone,
             string city, int? totalSeats, int? capacity, int? maxSeatPerBooking, string rating, string photo,
