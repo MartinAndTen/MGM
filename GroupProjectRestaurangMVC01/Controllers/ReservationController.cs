@@ -14,6 +14,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
         //
         // GET: /Booking/
         private readonly ReservationRepository _reservationRepository = new ReservationRepository();
+        private readonly RestaurantRepository _restaurantRepository = new RestaurantRepository();
         public ActionResult Index(int? id)
         {
             ReservationViewModel viewModel = new ReservationViewModel();
@@ -35,10 +36,20 @@ namespace GroupProjectRestaurangMVC01.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Create(RestaurantViewModel model)
+        public ActionResult Create(Guid id)
         {
-            return View();
+            ReservationViewModel viewModel = new ReservationViewModel();
+            Restaurant currentRestaurant = _restaurantRepository.GetRestaurantById(id);
+            viewModel.Restaurant = currentRestaurant;
+            return View(viewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ReservationViewModel model)
+        {
+            _reservationRepository.CreateReservation(model);
+            return View();
+        }
     }
 }

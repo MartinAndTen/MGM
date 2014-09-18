@@ -9,6 +9,7 @@ namespace GroupProjectRestaurangMVC01.ViewModels
 {
     public class ReservationViewModel
     {
+        public Restaurant Restaurant { get; set; }
         public Reservation Reservation { get; set; }
         public List<Reservation> Reservations { get; set; }
 

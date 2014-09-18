@@ -1,8 +1,10 @@
 ﻿using GroupProjectRestaurangMVC01.Models;
+using GroupProjectRestaurangMVC01.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace GroupProjectRestaurangMVC01.Repository
 {
@@ -26,10 +28,22 @@ namespace GroupProjectRestaurangMVC01.Repository
             }
         }
 
-        public Reservation CreateReservation(Guid restaurantId, int tableId, DateTime date, string day, string customerName, string customerPhoneNumber, string ContactEmail)
+
+        public Reservation CreateReservation(ReservationViewModel viewModel)
         {
             Reservation reservation = new Reservation();
+            using (RestaurantProjectMVC01Entities db =  new RestaurantProjectMVC01Entities())
+            {
+                reservation.Day = viewModel.Day;
+                reservation.CustomerName = viewModel.CustomerName;
+                reservation.ContactEmail = viewModel.ContactEmail;
+                reservation.CustomerPhoneNumber = viewModel.CustomerPhoneNumber;
+                reservation.Date = viewModel.Date;
+                reservation.RestaurantId = viewModel.Restaurant.Id;
+                //reservation.TableId = viewModel.Restaurant.Tables.Where(c => 
+            }
 
+            return reservation;
         }
     }
 }
