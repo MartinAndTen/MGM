@@ -16,25 +16,23 @@ namespace GroupProjectRestaurangMVC01.Controllers
         private readonly ReservationRepository _reservationRepository = new ReservationRepository();
         private readonly RestaurantRepository _restaurantRepository = new RestaurantRepository();
 
-        public ActionResult Index(int? id)
+        public ActionResult Index(Guid? id)
         {
             ReservationViewModel viewModel = new ReservationViewModel();
             if (id.HasValue)
             {
-                var id2 = (int)id;
-                Reservation reservation;
-                reservation = _reservationRepository.GetReservationsByID(id2);
-                if (reservation != null)
-                {
-                    viewModel.Reservation = reservation;
-                }
+                Guid _id = (Guid)id;
+                Restaurant currentRestaurant = _restaurantRepository.GetRestaurantById(_id);
             }
-            else
-            {
-                viewModel.Reservations = _reservationRepository.GetAllReservationsToList();
-            }
-            
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(ReservationViewModel viewModel)
+        {
+            //Skicka till nästa partial view här på nått sätt
+            return View();
         }
 
         public ActionResult Create(Guid id)
@@ -49,9 +47,9 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ReservationViewModel model)
+        public ActionResult Create(ReservationViewModel viewModel)
         {
-            _reservationRepository.CreateReservation(model);
+            _reservationRepository.CreateReservation(viewModel);
             return View();
         }
     }
