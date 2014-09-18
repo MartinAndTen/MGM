@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using GroupProjectRestaurangMVC01.Models;
+using GroupProjectRestaurangMVC01.ViewModels;
 
 namespace GroupProjectRestaurangMVC01.Repository
 {
@@ -61,10 +62,10 @@ namespace GroupProjectRestaurangMVC01.Repository
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
                 Restaurant result = db.Restaurants.Include("ClosedForBookings")
-                        .Include("OpenForBookings")
-                        .Include("Reservations")
-                        .Include("Tables")
-                        .FirstOrDefault(c => c.Id.Equals(id));
+                    .Include("OpenForBookings")
+                    .Include("Reservations")
+                    .Include("Tables").Include("Tables.BookedTables").Include("Tables.Reservations")
+                    .FirstOrDefault(c => c.Id.Equals(id));
                 return result;
             }
         }
@@ -155,6 +156,26 @@ namespace GroupProjectRestaurangMVC01.Repository
             }
 
             return resultValue;
+        }
+
+        public RestaurantViewModel AddRestaurantToViewModel(Restaurant restaurantToEdit)
+        {
+            RestaurantViewModel viewModel = new RestaurantViewModel();
+            viewModel.Restaurant = restaurantToEdit;
+            viewModel.Name = restaurantToEdit.Name;
+            viewModel.Description = restaurantToEdit.Description;
+            viewModel.Address = restaurantToEdit.Address;
+            viewModel.Zipcode = restaurantToEdit.Zipcode;
+            viewModel.Phone = restaurantToEdit.Phone;
+            viewModel.Photo = restaurantToEdit.Photo;
+            viewModel.City = restaurantToEdit.City;
+            viewModel.TotalSeats = restaurantToEdit.TotalSeats;
+            viewModel.Capacity = restaurantToEdit.Capacity;
+            viewModel.MaxSeatPerBooking = restaurantToEdit.MaxSeatPerBooking;
+            viewModel.Email = restaurantToEdit.Email;
+            viewModel.Activated = restaurantToEdit.Activated;
+
+            return viewModel;
         }
     }
 }
