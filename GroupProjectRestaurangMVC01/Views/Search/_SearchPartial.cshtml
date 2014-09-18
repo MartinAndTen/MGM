@@ -1,14 +1,17 @@
-﻿@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
+﻿@using System.Web.UI.WebControls
+@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
 
 <h2>SearchResult</h2>
 <br/>
+
+
 @if (Model.Restaurants != null)
 {
 
     foreach (var restaurant in Model.Restaurants)
     {
         <div class="col-md-6">
-            <strong>@Html.ActionLink(@restaurant.Name, "Index", "Restaurant", new { id = restaurant.Id })</strong>
+            <strong>@Html.ActionLink(@restaurant.Name, "Index", "Restaurant", new {id = restaurant.Id})</strong>
             <div class="row">
                 <div class="col-md-6">
                     <img src="@restaurant.Photo" class="RestaurantImage" />
@@ -50,4 +53,11 @@
         </div>
 
     }
+    @ViewBag.Result
+    <br />
 }
+
+
+
+
+   
