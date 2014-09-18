@@ -4,7 +4,37 @@
 }
 
 <h2>Index</h2>
-@if (Model.Reservation != null)
+
+@using (Html.BeginForm("Index", "Reserveration", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    <div>@Model.Reservation.CustomerName</div>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-group col-md-7">
+        @Html.LabelFor(c => c.TotalGuests, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(c => c.TotalGuests, new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.TotalGuests)
+        </div>
+    </div>
+    
+    <div class="form-group col-md-7">
+        @Html.LabelFor(c => c.Date, new { @class = "col-md-3 control-label"})
+        <div>
+            @Html.TextBoxFor(c => c.Date, new { id = "date" })
+            @Html.ValidationMessageFor(c => c.Date)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Next" class="btn btn-info" />
+        </div>
+    </div>
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#date").datepicker({ dateFormat: 'yy/mm/dd' });
+    });
+</script>

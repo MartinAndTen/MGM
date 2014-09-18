@@ -28,11 +28,10 @@ namespace GroupProjectRestaurangMVC01.Repository
             }
         }
 
-
         public Reservation CreateReservation(ReservationViewModel viewModel)
         {
             Reservation reservation = new Reservation();
-            using (RestaurantProjectMVC01Entities db =  new RestaurantProjectMVC01Entities())
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
                 reservation.Day = viewModel.Day;
                 reservation.CustomerName = viewModel.CustomerName;
@@ -42,7 +41,6 @@ namespace GroupProjectRestaurangMVC01.Repository
                 reservation.RestaurantId = viewModel.Restaurant.Id;
                 //reservation.TableId = viewModel.Tables
             }
-
             return reservation;
         }
     }
