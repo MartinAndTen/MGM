@@ -40,7 +40,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                 reservation.CustomerPhoneNumber = viewModel.CustomerPhoneNumber;
                 reservation.Date = viewModel.Date;
                 reservation.RestaurantId = viewModel.Restaurant.Id;
-                //reservation.TableId = viewModel.Restaurant.Tables.Where(c => 
+                //reservation.TableId = viewModel.Tables
             }
 
             return reservation;

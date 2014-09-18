@@ -57,6 +57,15 @@ namespace GroupProjectRestaurangMVC01.Repository
             return returnValue;
         }
 
+        public List<Table> GetRestaurantTablesById(Guid id)
+        {
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                List<Table> tables = db.Tables.Include("BookedTables").Include("Reservations").Where(c => c.RestaurantId.Equals(id)).ToList();
+                return tables;
+            }
+        }
+
         public Restaurant GetRestaurantById(Guid id)
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())

@@ -15,6 +15,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
         // GET: /Booking/
         private readonly ReservationRepository _reservationRepository = new ReservationRepository();
         private readonly RestaurantRepository _restaurantRepository = new RestaurantRepository();
+
         public ActionResult Index(int? id)
         {
             ReservationViewModel viewModel = new ReservationViewModel();
@@ -40,7 +41,9 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             ReservationViewModel viewModel = new ReservationViewModel();
             Restaurant currentRestaurant = _restaurantRepository.GetRestaurantById(id);
+            List<Table> tables = _restaurantRepository.GetRestaurantTablesById(id);
             viewModel.Restaurant = currentRestaurant;
+            viewModel.Tables = tables;
             return View(viewModel);
         }
 
