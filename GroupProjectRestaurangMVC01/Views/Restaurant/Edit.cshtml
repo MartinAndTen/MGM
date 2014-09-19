@@ -20,7 +20,7 @@
             @Html.TextBoxFor(c => c.Email, new { @Value = @Model.Restaurant.Email, @class = "form-control" })
             @Html.ValidationMessageFor(c => c.Restaurant.Email)
         </div>
-        <img src="@Model.Restaurant.Photo" alt="RestaurantImage"/>
+        <img src="@Model.Restaurant.Photo" alt="RestaurantImage" class="RestaurantImage"/>
         <div class="form-group">
             <label>Change</label>
             @Html.LabelFor(c => c.Photo, new { @class = "control-label" })

@@ -25,11 +25,18 @@
                                   @Html.Partial("_LoginPartial")
                               </section>
                               <nav>
-                                  <ul id="menu">
-                                      <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                      <li>@Html.ActionLink("Restaurants", "Index", "Restaurant")</li>
-                                      <li>@Html.ActionLink("Search","Index","Search")</li>
-                                      <li>@Html.ActionLink("About", "About", "Home")</li>
+                                      <ul id="dropDownMenu">
+                                          <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                          <li>
+                                              @Html.ActionLink("Restaurants", "Index", "Restaurant")
+                                          <ul>
+                                              <li>@Html.ActionLink("Edit", "Create", "Restaurant")</li>
+                                              <li><a href="#">Time</a></li>
+                                              <li><a href="#">Tables</a></li>
+                                              <li><a href="#">Reservations</a></li>
+                                          </ul>
+                                      </li>
+                                      <li>@Html.ActionLink("Search", "Index", "Search")</li>
                                       <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                                       <li>@Html.ActionLink("User Agreements", "UserAgreements", "Home")</li>
                                   </ul>
