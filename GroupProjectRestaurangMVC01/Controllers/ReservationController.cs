@@ -44,8 +44,18 @@ namespace GroupProjectRestaurangMVC01.Controllers
             {
                 ReservationViewModel reservationViewModel = GetReservation();
                 Restaurant currentRestaurant = reservationViewModel.Restaurant;
+
                 reservationViewModel.Restaurant = currentRestaurant;
                 reservationViewModel.TotalGuests = firstPartReservation.TotalGuests;
+
+                if (currentRestaurant.MaxSeatPerBooking.HasValue)
+                {
+                    if (reservationViewModel.TotalGuests > currentRestaurant.MaxSeatPerBooking.Value)
+                    {
+                        
+                    }
+                }
+
                 reservationViewModel.Date = firstPartReservation.Date;
                 return View("SecondCreate");
             }
@@ -86,7 +96,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                         reservation.TotalGuests = reservationViewModel.TotalGuests;
                         reservation.RestaurantId = reservationViewModel.Restaurant.Id;
                         reservation.Date = reservationViewModel.Date;
-                        reservation.EndDate = reservationViewModel.EndDate.AddHours(1);
+                        reservation.EndDate = reservationViewModel.Date.AddHours(1);
 
                         db.Reservations.Add(reservation);
                         db.SaveChanges();
