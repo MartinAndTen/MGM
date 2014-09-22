@@ -4,15 +4,54 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@if(Model.Restaurant != null)
-{ 
-    @Model.Restaurant.Name
+@if (Model.Restaurant != null)
+{
+    <div class="col-md-6"><strong>@Model.Restaurant.Name</strong>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <img src="@Model.Restaurant.Photo" class="RestaurantImage" />
+            </div>
+            <div class="col-md-6 text-left">
+                <small>@Model.Restaurant.Description</small>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-5">
+                <table id="restaurantTable">
+                    <tr>
+                        <td><strong>Email:</strong></td>
+                        <td>@Model.Restaurant.Email</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phone:</strong></td>
+                        <td>@Model.Restaurant.Phone</td>
+                    </tr>
+                    <tr>
+                        <td><strong>City:</strong></td>
+                        <td>@Model.Restaurant.City</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Address:</strong></td>
+                        <td>@Model.Restaurant.Address</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ZipCode:</strong></td>
+                        <td>@Model.Restaurant.Zipcode</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
 }
 else
 {
     foreach (var restaurant in Model.Restaurants)
     {
-        <div class="col-md-6"><strong>@Html.ActionLink(@restaurant.Name,"Index", "Restaurant", new {id = restaurant.Id})</strong>
+        <div class="col-md-6"><strong>@Html.ActionLink(@restaurant.Name,"Index", "Restaurant", new {id = restaurant.Id},null)</strong>
             <div class="row" >
                 <div class="col-md-6">
                     <img src="@restaurant.Photo" class="RestaurantImage" />

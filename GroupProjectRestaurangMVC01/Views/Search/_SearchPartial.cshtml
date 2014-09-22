@@ -35,7 +35,7 @@
             {
                 <tr>
                     <td class="col-lg-1">
-                        <span style="font-size: 17px;">@Html.ActionLink(@restaurant.Name, "Index", "Restaurant",null, new { id = restaurant.Id })</span>
+                        <span style="font-size: 17px;">@Html.ActionLink(@restaurant.Name, "Index","Restaurant", new { id = restaurant.Id }, null)</span>
                     </td>
                     <td class="col-lg-1">
                         <img src="@restaurant.Photo" class="RestaurantImageSearch" />
