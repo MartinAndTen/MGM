@@ -10,8 +10,6 @@ namespace GroupProjectRestaurangMVC01.Repository
 {
     public class ReservationRepository
     {
-
-
         public Reservation GetReservationsByID(int id)
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
@@ -35,13 +33,12 @@ namespace GroupProjectRestaurangMVC01.Repository
             Reservation reservation = new Reservation();
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
-                //reservation.Day = viewModel.Day;
                 reservation.CustomerName = viewModel.CustomerName;
                 reservation.ContactEmail = viewModel.ContactEmail;
                 reservation.CustomerPhoneNumber = viewModel.CustomerPhoneNumber;
                 reservation.Date = viewModel.Date;
+                reservation.EndDate = viewModel.Date.AddHours(1);
                 reservation.RestaurantId = viewModel.Restaurant.Id;
-                //reservation.TableId = viewModel.Tables
             }
             return reservation;
         }
