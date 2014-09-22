@@ -409,6 +409,7 @@
     <Content Include="Views\Restaurant\Table.cshtml" />
     <Content Include="Views\Reservation\FirstCreate.cshtml" />
     <Content Include="Views\Reservation\SecondCreate.cshtml" />
+    <Content Include="Views\Emails\BookingEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,6 +6,33 @@
 <h2>SecondCreate</h2>
 @using (@Html.BeginForm("SecondCreate", "Reservation", FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-group col-md-7">
+        @Html.LabelFor(c => c.CustomerName, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(c => c.CustomerName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.CustomerName)
+        </div>
+    </div>
+
+    <div class="form-group col-md-7">
+        @Html.LabelFor(c => c.CustomerPhoneNumber, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(c => c.CustomerPhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.CustomerPhoneNumber)
+        </div>
+    </div>
+
+    <div class="form-group col-md-7">
+        @Html.LabelFor(c => c.ContactEmail, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(c => c.ContactEmail, new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.ContactEmail)
+        </div>
+    </div>
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" name="BtnPrevious" value="Previous" class="btn btn-default" />
