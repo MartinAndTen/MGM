@@ -10,6 +10,8 @@ namespace GroupProjectRestaurangMVC01.Repository
 {
     public class ReservationRepository
     {
+
+
         public Reservation GetReservationsByID(int id)
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
