@@ -1,8 +1,30 @@
-﻿
+﻿@model GroupProjectRestaurangMVC01.ViewModels.TableViewModel
 @{
     ViewBag.Title = "EditTable";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>EditTable</h2>
+<h2>Edit @Model.Table.TableName</h2>
 
+<div class="col-md-12">
+    @using (Html.BeginForm("EditTable", "Restaurant", FormMethod.Post, new { @class = "form-horizontal", id = Model.Table.Id }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="col-md-7">
+            <div class="form-group">
+                @Html.LabelFor(c => c.TableName, new { @class = "control-label" })
+                @Html.TextBoxFor(c => c.TableName, new { @Value= Model.Table.TableName,@class = "form-control" })
+                @Html.ValidationMessageFor(c => c.TableName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(c => c.Seats, new { @class = "control-label" })
+                @Html.TextBoxFor(c => c.Seats, new { @Value = Model.Table.Seats,@class = "form-control" })
+                @Html.ValidationMessageFor(c => c.Seats)
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-info col-md-12" />
+            </div>
+        </div>
+    }
+</div>

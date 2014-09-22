@@ -169,13 +169,24 @@ namespace GroupProjectRestaurangMVC01.Controllers
             viewModel.Table = _restaurantRepository.GetTableById(id);
             return View(viewModel);
         }
+        
+        [HttpPost]
+        [Authorize]
+        public ActionResult EditTable(int id, TableViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool returnValue = _restaurantRepository.EditTable(id, model);
+            }
+            return RedirectToAction("Table", "Restaurant");
+        }
 
         [Authorize]
         public ActionResult DeleteTable(int id)
         {
             var userId = WebSecurity.CurrentUserId;
             bool returnValue = _restaurantRepository.DeleteTable(userId, id);
-            return RedirectToAction("AddTable","Restaurant");
+            return RedirectToAction("Table","Restaurant");
         }
     }
 }

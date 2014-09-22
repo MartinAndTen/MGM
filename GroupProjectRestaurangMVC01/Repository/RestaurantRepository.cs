@@ -10,6 +10,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using GroupProjectRestaurangMVC01.Models;
 using GroupProjectRestaurangMVC01.ViewModels;
+using Microsoft.Ajax.Utilities;
 
 namespace GroupProjectRestaurangMVC01.Repository
 {
@@ -277,25 +278,42 @@ namespace GroupProjectRestaurangMVC01.Repository
             return returnValue;
         }
 
-        public bool DeleteTable(int userId, int id)
+        public bool EditTable(int tableId, TableViewModel table)
         {
             bool returnValue = false;
             try
             {
                 using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
-                    Table tableToDelete = new Table();
-                    if (tableToDelete != null)
-                    {
-                        db.Tables.Remove(tableToDelete);
-                        db.SaveChanges();
-                        returnValue = true;
-                    }
+                    Table tableToEdit = GetTableById(tableId);
+                    tableToEdit.Seats = table.Seats;
+                    tableToEdit.TableName = table.TableName;
+                    db.Tables.AddOrUpdate(tableToEdit);
+                    db.SaveChanges();
+                    returnValue = true;
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            return returnValue;
+        }
+
+
+        public bool DeleteTable(int userId, int id)
+        {
+            bool returnValue = false;
+
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                Table tableToDelete = GetTableById(id, db);
+                if (tableToDelete != null)
+                {
+                    db.Tables.Remove(tableToDelete);
+                    db.SaveChanges();
+                    returnValue = true;
+                }
             }
 
             return returnValue;
@@ -303,13 +321,24 @@ namespace GroupProjectRestaurangMVC01.Repository
         ///
         /// 
         /// Get Tables
-        public Table GetTableById(int id)
+        public Table GetTableById(int id, RestaurantProjectMVC01Entities db = null)
         {
-            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            if (db == null)
             {
-                Table table = db.Tables.Include("ReservedTables").FirstOrDefault(c => c.Id.Equals(id));
+                using (RestaurantProjectMVC01Entities db2 = new RestaurantProjectMVC01Entities())
+                {
+                    Table table =
+                        db2.Tables.Include("ReservedTables").Include("Restaurant").FirstOrDefault(c => c.Id.Equals(id));
+                    return table;
+                }
+            }
+            else
+            {
+                Table table = db.Tables.Include("ReservedTables").Include("Restaurant").FirstOrDefault(c => c.Id.Equals(id));
                 return table;
             }
+
+            
         }
     }
 }
