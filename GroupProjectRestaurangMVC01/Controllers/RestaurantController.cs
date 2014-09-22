@@ -165,7 +165,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
         [Authorize]
         public ActionResult EditTable(int table)
         {
-            
+            return View();
         }
     }
 }
