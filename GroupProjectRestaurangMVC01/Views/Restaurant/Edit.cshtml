@@ -52,11 +52,6 @@
             @Html.TextBoxFor(c => c.City, new { @Value = @Model.Restaurant.City, @class = "form-control" })
             @Html.ValidationMessageFor(c => c.City)
         </div>
-            @Html.LabelFor(c => c.TotalSeats, new { @class = "control-label" })
-        <div class="form-group">
-            @Html.TextBoxFor(c => c.TotalSeats, new { @Value = @Model.Restaurant.TotalSeats, @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.TotalSeats)
-        </div>
         <div class="form-group">
             @Html.LabelFor(c => c.Capacity, new { @class = "control-label" })
             @Html.TextBoxFor(c => c.Capacity, new { @Value = @Model.Restaurant.Capacity, @class = "form-control" })
