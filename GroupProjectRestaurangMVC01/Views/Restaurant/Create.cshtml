@@ -10,69 +10,68 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    <div class="form-group col-md-7">
-        @Html.LabelFor(c => c.Name, new { @class = "col-md-3 control-label"})
-        <div class="col-md-9">
-                @Html.TextBoxFor(c => c.Name, new { @Value = @Model.Name, @class = "form-control" })
+    <div class="col-md-7">
+        <div class="form-group">
+            @Html.LabelFor(c => c.Name, new { @class = "control-label"})
+            @Html.TextBoxFor(c => c.Name, new { @Value = @Model.Name, @class = "form-control" })
             @Html.ValidationMessageFor(c => c.Restaurant.Name)
         </div>
-        @Html.LabelFor(c => c.Email, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
+    <div class="form-group">
+        @Html.LabelFor(c => c.Email, new { @class = "control-label" })
             @Html.TextBoxFor(c => c.Email, new { @class = "form-control" })
             @Html.ValidationMessageFor(c => c.Restaurant.Email)
         </div>
-
-        @Html.LabelFor(c => c.Photo, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            <input type="file" name="file" id="file" class="form-control" />
-        </div>
-        @Html.LabelFor(c => c.Description, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextAreaFor(c => c.Description, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.Description)
-        </div>
-        @Html.LabelFor(c => c.Address, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.Address, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.Address)
-        </div>
-        @Html.LabelFor(c => c.Zipcode, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.Zipcode, new { @Value = "", @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.Zipcode)
-        </div>
-        @Html.LabelFor(c => c.Phone, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.Phone, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.Phone)
-        </div>
-        @Html.LabelFor(c => c.City, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.City, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.City)
-        </div>
-        @Html.LabelFor(c => c.TotalSeats, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.TotalSeats, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.TotalSeats)
-        </div>
-        @Html.LabelFor(c => c.Capacity, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.Capacity, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.Capacity)
-        </div>
-        @Html.LabelFor(c => c.MaxSeatPerBooking, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.MaxSeatPerBooking, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.MaxSeatPerBooking)
-        </div>
-        @Html.LabelFor(c => c.Activated, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
+    <div class="form-group">
+        @Html.LabelFor(c => c.Photo, new { @class = "control-label" })
+        <input type="file" name="file" id="file" class="form-control" />
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Description, new { @class = "control-label" })
+        @Html.TextAreaFor(c => c.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.Description)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Address, new { @class = "control-label" })
+        @Html.TextBoxFor(c => c.Address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.Address)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Zipcode, new { @class = "control-label" })
+        @Html.TextBoxFor(c => c.Zipcode, new { @Value = "", @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.Zipcode)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Phone, new { @class = "control-label" })
+        @Html.TextBoxFor(c => c.Phone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.Phone)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.City, new { @class = "control-label" })
+        @Html.TextBoxFor(c => c.City, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.City)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.TotalSeats, new { @class = "control-label" })
+        @Html.TextBoxFor(c => c.TotalSeats, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.TotalSeats)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Capacity, new { @class = "control-label" })
+        @Html.TextBoxFor(c => c.Capacity, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.Capacity)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.MaxSeatPerBooking, new { @class = "control-label" })
+        @Html.TextBoxFor(c => c.MaxSeatPerBooking, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.MaxSeatPerBooking)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Activated, new { @class = "control-label" })
             @Html.CheckBoxFor(c => c.Activated, new { @class = "checkbox" })
             @Html.ValidationMessageFor(c => c.Activated)
         </div>
-        <div class="col-md-3"></div>
-        <div class="col-md-9">
+       
+        <div class="form-group">
             <input type="submit" value="Create" class="btn btn-info col-md-12" />
         </div>
     </div>
