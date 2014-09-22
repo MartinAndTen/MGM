@@ -39,10 +39,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                     newRestaurant.Zipcode = zipcode;
                     newRestaurant.Phone = phone;
                     newRestaurant.City = city;
-                    if (totalSeats.HasValue)
-                    {
-                        newRestaurant.TotalSeats = totalSeats.Value;
-                    }
+                    newRestaurant.TotalSeats = 0;
                     if (capacity.HasValue)
                     {
                         newRestaurant.Capacity = capacity.Value;
