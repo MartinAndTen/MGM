@@ -151,7 +151,7 @@ namespace GroupProjectRestaurangMVC01.Repository
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
-                List<Table> tables = db.Tables.Include("BookedTables").Include("Reservations").Where(c => c.RestaurantId.Equals(id)).ToList();
+                List<Table> tables = db.Tables.Include("ReservedTables").Where(c => c.RestaurantId.Equals(id)).ToList();
                 return tables;
             }
         }
@@ -163,7 +163,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                 Restaurant result = db.Restaurants.Include("ClosedForBookings")
                     .Include("OpenForBookings")
                     .Include("Reservations")
-                    .Include("Tables").Include("Tables.BookedTables").Include("Tables.Reservations")
+                    .Include("Tables").Include("Tables.ReservedTables")
                     .FirstOrDefault(c => c.Id.Equals(id));
                 return result;
             }
@@ -176,8 +176,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                 Restaurant result = db.Restaurants.Include("ClosedForBookings")
                     .Include("OpenForBookings")
                     .Include("Reservations")
-                    .Include("Tables").Include("Tables.ReservedTables")
-                    .FirstOrDefault(c => c.UserId.Equals(id));
+                    .Include("Tables").Include("Tables.ReservedTables").FirstOrDefault(c => c.UserId.Equals(id));
                 return result;
             }
         }
@@ -189,7 +188,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                 List<Restaurant> result = db.Restaurants.Include("ClosedForBookings")
                     .Include("OpenForBookings")
                     .Include("Reservations")
-                    .Include("Tables").ToList();
+                    .Include("Tables").Include("Tables.ReservedTables").ToList();
                 return result;
             }
         }
