@@ -3,61 +3,115 @@
 
 <h2>SearchResult</h2>
 <br/>
-
-
 @if (Model.Restaurants != null)
 {
-
-    foreach (var restaurant in Model.Restaurants)
-    {
-        <div class="col-md-6">
-            <strong>@Html.ActionLink(@restaurant.Name, "Index", "Restaurant", new {id = restaurant.Id})</strong>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="@restaurant.Photo" class="RestaurantImage" />
-                </div>
-                <div class="col-md-6 text-left">
-                    <small>@restaurant.Description</small>
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col-md-5">
-                    <table id="restaurantTable">
-                        <tr>
-                            <td><strong>Email:</strong></td>
-                            <td>@restaurant.Email</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Phone:</strong></td>
-                            <td>@restaurant.Phone</td>
-                        </tr>
-                        <tr>
-                            <td><strong>City:</strong></td>
-                            <td>@restaurant.City</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Address:</strong></td>
-                            <td>@restaurant.Address</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ZipCode:</strong></td>
-                            <td>@restaurant.Zipcode</td>
-                        </tr>
-                    </table>
+    <div class="row"></div>
+    <div class="col-md-12">
+        <table class="table table-striped table-responsive table-condensed">
+            <tr>
+                <th>
+                    <h3 style="font-size:x-large"><span style="font-weight:bolder">Name</span></h3>
+                </th>
+                <th>
+                    <h3 style="font-size:x-large"><span style="font-weight:bolder">Photo</span></h3>
+                </th>
+                <th>
+                    <h3 style="font-size:x-large"><span style="font-weight:bolder">Description</span></h3>
+                </th>
+                <th>
+                    <h3 style="font-size:x-large"><span style="font-weight:bolder">Address</span></h3>
+                </th>
+                <th>
+                    <h3 style="font-size:x-large"><span style="font-weight:bolder">City</span></h3>
+                </th>
+                <th>
+                    <h3 style="font-size:x-large"><span style="font-weight:bolder">Book</span></h3>
+                </th>
+            </tr>
 
 
 
-                </div>
-            </div>
-        </div>
+            @foreach (var restaurant in Model.Restaurants)
+            {
+                <tr>
+                    <td class="col-lg-1">
+                        <span style="font-size: 17px;">@Html.ActionLink(@restaurant.Name, "Index","Restaurant", new { id = restaurant.Id }, null)</span>
+                    </td>
+                    <td class="col-lg-1">
+                        <img src="@restaurant.Photo" class="RestaurantImageSearch" />
+                    </td>
+                    <td class="col-lg-2">
+                        <span style="font-size: 17px;">@Html.DisplayFor(modelItem => restaurant.Description)</span>
+                    </td>
+                    <td class="col-lg-1">
+                        <span style="font-size: 17px;">@Html.DisplayFor(modelItem => restaurant.Address)</span>
+                    </td>
+                    <td class="col-lg-1">
+                        <span style="font-size: 17px;">@Html.DisplayFor(modelItem => restaurant.City)</span>
+                    </td>
+                    <td class="col-lg-3">
+                        <button type="button" class="btn btn-info col-lg-3" onclick="location.href='@Url.Action("Index", "Reservation", new { id = restaurant.Id })';return false;"><span style="margin-right: 5px; float:right;" class="glyphicon glyphicon-envelope"></span>Book</button>
 
+
+                    </td>
+                </tr>
+
+
+
+
+
+
+
+
+                @*<div class="col-md-6">
+                        <strong>@Html.ActionLink(@restaurant.Name, "Index", "Restaurant", null, new {id = restaurant.Id})</strong>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="@restaurant.Photo" class="RestaurantImageSearch" />
+                            </div>
+                            <div class="col-md-6 text-left">
+                                <small>@restaurant.Description</small>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-5">
+                                <table id="restaurantTable">
+                                    <tr>
+                                        <td><strong>Email:</strong></td>
+                                        <td>@restaurant.Email</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phone:</strong></td>
+                                        <td>@restaurant.Phone</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>City:</strong></td>
+                                        <td>@restaurant.City</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Address:</strong></td>
+                                        <td>@restaurant.Address</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>ZipCode:</strong></td>
+                                        <td>@restaurant.Zipcode</td>
+                                    </tr>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+                    </div>*@
+
+            }
+        </table>
+    </div>
+        @ViewBag.Result
+        <br />
     }
-    @ViewBag.Result
-    <br />
-}
 
 
 
 
-   

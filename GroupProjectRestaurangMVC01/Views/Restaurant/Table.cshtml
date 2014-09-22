@@ -1,0 +1,57 @@
+﻿@using GroupProjectRestaurangMVC01.Models
+@model GroupProjectRestaurangMVC01.ViewModels.TableViewModel
+
+@{
+    ViewBag.Title = "Table";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Table's</h2>
+<h3>@Model.Restaurant.Name</h3>
+<div class="col-md-12">
+    @using (Html.BeginForm("AddTable", "Restaurant", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="col-md-7">
+            <div class="form-group">
+                @Html.LabelFor(c => c.TableName, new { @class = "control-label" })
+                @Html.TextBoxFor(c => c.TableName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(c => c.TableName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(c => c.Seats, new { @class = "control-label" })
+                @Html.TextBoxFor(c => c.Seats, new { @class = "form-control" })
+                @Html.ValidationMessageFor(c => c.Seats)
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-info col-md-12" />
+            </div>
+        </div>
+    }
+</div>
+<div class="row"></div>
+<div class="col-md-12">
+    <h2>Current Table's</h2>
+    
+    <table>
+        <tr>
+            <td>Name/Nr</td>
+            <td>Seats</td>
+            <td>Edit/Delete</td>
+        </tr>
+        @foreach (var table in Model.Restaurant.Tables)
+        {
+            <tr>
+                <td>
+                    @table.TableName
+                </td>
+                <td>
+                    @table.Seats
+                </td>
+                <td>@Html.ActionLink("Edit","EditTable","Restaurant",null, new {id = table.Id})/Delete</td>
+                
+            </tr>
+        }
+    </table>
+</div>

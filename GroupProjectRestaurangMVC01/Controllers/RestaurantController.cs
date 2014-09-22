@@ -77,7 +77,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 }
                 else
                 {
-                    photo = "../../Assets/Images/800px-No_Image_Wide.png";
+                    photo = _restaurantRepository.DefaultNoImageLocation;
                 }
 
                 int userId = WebSecurity.CurrentUserId;
@@ -127,6 +127,45 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 }
             }
             return RedirectToAction("Index","Restaurant");
+        }
+        
+        
+        /// <summary>
+        /// Add/Edit/Delete Table Methods
+        /// </summary>
+        /// <returns></returns>
+
+        [Authorize]
+        public ActionResult Table()
+        {
+            TableViewModel viewModel = new TableViewModel();
+            if (Request.IsAuthenticated)
+            {
+                var userId = WebSecurity.CurrentUserId;
+                Restaurant currentRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
+
+                viewModel.Restaurant = currentRestaurant;
+
+            }
+
+            return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddTable(TableViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool returnValue = _restaurantRepository.CreateTable(WebSecurity.CurrentUserId,model);
+            }
+            return RedirectToAction("Table","Restaurant");
+        }
+
+        [Authorize]
+        public ActionResult EditTable(int table)
+        {
+            return View();
         }
     }
 }

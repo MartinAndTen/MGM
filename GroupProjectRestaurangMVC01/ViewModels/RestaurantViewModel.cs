@@ -67,5 +67,7 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         public string SearchName { get; set; }
 
         public string SearchCity { get; set; }
+
+        public string Result { get; set; }
     }
 }
