@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -249,7 +250,11 @@ namespace GroupProjectRestaurangMVC01.Repository
 
             return viewModel;
         }
-
+        ///
+        /// 
+        /// 
+        /// 
+        /// 
         //Table Create/Edit/Delete
         public bool CreateTable(int userId,TableViewModel table)
         {
@@ -274,6 +279,41 @@ namespace GroupProjectRestaurangMVC01.Repository
             }
 
             return returnValue;
+        }
+
+        public bool DeleteTable(int userId, int id)
+        {
+            bool returnValue = false;
+            try
+            {
+                using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                {
+                    Table tableToDelete = new Table();
+                    if (tableToDelete != null)
+                    {
+                        db.Tables.Remove(tableToDelete);
+                        db.SaveChanges();
+                        returnValue = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return returnValue;
+        }
+        ///
+        /// 
+        /// Get Tables
+        public Table GetTableById(int id)
+        {
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                Table table = db.Tables.Include("BookedTables").Include("Reservations").Include("Restaurant").FirstOrDefault(c => c.Id.Equals(id));
+                return table;
+            }
         }
     }
 }

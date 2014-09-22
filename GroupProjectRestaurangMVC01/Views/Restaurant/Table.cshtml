@@ -49,7 +49,8 @@
                 <td>
                     @table.Seats
                 </td>
-                <td>@Html.ActionLink("Edit","EditTable","Restaurant",null, new {id = table.Id})/Delete</td>
+                <td>@Html.ActionLink("Edit","EditTable","Restaurant",new {id = table.Id}, null)/
+                @Html.ActionLink("Delete", "DeleteTable", "Restaurant", new { id = table.Id }, new { onclick = "return confirm('Are you sure you wish to delete this article?');" })</td>
                 
             </tr>
         }

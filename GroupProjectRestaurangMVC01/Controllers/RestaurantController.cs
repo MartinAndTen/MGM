@@ -163,9 +163,19 @@ namespace GroupProjectRestaurangMVC01.Controllers
         }
 
         [Authorize]
-        public ActionResult EditTable(int table)
+        public ActionResult EditTable(int id)
         {
-            return View();
+            TableViewModel viewModel = new TableViewModel();
+            viewModel.Table = _restaurantRepository.GetTableById(id);
+            return View(viewModel);
+        }
+
+        [Authorize]
+        public ActionResult DeleteTable(int id)
+        {
+            var userId = WebSecurity.CurrentUserId;
+            bool returnValue = _restaurantRepository.DeleteTable(userId, id);
+            return RedirectToAction("AddTable","Restaurant");
         }
     }
 }
