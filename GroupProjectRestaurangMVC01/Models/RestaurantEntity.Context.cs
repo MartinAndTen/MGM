@@ -25,10 +25,10 @@ namespace GroupProjectRestaurangMVC01.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<BookedTable> BookedTables { get; set; }
         public DbSet<ClosedForBooking> ClosedForBookings { get; set; }
         public DbSet<OpenForBooking> OpenForBookings { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<ReservedTable> ReservedTables { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Table> Tables { get; set; }
     }

@@ -176,7 +176,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                 Restaurant result = db.Restaurants.Include("ClosedForBookings")
                     .Include("OpenForBookings")
                     .Include("Reservations")
-                    .Include("Tables").Include("Tables.BookedTables").Include("Tables.Reservations")
+                    .Include("Tables").Include("Tables.ReservedTables")
                     .FirstOrDefault(c => c.UserId.Equals(id));
                 return result;
             }
@@ -311,7 +311,7 @@ namespace GroupProjectRestaurangMVC01.Repository
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
-                Table table = db.Tables.Include("BookedTables").Include("Reservations").Include("Restaurant").FirstOrDefault(c => c.Id.Equals(id));
+                Table table = db.Tables.Include("ReservedTables").FirstOrDefault(c => c.Id.Equals(id));
                 return table;
             }
         }

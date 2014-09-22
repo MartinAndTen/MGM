@@ -14,18 +14,21 @@ namespace GroupProjectRestaurangMVC01.Models
     
     public partial class Reservation
     {
+        public Reservation()
+        {
+            this.ReservedTables = new HashSet<ReservedTable>();
+        }
+    
         public System.Guid RestaurantId { get; set; }
-        public int Id { get; set; }
-        public int TableId { get; set; }
-        public string Day { get; set; }
+        public System.Guid Id { get; set; }
         public System.DateTime Date { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
         public string CustomerName { get; set; }
         public string CustomerPhoneNumber { get; set; }
         public string ContactEmail { get; set; }
         public int TotalGuests { get; set; }
-        public bool ConfirmedBooking { get; set; }
     
         public virtual Restaurant Restaurant { get; set; }
-        public virtual Table Table { get; set; }
+        public virtual ICollection<ReservedTable> ReservedTables { get; set; }
     }
 }

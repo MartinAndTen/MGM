@@ -5,14 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RestaurantProjectMVC01Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="BookedTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="TableId" Type="int" Nullable="false" />
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="ClosedForBooking">
           <Key>
             <PropertyRef Name="Id" />
@@ -38,15 +30,23 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="RestaurantId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TableId" Type="int" Nullable="false" />
-          <Property Name="Day" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
           <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CustomerPhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ContactEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TotalGuests" Type="int" Nullable="false" />
-          <Property Name="ConfirmedBooking" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReservedTable">
+          <Key>
+            <PropertyRef Name="TableId" />
+            <PropertyRef Name="ReservationId" />
+          </Key>
+          <Property Name="TableId" Type="int" Nullable="false" />
+          <Property Name="ReservationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Restaurant">
           <Key>
@@ -77,18 +77,6 @@
           <Property Name="TableName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Seats" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__BookedTab__Table__44FF419A">
-          <End Role="Table" Type="Self.Table" Multiplicity="1" />
-          <End Role="BookedTable" Type="Self.BookedTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="BookedTable">
-              <PropertyRef Name="TableId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ClosedFor__Resta__4222D4EF">
           <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
           <End Role="ClosedForBooking" Type="Self.ClosedForBooking" Multiplicity="*" />
@@ -113,7 +101,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reservati__Resta__47DBAE45">
+        <Association Name="FK__Reservati__Resta__6754599E">
           <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
           <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,14 +113,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reservati__Table__48CFD27E">
+        <Association Name="FK__ReservedT__Reser__6D0D32F4">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="ReservedTable" Type="Self.ReservedTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReservedTable">
+              <PropertyRef Name="ReservationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReservedT__Table__6C190EBB">
           <End Role="Table" Type="Self.Table" Multiplicity="1" />
-          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <End Role="ReservedTable" Type="Self.ReservedTable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Table">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Reservation">
+            <Dependent Role="ReservedTable">
               <PropertyRef Name="TableId" />
             </Dependent>
           </ReferentialConstraint>
@@ -150,16 +150,12 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RestaurantProjectMVC01ModelStoreContainer">
-          <EntitySet Name="BookedTable" EntityType="Self.BookedTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClosedForBooking" EntityType="Self.ClosedForBooking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OpenForBooking" EntityType="Self.OpenForBooking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReservedTable" EntityType="Self.ReservedTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__BookedTab__Table__44FF419A" Association="Self.FK__BookedTab__Table__44FF419A">
-            <End Role="Table" EntitySet="Table" />
-            <End Role="BookedTable" EntitySet="BookedTable" />
-          </AssociationSet>
           <AssociationSet Name="FK__ClosedFor__Resta__4222D4EF" Association="Self.FK__ClosedFor__Resta__4222D4EF">
             <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="ClosedForBooking" EntitySet="ClosedForBooking" />
@@ -168,13 +164,17 @@
             <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="OpenForBooking" EntitySet="OpenForBooking" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reservati__Resta__47DBAE45" Association="Self.FK__Reservati__Resta__47DBAE45">
+          <AssociationSet Name="FK__Reservati__Resta__6754599E" Association="Self.FK__Reservati__Resta__6754599E">
             <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="Reservation" EntitySet="Reservation" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reservati__Table__48CFD27E" Association="Self.FK__Reservati__Table__48CFD27E">
-            <End Role="Table" EntitySet="Table" />
+          <AssociationSet Name="FK__ReservedT__Reser__6D0D32F4" Association="Self.FK__ReservedT__Reser__6D0D32F4">
             <End Role="Reservation" EntitySet="Reservation" />
+            <End Role="ReservedTable" EntitySet="ReservedTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReservedT__Table__6C190EBB" Association="Self.FK__ReservedT__Table__6C190EBB">
+            <End Role="Table" EntitySet="Table" />
+            <End Role="ReservedTable" EntitySet="ReservedTable" />
           </AssociationSet>
           <AssociationSet Name="FK__Table__Restauran__3C69FB99" Association="Self.FK__Table__Restauran__3C69FB99">
             <End Role="Restaurant" EntitySet="Restaurant" />
@@ -186,16 +186,12 @@
     <edmx:ConceptualModels>
       <Schema Namespace="RestaurantProjectMVC01Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="RestaurantProjectMVC01Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BookedTables" EntityType="RestaurantProjectMVC01Model.BookedTable" />
           <EntitySet Name="ClosedForBookings" EntityType="RestaurantProjectMVC01Model.ClosedForBooking" />
           <EntitySet Name="OpenForBookings" EntityType="RestaurantProjectMVC01Model.OpenForBooking" />
           <EntitySet Name="Reservations" EntityType="RestaurantProjectMVC01Model.Reservation" />
+          <EntitySet Name="ReservedTables" EntityType="RestaurantProjectMVC01Model.ReservedTable" />
           <EntitySet Name="Restaurants" EntityType="RestaurantProjectMVC01Model.Restaurant" />
           <EntitySet Name="Tables" EntityType="RestaurantProjectMVC01Model.Table" />
-          <AssociationSet Name="FK__BookedTab__Table__44FF419A" Association="RestaurantProjectMVC01Model.FK__BookedTab__Table__44FF419A">
-            <End Role="Table" EntitySet="Tables" />
-            <End Role="BookedTable" EntitySet="BookedTables" />
-          </AssociationSet>
           <AssociationSet Name="FK__ClosedFor__Resta__4222D4EF" Association="RestaurantProjectMVC01Model.FK__ClosedFor__Resta__4222D4EF">
             <End Role="Restaurant" EntitySet="Restaurants" />
             <End Role="ClosedForBooking" EntitySet="ClosedForBookings" />
@@ -204,28 +200,23 @@
             <End Role="Restaurant" EntitySet="Restaurants" />
             <End Role="OpenForBooking" EntitySet="OpenForBookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reservati__Resta__47DBAE45" Association="RestaurantProjectMVC01Model.FK__Reservati__Resta__47DBAE45">
+          <AssociationSet Name="FK__Reservati__Resta__6754599E" Association="RestaurantProjectMVC01Model.FK__Reservati__Resta__6754599E">
             <End Role="Restaurant" EntitySet="Restaurants" />
             <End Role="Reservation" EntitySet="Reservations" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reservati__Table__48CFD27E" Association="RestaurantProjectMVC01Model.FK__Reservati__Table__48CFD27E">
-            <End Role="Table" EntitySet="Tables" />
+          <AssociationSet Name="FK__ReservedT__Reser__6D0D32F4" Association="RestaurantProjectMVC01Model.FK__ReservedT__Reser__6D0D32F4">
             <End Role="Reservation" EntitySet="Reservations" />
+            <End Role="ReservedTable" EntitySet="ReservedTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReservedT__Table__6C190EBB" Association="RestaurantProjectMVC01Model.FK__ReservedT__Table__6C190EBB">
+            <End Role="Table" EntitySet="Tables" />
+            <End Role="ReservedTable" EntitySet="ReservedTables" />
           </AssociationSet>
           <AssociationSet Name="FK__Table__Restauran__3C69FB99" Association="RestaurantProjectMVC01Model.FK__Table__Restauran__3C69FB99">
             <End Role="Restaurant" EntitySet="Restaurants" />
             <End Role="Table" EntitySet="Tables" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="BookedTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="TableId" Type="Int32" Nullable="false" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Table" Relationship="RestaurantProjectMVC01Model.FK__BookedTab__Table__44FF419A" FromRole="BookedTable" ToRole="Table" />
-        </EntityType>
         <EntityType Name="ClosedForBooking">
           <Key>
             <PropertyRef Name="Id" />
@@ -253,17 +244,27 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="RestaurantId" Type="Guid" Nullable="false" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TableId" Type="Int32" Nullable="false" />
-          <Property Name="Day" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CustomerPhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ContactEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TotalGuests" Type="Int32" Nullable="false" />
-          <Property Name="ConfirmedBooking" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Restaurant" Relationship="RestaurantProjectMVC01Model.FK__Reservati__Resta__47DBAE45" FromRole="Reservation" ToRole="Restaurant" />
-          <NavigationProperty Name="Table" Relationship="RestaurantProjectMVC01Model.FK__Reservati__Table__48CFD27E" FromRole="Reservation" ToRole="Table" />
+          <NavigationProperty Name="Restaurant" Relationship="RestaurantProjectMVC01Model.FK__Reservati__Resta__6754599E" FromRole="Reservation" ToRole="Restaurant" />
+          <NavigationProperty Name="ReservedTables" Relationship="RestaurantProjectMVC01Model.FK__ReservedT__Reser__6D0D32F4" FromRole="Reservation" ToRole="ReservedTable" />
+        </EntityType>
+        <EntityType Name="ReservedTable">
+          <Key>
+            <PropertyRef Name="TableId" />
+            <PropertyRef Name="ReservationId" />
+          </Key>
+          <Property Name="TableId" Type="Int32" Nullable="false" />
+          <Property Name="ReservationId" Type="Guid" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Reservation" Relationship="RestaurantProjectMVC01Model.FK__ReservedT__Reser__6D0D32F4" FromRole="ReservedTable" ToRole="Reservation" />
+          <NavigationProperty Name="Table" Relationship="RestaurantProjectMVC01Model.FK__ReservedT__Table__6C190EBB" FromRole="ReservedTable" ToRole="Table" />
         </EntityType>
         <EntityType Name="Restaurant">
           <Key>
@@ -286,7 +287,7 @@
           <Property Name="Activated" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ClosedForBookings" Relationship="RestaurantProjectMVC01Model.FK__ClosedFor__Resta__4222D4EF" FromRole="Restaurant" ToRole="ClosedForBooking" />
           <NavigationProperty Name="OpenForBookings" Relationship="RestaurantProjectMVC01Model.FK__OpenForBo__Resta__3F466844" FromRole="Restaurant" ToRole="OpenForBooking" />
-          <NavigationProperty Name="Reservations" Relationship="RestaurantProjectMVC01Model.FK__Reservati__Resta__47DBAE45" FromRole="Restaurant" ToRole="Reservation" />
+          <NavigationProperty Name="Reservations" Relationship="RestaurantProjectMVC01Model.FK__Reservati__Resta__6754599E" FromRole="Restaurant" ToRole="Reservation" />
           <NavigationProperty Name="Tables" Relationship="RestaurantProjectMVC01Model.FK__Table__Restauran__3C69FB99" FromRole="Restaurant" ToRole="Table" />
         </EntityType>
         <EntityType Name="Table">
@@ -297,22 +298,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TableName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Seats" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BookedTables" Relationship="RestaurantProjectMVC01Model.FK__BookedTab__Table__44FF419A" FromRole="Table" ToRole="BookedTable" />
-          <NavigationProperty Name="Reservations" Relationship="RestaurantProjectMVC01Model.FK__Reservati__Table__48CFD27E" FromRole="Table" ToRole="Reservation" />
+          <NavigationProperty Name="ReservedTables" Relationship="RestaurantProjectMVC01Model.FK__ReservedT__Table__6C190EBB" FromRole="Table" ToRole="ReservedTable" />
           <NavigationProperty Name="Restaurant" Relationship="RestaurantProjectMVC01Model.FK__Table__Restauran__3C69FB99" FromRole="Table" ToRole="Restaurant" />
         </EntityType>
-        <Association Name="FK__BookedTab__Table__44FF419A">
-          <End Type="RestaurantProjectMVC01Model.Table" Role="Table" Multiplicity="1" />
-          <End Type="RestaurantProjectMVC01Model.BookedTable" Role="BookedTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="BookedTable">
-              <PropertyRef Name="TableId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ClosedFor__Resta__4222D4EF">
           <End Type="RestaurantProjectMVC01Model.Restaurant" Role="Restaurant" Multiplicity="1" />
           <End Type="RestaurantProjectMVC01Model.ClosedForBooking" Role="ClosedForBooking" Multiplicity="*" />
@@ -337,7 +325,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reservati__Resta__47DBAE45">
+        <Association Name="FK__Reservati__Resta__6754599E">
           <End Type="RestaurantProjectMVC01Model.Restaurant" Role="Restaurant" Multiplicity="1" />
           <End Type="RestaurantProjectMVC01Model.Reservation" Role="Reservation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -349,14 +337,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reservati__Table__48CFD27E">
+        <Association Name="FK__ReservedT__Reser__6D0D32F4">
+          <End Type="RestaurantProjectMVC01Model.Reservation" Role="Reservation" Multiplicity="1" />
+          <End Type="RestaurantProjectMVC01Model.ReservedTable" Role="ReservedTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReservedTable">
+              <PropertyRef Name="ReservationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReservedT__Table__6C190EBB">
           <End Type="RestaurantProjectMVC01Model.Table" Role="Table" Multiplicity="1" />
-          <End Type="RestaurantProjectMVC01Model.Reservation" Role="Reservation" Multiplicity="*" />
+          <End Type="RestaurantProjectMVC01Model.ReservedTable" Role="ReservedTable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Table">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Reservation">
+            <Dependent Role="ReservedTable">
               <PropertyRef Name="TableId" />
             </Dependent>
           </ReferentialConstraint>
@@ -373,21 +373,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="RestaurantProjectMVC01ModelStoreContainer" CdmEntityContainer="RestaurantProjectMVC01Entities">
-          <EntitySetMapping Name="BookedTables">
-            <EntityTypeMapping TypeName="RestaurantProjectMVC01Model.BookedTable">
-              <MappingFragment StoreEntitySet="BookedTable">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TableId" ColumnName="TableId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ClosedForBookings">
             <EntityTypeMapping TypeName="RestaurantProjectMVC01Model.ClosedForBooking">
               <MappingFragment StoreEntitySet="ClosedForBooking">
@@ -413,16 +404,24 @@
           <EntitySetMapping Name="Reservations">
             <EntityTypeMapping TypeName="RestaurantProjectMVC01Model.Reservation">
               <MappingFragment StoreEntitySet="Reservation">
-                <ScalarProperty Name="ConfirmedBooking" ColumnName="ConfirmedBooking" />
                 <ScalarProperty Name="TotalGuests" ColumnName="TotalGuests" />
                 <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
                 <ScalarProperty Name="CustomerPhoneNumber" ColumnName="CustomerPhoneNumber" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Day" ColumnName="Day" />
-                <ScalarProperty Name="TableId" ColumnName="TableId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReservedTables">
+            <EntityTypeMapping TypeName="RestaurantProjectMVC01Model.ReservedTable">
+              <MappingFragment StoreEntitySet="ReservedTable">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
+                <ScalarProperty Name="TableId" ColumnName="TableId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

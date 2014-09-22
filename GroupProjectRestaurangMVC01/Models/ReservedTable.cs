@@ -12,12 +12,14 @@ namespace GroupProjectRestaurangMVC01.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BookedTable
+    public partial class ReservedTable
     {
         public int TableId { get; set; }
-        public int Id { get; set; }
-        public System.DateTime Date { get; set; }
+        public System.Guid ReservationId { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
     
+        public virtual Reservation Reservation { get; set; }
         public virtual Table Table { get; set; }
     }
 }

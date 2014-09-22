@@ -106,11 +106,11 @@ namespace GroupProjectRestaurangMVC01.Controllers
                         //reservation.Restaurant = reservationViewModel.Restaurant;
                         reservation.TotalGuests = reservationViewModel.TotalGuests;
                         reservation.RestaurantId = reservationViewModel.Restaurant.Id;
-                        reservation.TableId = 2;
+                        //reservation.TableId = 2;
 
                         //2 onödiga egenskaper?
-                        reservation.Day = "x";
-                        reservation.ConfirmedBooking = true;
+                        //reservation.Day = "x";
+                        //reservation.ConfirmedBooking = true;
                         db.Reservations.Add(reservation);
                         db.SaveChanges();
                     }

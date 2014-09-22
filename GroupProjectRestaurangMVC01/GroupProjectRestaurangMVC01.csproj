@@ -213,9 +213,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\BookedTable.cs">
-      <DependentUpon>RestaurantEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ClosedForBooking.cs">
       <DependentUpon>RestaurantEntity.tt</DependentUpon>
     </Compile>
@@ -223,6 +220,9 @@
       <DependentUpon>RestaurantEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Reservation.cs">
+      <DependentUpon>RestaurantEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReservedTable.cs">
       <DependentUpon>RestaurantEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Restaurant.cs">

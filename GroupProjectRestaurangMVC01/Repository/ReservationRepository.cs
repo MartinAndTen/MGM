@@ -35,7 +35,7 @@ namespace GroupProjectRestaurangMVC01.Repository
             Reservation reservation = new Reservation();
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
-                reservation.Day = viewModel.Day;
+                //reservation.Day = viewModel.Day;
                 reservation.CustomerName = viewModel.CustomerName;
                 reservation.ContactEmail = viewModel.ContactEmail;
                 reservation.CustomerPhoneNumber = viewModel.CustomerPhoneNumber;

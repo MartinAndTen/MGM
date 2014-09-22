@@ -16,8 +16,7 @@ namespace GroupProjectRestaurangMVC01.Models
     {
         public Table()
         {
-            this.BookedTables = new HashSet<BookedTable>();
-            this.Reservations = new HashSet<Reservation>();
+            this.ReservedTables = new HashSet<ReservedTable>();
         }
     
         public System.Guid RestaurantId { get; set; }
@@ -25,8 +24,7 @@ namespace GroupProjectRestaurangMVC01.Models
         public string TableName { get; set; }
         public int Seats { get; set; }
     
-        public virtual ICollection<BookedTable> BookedTables { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual ICollection<ReservedTable> ReservedTables { get; set; }
         public virtual Restaurant Restaurant { get; set; }
     }
 }
