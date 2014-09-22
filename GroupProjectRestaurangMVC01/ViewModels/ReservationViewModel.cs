@@ -14,12 +14,12 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         public List<Reservation> Reservations { get; set; }
         public List<Table> Tables { get; set; }
 
-        //[Key]
-        //public int id { get; set; }
-
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{yy/mm/dd}")]
         [Required(ErrorMessage = "A date is required")]
         public DateTime Date { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
 
         public string Day { get; set; }
         [Display(Name = "Name")]
