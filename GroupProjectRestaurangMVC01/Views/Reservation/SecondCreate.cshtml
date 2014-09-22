@@ -1,0 +1,15 @@
+﻿@model GroupProjectRestaurangMVC01.ViewModels.ReservationViewModel
+@{
+    ViewBag.Title = "SecondCreate";
+}
+
+<h2>SecondCreate</h2>
+@using (@Html.BeginForm("SecondCreate", "Reservation", FormMethod.Post))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="BtnPrevious" value="Previous" class="btn btn-default" />
+            <input type="submit" name="BtnNext" value="Finish" class="btn btn-default" />
+        </div>
+    </div>
+}
