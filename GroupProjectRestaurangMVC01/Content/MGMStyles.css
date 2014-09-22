@@ -167,3 +167,7 @@ ul#menu {
 #dropDownMenu li:hover ul {
     display: block;
 }
+
+.table {
+    width: 100% !important;
+}
