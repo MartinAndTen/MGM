@@ -120,10 +120,10 @@ namespace GroupProjectRestaurangMVC01.Repository
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
                 Restaurant result = db.Restaurants.Include("ClosedForBookings")
-                        .Include("OpenForBookings")
-                        .Include("Reservations")
-                        .Include("Tables")
-                        .FirstOrDefault(c => c.UserId.Equals(id));
+                    .Include("OpenForBookings")
+                    .Include("Reservations")
+                    .Include("Tables").Include("Tables.BookedTables").Include("Tables.Reservations")
+                    .FirstOrDefault(c => c.UserId.Equals(id));
                 return result;
             }
         }

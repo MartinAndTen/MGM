@@ -20,7 +20,7 @@
             @Html.TextBoxFor(c => c.Email, new { @Value = @Model.Restaurant.Email, @class = "form-control" })
             @Html.ValidationMessageFor(c => c.Restaurant.Email)
         </div>
-        <img src="@Model.Restaurant.Photo" alt="RestaurantImage"/>
+        <img src="@Model.Restaurant.Photo" alt="RestaurantImage" class="RestaurantImage"/>
         <div class="form-group">
             <label>Change</label>
             @Html.LabelFor(c => c.Photo, new { @class = "control-label" })
@@ -77,12 +77,10 @@
             {
                 @Html.CheckBoxFor(c => c.Activated, new { @class = "checkbox"})
             }
-            @*@Html.CheckBoxFor(c => c.Activated, new { @Value = @Model.Restaurant.Activated, @class = "checkbox" })*@
             @Html.ValidationMessageFor(c => c.Activated)
         </div>
-        <div class="col-md-3"></div>
-        <div class="col-md-9">
-            <input type="submit" value="Create" class="btn btn-info col-md-12" />
+        <div class="form-group">
+            <input type="submit" value="Edit" class="btn btn-info col-md-12" />
         </div>
     </div>
 }

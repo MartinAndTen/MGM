@@ -109,6 +109,14 @@ ul#menu {
     margin-right: auto;
 }
 
+.RestaurantImageSearch {
+    width: 150px;
+    height: auto;
+    display: block;
+    margin-left: 0;
+    margin-right: auto;
+}
+
 #restaurantTable {
     width: 100%;
     margin: 0;
@@ -118,4 +126,44 @@ ul#menu {
     vertical-align: central !important;
     display: inline-block !important;
     line-height: normal !important;
+}
+
+/*//DropDownMenu//*/
+#dropDownMenu {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+#dropDownMenu li{
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 0;
+    position: relative;
+    height: 20px;
+    width: 100px;
+}
+#dropDownMenu li:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+#dropDownMenu li a {
+    text-decoration: none;
+}
+#dropDownMenu ul {
+    background: rgba(255, 255, 255, 0.5);
+    display: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 20px;
+    left: -1px;
+    z-index: 500;
+}
+#dropDownMenu ul {
+    position: absolute;
+}
+
+#dropDownMenu li:hover ul {
+    display: block;
 }

@@ -94,16 +94,18 @@ namespace GroupProjectRestaurangMVC01.Controllers
         }
 
         [Authorize]
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(Guid? id)
         {
-            RestaurantViewModel viewModel = new RestaurantViewModel();
-            if (Request.IsAuthenticated)
-            {
-                int userId = WebSecurity.CurrentUserId;
-                Restaurant restaurantToEdit = _restaurantRepository.GetRestaurantByUserId(userId);
-                viewModel = _restaurantRepository.AddRestaurantToViewModel(restaurantToEdit);
-            }
-            return View(viewModel);
+           
+                RestaurantViewModel viewModel = new RestaurantViewModel();
+                if (Request.IsAuthenticated)
+                {
+                    int userId = WebSecurity.CurrentUserId;
+                    Restaurant restaurantToEdit = _restaurantRepository.GetRestaurantByUserId(userId);
+                    viewModel = _restaurantRepository.AddRestaurantToViewModel(restaurantToEdit);
+                }
+                return View(viewModel);
+            
         }
 
         [Authorize]
