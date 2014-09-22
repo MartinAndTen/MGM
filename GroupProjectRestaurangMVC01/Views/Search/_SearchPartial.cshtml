@@ -22,6 +22,9 @@
                     <h3 style="font-size:x-large"><span style="font-weight:bolder">Address</span></h3>
                 </th>
                 <th>
+                    <h3 style="font-size:x-large"><span style="font-weight:bolder">City</span></h3>
+                </th>
+                <th>
                     <h3 style="font-size:x-large"><span style="font-weight:bolder">Book</span></h3>
                 </th>
             </tr>
@@ -43,8 +46,11 @@
                     <td class="col-lg-1">
                         <span style="font-size: 17px;">@Html.DisplayFor(modelItem => restaurant.Address)</span>
                     </td>
+                    <td class="col-lg-1">
+                        <span style="font-size: 17px;">@Html.DisplayFor(modelItem => restaurant.City)</span>
+                    </td>
                     <td class="col-lg-3">
-                        <button type="button" class="btn btn-warning col-lg-3" onclick="location.href='@Url.Action("Index", "Reservation", new { id = restaurant.Id })';return false;"><span style="margin-right: 5px; float:right;" class="glyphicon glyphicon-pencil"></span>Book</button>
+                        <button type="button" class="btn btn-info col-lg-3" onclick="location.href='@Url.Action("Index", "Reservation", new { id = restaurant.Id })';return false;"><span style="margin-right: 5px; float:right;" class="glyphicon glyphicon-envelope"></span>Book</button>
 
 
                     </td>
