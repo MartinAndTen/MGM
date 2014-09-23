@@ -65,9 +65,14 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             ReservationViewModel reservationViewModel = GetReservation();
             Restaurant currentRestaurant = reservationViewModel.Restaurant;
+            TimeSpan openHours;
+            TimeSpan openingTime;
+            DateTime closeningTime;
 
+            string dayOfWeek = reservationViewModel.Date.DayOfWeek.ToString();
 
-            TimeSpan buttonShowTime = new TimeSpan(0, 30, 0);
+            var apa = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
+            
 
             if (BtnPrevious != null)
             {
