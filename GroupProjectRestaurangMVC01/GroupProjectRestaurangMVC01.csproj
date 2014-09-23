@@ -411,6 +411,8 @@
     <Content Include="Views\Emails\BookingEmail.cshtml" />
     <Content Include="Views\Restaurant\EditTable.cshtml" />
     <Content Include="Views\Restaurant\Reservations.cshtml" />
+    <Content Include="Views\Restaurant\OpenForBooking.cshtml" />
+    <Content Include="Views\Restaurant\ClosedForBooking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
