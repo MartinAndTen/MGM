@@ -188,5 +188,21 @@ namespace GroupProjectRestaurangMVC01.Controllers
             bool returnValue = _restaurantRepository.DeleteTable(userId, id);
             return RedirectToAction("Table","Restaurant");
         }
+
+        [Authorize]
+        public ActionResult Reservations()
+        {
+            RestaurantViewModel viewModel = new RestaurantViewModel();
+            if (Request.IsAuthenticated)
+            {
+                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(WebSecurity.CurrentUserId);
+                if (userRestaurant != null)
+                {
+                    viewModel.Restaurant = userRestaurant;
+                }
+            }
+
+            return View(viewModel);
+        }
     }
 }
