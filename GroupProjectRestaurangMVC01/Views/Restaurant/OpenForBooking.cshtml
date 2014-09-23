@@ -5,5 +5,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>OpenForBooking</h2>
+<h2>OpeningHours</h2>
+<div class="col-md-12">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="col-md-7">
+            <div class="form-group">
+                @Html.LabelFor(c => c.Restaurant.OpenForBookings)
+                @Html.EnumDropDownListFor(c => c.WeekDay)
+            </div>
+        </div>
 
+    }
+</div>
