@@ -31,28 +31,29 @@
     }
 </div>
 <div class="row"></div>
-<div class="col-md-12">
+<div class="col-md-7">
     <h2>Current Table's</h2>
     
-    <table>
+    <table class="table table-striped table-responsive table-condensed">
         <tr>
-            <td>Name/Nr</td>
-            <td>Seats</td>
-            <td>Edit/Delete</td>
+            <th>Name/Nr</th>
+            <th>Seats</th>
+            <th>Edit/Delete</th>
         </tr>
         @foreach (var table in Model.Restaurant.Tables)
         {
             <tr>
-                <td>
+                <td class="col-lg-4">
                     @table.TableName
                 </td>
-                <td>
+                <td class="col-lg-4">
                     @table.Seats
                 </td>
-                <td>@Html.ActionLink("Edit","EditTable","Restaurant",new {id = table.Id}, null)/
-                @Html.ActionLink("Delete", "DeleteTable", "Restaurant", new { id = table.Id }, new { onclick = "return confirm('Are you sure you wish to delete this article?');" })</td>
-                
-            </tr>
+                <td class="col-lg-4">
+                    @Html.ActionLink("Edit", "EditTable", "Restaurant", new { id = table.Id }, null)/
+                    @Html.ActionLink("Delete", "DeleteTable", "Restaurant", new { id = table.Id }, new { onclick = "return confirm('Are you sure you wish to delete this table?');" })
+                </td>
+        </tr>
         }
     </table>
 </div>
