@@ -176,7 +176,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool returnValue = _restaurantRepository.EditTable(id, model);
+                bool returnValue = _restaurantRepository.EditTable(WebSecurity.CurrentUserId,id, model);
             }
             return RedirectToAction("Table", "Restaurant");
         }
