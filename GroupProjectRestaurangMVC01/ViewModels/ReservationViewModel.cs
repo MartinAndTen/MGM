@@ -5,7 +5,6 @@ using System.Web;
 using GroupProjectRestaurangMVC01.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using GroupProjectRestaurangMVC01.Validation;
 
 namespace GroupProjectRestaurangMVC01.ViewModels
 {

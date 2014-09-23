@@ -50,7 +50,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
                     if (reservationViewModel.TotalGuests > currentRestaurant.MaxSeatPerBooking.Value)
                     {
                         firstPartReservation.Result = currentRestaurant.Name + " allows a maximum of " + currentRestaurant.MaxSeatPerBooking.ToString() + " persons per reservation";
-                        
                         return View("FirstCreate", firstPartReservation);
                     }
                 }
@@ -65,6 +64,11 @@ namespace GroupProjectRestaurangMVC01.Controllers
         public ActionResult SecondCreate(ReservationViewModel secondPartReservation, string BtnPrevious, string BtnNext, Guid? id)
         {
             ReservationViewModel reservationViewModel = GetReservation();
+            Restaurant currentRestaurant = reservationViewModel.Restaurant;
+
+
+            TimeSpan buttonShowTime = new TimeSpan(0, 30, 0);
+
             if (BtnPrevious != null)
             {
                 ReservationViewModel firstPartViewModel = new ReservationViewModel();
@@ -76,8 +80,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
             }
             if (BtnNext != null)
             {
-                //reservationViewModel.TotalGuests = reservationViewModel.TotalGuests;
-                //reservationViewModel.Date = reservationViewModel.Date;
                 reservationViewModel.CustomerName = secondPartReservation.CustomerName;
                 reservationViewModel.CustomerPhoneNumber = secondPartReservation.CustomerPhoneNumber;
                 reservationViewModel.ContactEmail = secondPartReservation.ContactEmail;
