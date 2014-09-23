@@ -1,4 +1,5 @@
-﻿@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
+﻿@using GroupProjectRestaurangMVC01.ViewModels
+@model GroupProjectRestaurangMVC01.ViewModels.RestaurantViewModel
 
 @{
     ViewBag.Title = "ClosedForBooking";
@@ -7,4 +8,4 @@
 
 <h2>ClosedForBooking</h2>
 
-@*@Html.DropDownListFor(c => c.Day, Model.Day.ToSelectList())*@
+@Html.EditorFor(c => c.WeekDay)

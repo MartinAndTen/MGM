@@ -84,11 +84,11 @@ namespace GroupProjectRestaurangMVC01.ViewModels
 
 
         
-        public Days Day { get; set; }
+        public Day WeekDay { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
-        public enum Days
+        public enum Day
         {
             Monday,
             Tuesday,
