@@ -9,6 +9,11 @@ namespace GroupProjectRestaurangMVC01.ViewModels
 {
     public class RestaurantViewModel
     {
+
+        /// <summary>
+        /// Restaurant Props
+        /// </summary>
+
         public Restaurant Restaurant { get; set; }
 
         [Required(ErrorMessage = "Restaurant name is required")]
@@ -64,6 +69,11 @@ namespace GroupProjectRestaurangMVC01.ViewModels
 
         public List<Restaurant> Restaurants { get; set; }
 
+
+        /// <summary>
+        /// Restaurant Search props
+        /// </summary>
+
         [Display(Name="Name")]
         public string SearchName { get; set; }
 
@@ -71,5 +81,23 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         public string SearchCity { get; set; }
 
         public string Result { get; set; }
+
+
+        
+        public Days Day { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+
+        public enum Days
+        {
+            Monday,
+            Tuesday,
+            Wendsday,
+            Thursday,
+            Friday,
+            Saturday,
+            Sunday
+        }
+        
     }
 }
