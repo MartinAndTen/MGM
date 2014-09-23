@@ -8,6 +8,7 @@
 {
     <div class="col-md-12"><strong>@Model.Restaurant.Name</strong>
         <br />
+    <br/>
         <div class="row">
             <div class="col-md-6">
                 <img src="@Model.Restaurant.Photo" class="RestaurantImageProfile" />
@@ -52,7 +53,12 @@
                         <td><strong>Capacity:</strong></td>
                         <td>@Model.Restaurant.Capacity</td>
                     </tr>
+
                 </table>
+                
+                <br/>
+                <button type="button" class="btn btn-info col-lg-2" onclick="location.href='@Url.Action("Index", "Reservation", new { id = @Model.Restaurant.Id })';return false;"><span style="margin-right: 5px; float:right;" class="glyphicon glyphicon-envelope"></span>Book</button>
+               
             </div>
         </div>
     </div>

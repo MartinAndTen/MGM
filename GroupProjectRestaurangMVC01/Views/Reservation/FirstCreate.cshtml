@@ -30,6 +30,7 @@
         @Html.LabelFor(c => c.Date, new { @class = "col-md-3 control-label" })
         <div>
             @Html.TextBoxFor(c => c.Date, new {id = "date"})
+
             @Html.ValidationMessageFor(c => c.Date)
         </div>
     </div>
@@ -51,11 +52,19 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#date").datepicker({ dateFormat: 'yy/mm/dd' });
+    $(function () {
+        $('#date').datepicker({
+            inline: true,
+            showOtherMonths: true,
+            
+        });
     });
 </script>
 
+
+
 <style>    
-    #ui-datepicker-div {background-color: #fff !important;}
+ 
+
+   
 </style>
