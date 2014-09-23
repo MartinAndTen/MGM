@@ -64,8 +64,10 @@ namespace GroupProjectRestaurangMVC01.ViewModels
 
         public List<Restaurant> Restaurants { get; set; }
 
+        [Display(Name="Name")]
         public string SearchName { get; set; }
 
+        [Display(Name="City")]
         public string SearchCity { get; set; }
 
         public string Result { get; set; }

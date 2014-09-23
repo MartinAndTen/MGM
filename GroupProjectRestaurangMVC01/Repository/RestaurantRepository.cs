@@ -259,12 +259,17 @@ namespace GroupProjectRestaurangMVC01.Repository
             try
             {
                 Restaurant userRestaurant = GetRestaurantByUserId(userId);
+                userRestaurant.TotalSeats = userRestaurant.TotalSeats + table.Seats;
+                userRestaurant.MaxSeatPerBooking = userRestaurant.TotalSeats;
                 using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
                     Table newTable = new Table();
                     newTable.RestaurantId = userRestaurant.Id;
                     newTable.TableName = table.TableName;
                     newTable.Seats = table.Seats;
+
+                    //Save to db
+                    db.Restaurants.AddOrUpdate(userRestaurant);
                     db.Tables.Add(newTable);
                     db.SaveChanges();
                     returnValue = true;
@@ -278,19 +283,29 @@ namespace GroupProjectRestaurangMVC01.Repository
             return returnValue;
         }
 
-        public bool EditTable(int tableId, TableViewModel table)
+        public bool EditTable(int userId, int tableId, TableViewModel table)
         {
             bool returnValue = false;
             try
             {
-                using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                Restaurant userRestaurant = GetRestaurantByUserId(userId);
+                Table tableToEdit = GetTableById(tableId);
+
+                if (userRestaurant != null && tableToEdit != null)
                 {
-                    Table tableToEdit = GetTableById(tableId);
-                    tableToEdit.Seats = table.Seats;
-                    tableToEdit.TableName = table.TableName;
-                    db.Tables.AddOrUpdate(tableToEdit);
-                    db.SaveChanges();
-                    returnValue = true;
+                    userRestaurant.TotalSeats = userRestaurant.TotalSeats - tableToEdit.Seats + table.Seats;
+                    userRestaurant.MaxSeatPerBooking = userRestaurant.TotalSeats;
+
+                    using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                    {
+
+                        tableToEdit.Seats = table.Seats;
+                        tableToEdit.TableName = table.TableName;
+                        db.Tables.AddOrUpdate(tableToEdit);
+                        db.Restaurants.AddOrUpdate(userRestaurant);
+                        db.SaveChanges();
+                        returnValue = true;
+                    }
                 }
             }
             catch (Exception ex)
@@ -305,12 +320,17 @@ namespace GroupProjectRestaurangMVC01.Repository
         {
             bool returnValue = false;
 
-            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
-            {
-                Table tableToDelete = GetTableById(id, db);
-                if (tableToDelete != null)
+            Restaurant userRestaurant = GetRestaurantByUserId(userId);
+            Table tableToDelete = GetTableById(id);
+            if(userRestaurant != null && tableToDelete != null)
+            { 
+            userRestaurant.TotalSeats = userRestaurant.TotalSeats - tableToDelete.Seats;
+            userRestaurant.MaxSeatPerBooking = userRestaurant.TotalSeats;
+                using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
+                    db.Tables.Attach(tableToDelete);
                     db.Tables.Remove(tableToDelete);
+                    db.Restaurants.AddOrUpdate(userRestaurant);
                     db.SaveChanges();
                     returnValue = true;
                 }
@@ -321,24 +341,14 @@ namespace GroupProjectRestaurangMVC01.Repository
         ///
         /// 
         /// Get Tables
-        public Table GetTableById(int id, RestaurantProjectMVC01Entities db = null)
+        public Table GetTableById(int id)
         {
-            if (db == null)
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
-                using (RestaurantProjectMVC01Entities db2 = new RestaurantProjectMVC01Entities())
-                {
-                    Table table =
-                        db2.Tables.Include("ReservedTables").Include("Restaurant").FirstOrDefault(c => c.Id.Equals(id));
-                    return table;
-                }
-            }
-            else
-            {
-                Table table = db.Tables.Include("ReservedTables").Include("Restaurant").FirstOrDefault(c => c.Id.Equals(id));
+                Table table =
+                    db.Tables.Include("ReservedTables").Include("Restaurant").FirstOrDefault(c => c.Id.Equals(id));
                 return table;
             }
-
-            
         }
     }
 }

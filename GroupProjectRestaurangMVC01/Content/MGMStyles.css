@@ -109,6 +109,14 @@ ul#menu {
     margin-right: auto;
 }
 
+.RestaurantImageProfile {
+    width: 500px;
+    height: auto;
+    display: block;
+    margin-left: 0;
+    margin-right: auto;
+}
+
 .RestaurantImageSearch {
     width: 150px;
     height: auto;

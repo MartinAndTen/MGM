@@ -32,8 +32,8 @@
                                           <ul>
                                               <li>@Html.ActionLink("Edit", "Edit", "Restaurant")</li>
                                               <li><a href="#">Time</a></li>
-                                              <li><a href="#">Tables</a></li>
-                                              <li><a href="#">Reservations</a></li>
+                                              <li>@Html.ActionLink("Tables", "Table","Restaurant")</li>
+                                              <li>@Html.ActionLink("Reservation","Reservations","Restaurant")</li>
                                           </ul>
                                       </li>
                                       <li>@Html.ActionLink("Search", "Index", "Search")</li>
