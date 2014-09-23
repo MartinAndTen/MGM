@@ -7,29 +7,33 @@
         max-width: 40%;
     }
 </style>
-<h2>Index</h2>
 
-@using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.SearchName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.SearchName, new { @class = "form-control" })
+<div class="col-md-12">
+    @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        
+        <div class="col-md-7">
+            <h2>Search</h2>
+            <div class="form-group" >
+                @Html.LabelFor(m => m.SearchName, new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(m => m.SearchName, new { @class = "form-control col-md-5" })
+                @Html.ValidationMessageFor(m => m.SearchName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SearchCity, new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(m => m.SearchCity, new { @class = "form-control col-md-5" })
+                @Html.ValidationMessageFor(m => m.SearchCity)
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info col-md-push-2 col-md-5">Search<span style="margin-left: 5px;" class="glyphicon glyphicon-search"></span></button>
+            </div>
+
         </div>
-    </div>
-    <br/>
-    <div class="form-group">
-        @Html.LabelFor(m => m.SearchCity, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.SearchCity, new { @class = "form-control" })
-        </div>
-    </div>
-    <br/>
-    <button type="submit" class="btn btn-info">Search <span style="margin-left: 5px; float:right;" class="glyphicon glyphicon-search"></span></button>
 
 
-
-}
-
-
+    }
+</div>
+<br/>
 @Html.Partial("_SearchPartial")
