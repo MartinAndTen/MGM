@@ -13,6 +13,11 @@
         <h4>Step 1: Enter ammount of people in party and date for the reservation</h4>
     </div>
 
+    <div class="col-md-9">
+            @Model.Result
+
+    </div>
+    
     <div class="form-group col-md-7">
         @Html.LabelFor(c => c.TotalGuests, new { @class = "col-md-3 control-label" })
         <div class="col-md-9">
