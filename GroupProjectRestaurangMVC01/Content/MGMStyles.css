@@ -215,12 +215,12 @@ ul#menu {
     .ui-datepicker-title {  
     text-align: center;  
 }  
-    .ui-datepicker-prev, .ui-datepicker-next {  
+   .ui-datepicker-prev, .ui-datepicker-next {  
    
     cursor: pointer;
     color: #ffffff;  
 }  
-        .ui-datepicker-prev :hover, .ui-datepicker-next :hover{  
+   .ui-datepicker-prev :hover, .ui-datepicker-next :hover{  
    
     cursor:pointer;
     color: #ffffff;  
@@ -229,7 +229,7 @@ ul#menu {
     float: left;  
     background-position: center -30px;  
 }  
-.ui-datepicker-next {  
+    .ui-datepicker-next {  
     float: right;  
     background-position: center 0px;  
 }  
