@@ -20,20 +20,24 @@
                           <div class="col-md-6">
                               <p><a href='@Url.Action("Index", "Home")' id="LogoLink">MGM Restaurant Booking</a></p>
                           </div>
-                          <div class="col-md-6">
-                              <section id="login">
-                                  @Html.Partial("_LoginPartial")
-                              </section>
+                      <div class="col-md-6">
+                          <section id="login">
+                              @Html.Partial("_LoginPartial")
+                          </section>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-7 col-md-push-5">
                               <nav>
-                                      <ul id="dropDownMenu">
-                                          <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                          <li>
-                                              @Html.ActionLink("Restaurants", "Index", "Restaurant")
+                                  <ul id="dropDownMenu">
+                                      <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                      <li>
+                                          @Html.ActionLink("Restaurants", "Index", "Restaurant")
                                           <ul>
                                               <li>@Html.ActionLink("Edit", "Edit", "Restaurant")</li>
-                                              <li><a href="#">Time</a></li>
-                                              <li>@Html.ActionLink("Tables", "Table","Restaurant")</li>
-                                              <li>@Html.ActionLink("Reservation","Reservations","Restaurant")</li>
+                                              <li>@Html.ActionLink("Opening Hours", "OpenForBooking", "Restaurant")</li>
+                                              <li>@Html.ActionLink("Closing Hours", "ClosedForBooking", "Restaurant")</li>
+                                              <li>@Html.ActionLink("Tables", "Table", "Restaurant")</li>
+                                              <li>@Html.ActionLink("Reservation", "Reservations", "Restaurant")</li>
                                           </ul>
                                       </li>
                                       <li>@Html.ActionLink("Search", "Index", "Search")</li>
@@ -41,6 +45,7 @@
                                   </ul>
                               </nav>
                           </div>
+                      </div>
                   </div>
                   <div class="row">
                       @RenderSection("featured", required: false)

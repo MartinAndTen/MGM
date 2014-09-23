@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using GroupProjectRestaurangMVC01.Models;
 using GroupProjectRestaurangMVC01.Repository;
 using GroupProjectRestaurangMVC01.ViewModels;
@@ -15,8 +16,12 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
     public class RestaurantController : Controller
     {
-        //
-        // GET: /Restaurant/
+
+        /// <summary>
+        /// Restaurant
+        /// </summary>
+        /// <returns></returns>
+        
         private readonly RestaurantRepository _restaurantRepository = new RestaurantRepository();
         private readonly AccountRepository _accountRepository = new AccountRepository();
 
@@ -189,19 +194,74 @@ namespace GroupProjectRestaurangMVC01.Controllers
             return RedirectToAction("Table","Restaurant");
         }
 
+
+
+        /// <summary>
+        /// Admin-Reservations
+        /// </summary>
+        /// <returns></returns>
+
+
+
         [Authorize]
         public ActionResult Reservations()
         {
             RestaurantViewModel viewModel = new RestaurantViewModel();
             if (Request.IsAuthenticated)
             {
-                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(WebSecurity.CurrentUserId);
+                int userId = WebSecurity.CurrentUserId;
+                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
                 if (userRestaurant != null)
                 {
                     viewModel.Restaurant = userRestaurant;
                 }
             }
 
+            return View(viewModel);
+        }
+
+        [Authorize]
+        public ActionResult DeleteReservation(Guid id)
+        {
+            if (Request.IsAuthenticated)
+            {
+                var userId = WebSecurity.CurrentUserId;
+                bool result = _restaurantRepository.DeleteReservation(userId, id);
+            }
+            return RedirectToAction("Reservations", "Restaurant");
+        }
+
+        [Authorize]
+        public ActionResult CancelReservation(Guid id)
+        {
+            //ska läggas till i ett senare skede
+            return View();
+        }
+
+
+        [Authorize]
+        public ActionResult OpenForBooking()
+        {
+            RestaurantViewModel viewModel = new RestaurantViewModel();
+            if (Request.IsAuthenticated)
+            {
+                var userId = WebSecurity.CurrentUserId;
+                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
+                viewModel.Restaurant = userRestaurant;
+            }
+            return View(viewModel);
+        }
+
+        [Authorize]
+        public ActionResult ClosedForBooking()
+        {
+            RestaurantViewModel viewModel = new RestaurantViewModel();
+            if (Request.IsAuthenticated)
+            {
+                var userId = WebSecurity.CurrentUserId;
+                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
+                viewModel.Restaurant = userRestaurant;
+            }
             return View(viewModel);
         }
     }

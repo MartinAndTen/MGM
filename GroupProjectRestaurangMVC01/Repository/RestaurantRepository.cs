@@ -350,5 +350,43 @@ namespace GroupProjectRestaurangMVC01.Repository
                 return table;
             }
         }
+
+        ///
+        ///
+        /////////////////
+        // Reservation//
+        ///////////////
+        /// 
+        /// 
+        public bool DeleteReservation(int userId, Guid id)
+        {
+            bool returnValue = false;
+            Restaurant userRestaurant = GetRestaurantByUserId(userId);
+            Reservation reservationToDelete = GetReservationById(id);
+
+            if (userRestaurant != null && reservationToDelete != null)
+            {
+                if (userRestaurant.Id == reservationToDelete.RestaurantId)
+                {
+                    using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                    {
+                        db.Reservations.Attach(reservationToDelete);
+                        db.Reservations.Remove(reservationToDelete);
+                        db.SaveChanges();
+                        returnValue = true;
+                    }
+                }
+            }
+            return returnValue;
+        }
+
+        private Reservation GetReservationById(Guid id)
+        {
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                Reservation reservation = db.Reservations.Include("ReservedTables").FirstOrDefault(c => c.Id.Equals(id));
+                return reservation;
+            }
+        }
     }
 }
