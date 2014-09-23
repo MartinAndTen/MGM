@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using GroupProjectRestaurangMVC01.Models;
 using GroupProjectRestaurangMVC01.Repository;
 using GroupProjectRestaurangMVC01.ViewModels;
@@ -242,7 +243,12 @@ namespace GroupProjectRestaurangMVC01.Controllers
         public ActionResult OpenForBooking()
         {
             RestaurantViewModel viewModel = new RestaurantViewModel();
-
+            if (Request.IsAuthenticated)
+            {
+                var userId = WebSecurity.CurrentUserId;
+                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
+                viewModel.Restaurant = userRestaurant;
+            }
             return View(viewModel);
         }
 
@@ -250,6 +256,12 @@ namespace GroupProjectRestaurangMVC01.Controllers
         public ActionResult ClosedForBooking()
         {
             RestaurantViewModel viewModel = new RestaurantViewModel();
+            if (Request.IsAuthenticated)
+            {
+                var userId = WebSecurity.CurrentUserId;
+                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
+                viewModel.Restaurant = userRestaurant;
+            }
             return View(viewModel);
         }
     }
