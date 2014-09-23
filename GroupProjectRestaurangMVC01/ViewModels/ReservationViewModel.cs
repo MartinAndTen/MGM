@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using GroupProjectRestaurangMVC01.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace GroupProjectRestaurangMVC01.ViewModels
 {
@@ -31,12 +32,17 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         public string CustomerPhoneNumber { get; set; }
 
         [Display(Name = "Email")]
-        [Required(ErrorMessage = "An email is required")]
+        [Required(ErrorMessage = "Email is Required")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                            @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                            @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+                            ErrorMessage = "Email is not valid")]
         public string ContactEmail { get; set; }
 
         [Display(Name = "Persons in party")]
         [Required(ErrorMessage = "Number of persons is required")]
         public int TotalGuests { get; set; }
-        public bool ConfirmedReservation { get; set; }
+
+        public string Result { get; set; }
     }
 }

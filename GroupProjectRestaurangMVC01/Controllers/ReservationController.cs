@@ -20,20 +20,20 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             ReservationViewModel reservationViewModel = GetReservation();
             Restaurant currentRestaurant = new Restaurant();
-
             if (id.HasValue)
             {
                 currentRestaurant = _restaurantRepository.GetRestaurantById(id.Value);
                 IList<Table> tables = _restaurantRepository.GetRestaurantTablesById(id.Value);
                 reservationViewModel.Restaurant = currentRestaurant;
                 reservationViewModel.Restaurant.Tables = tables;
+                reservationViewModel.Result = string.Empty;
             }
-            else if(id.HasValue == false)
+            else if (id.HasValue == false)
             {
                 //Felmedelande eller skicka anvädaren till att välja om restaurant eller nått här kanske?
             }
 
-            return View("FirstCreate");
+            return View("FirstCreate", reservationViewModel);
         }
 
         [HttpPost]
@@ -44,20 +44,17 @@ namespace GroupProjectRestaurangMVC01.Controllers
             {
                 ReservationViewModel reservationViewModel = GetReservation();
                 Restaurant currentRestaurant = reservationViewModel.Restaurant;
-
-                reservationViewModel.Restaurant = currentRestaurant;
                 reservationViewModel.TotalGuests = firstPartReservation.TotalGuests;
-
                 if (currentRestaurant.MaxSeatPerBooking.HasValue)
                 {
                     if (reservationViewModel.TotalGuests > currentRestaurant.MaxSeatPerBooking.Value)
                     {
-                        
+                        firstPartReservation.Result = currentRestaurant.Name + " allows a maximum of " + currentRestaurant.MaxSeatPerBooking.ToString() + " persons per reservation";
+                        return View("FirstCreate", firstPartReservation);
                     }
                 }
-
                 reservationViewModel.Date = firstPartReservation.Date;
-                return View("SecondCreate");
+                return View("SecondCreate", reservationViewModel);
             }
             return View();
         }
@@ -67,6 +64,11 @@ namespace GroupProjectRestaurangMVC01.Controllers
         public ActionResult SecondCreate(ReservationViewModel secondPartReservation, string BtnPrevious, string BtnNext, Guid? id)
         {
             ReservationViewModel reservationViewModel = GetReservation();
+            Restaurant currentRestaurant = reservationViewModel.Restaurant;
+
+
+            TimeSpan buttonShowTime = new TimeSpan(0, 30, 0);
+
             if (BtnPrevious != null)
             {
                 ReservationViewModel firstPartViewModel = new ReservationViewModel();
@@ -78,8 +80,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
             }
             if (BtnNext != null)
             {
-                //reservationViewModel.TotalGuests = reservationViewModel.TotalGuests;
-                //reservationViewModel.Date = reservationViewModel.Date;
                 reservationViewModel.CustomerName = secondPartReservation.CustomerName;
                 reservationViewModel.CustomerPhoneNumber = secondPartReservation.CustomerPhoneNumber;
                 reservationViewModel.ContactEmail = secondPartReservation.ContactEmail;
@@ -89,10 +89,10 @@ namespace GroupProjectRestaurangMVC01.Controllers
                     if (ModelState.IsValid)
                     {
                         Reservation reservation = new Reservation();
+                        reservation.Id = Guid.NewGuid();
                         reservation.CustomerName = reservationViewModel.CustomerName;
                         reservation.ContactEmail = reservationViewModel.ContactEmail;
                         reservation.CustomerPhoneNumber = reservationViewModel.CustomerPhoneNumber;
-                        //reservation.Restaurant = reservationViewModel.Restaurant;
                         reservation.TotalGuests = reservationViewModel.TotalGuests;
                         reservation.RestaurantId = reservationViewModel.Restaurant.Id;
                         reservation.Date = reservationViewModel.Date;
@@ -116,23 +116,23 @@ namespace GroupProjectRestaurangMVC01.Controllers
         //    return View();
         //}
 
-        public ActionResult Create(Guid id)
-        {
-            ReservationViewModel viewModel = new ReservationViewModel();
-            Restaurant currentRestaurant = _restaurantRepository.GetRestaurantById(id);
-            List<Table> tables = _restaurantRepository.GetRestaurantTablesById(id);
-            viewModel.Restaurant = currentRestaurant;
-            viewModel.Tables = tables;
-            return View(viewModel);
-        }
+        //public ActionResult Create(Guid id)
+        //{
+        //    ReservationViewModel viewModel = new ReservationViewModel();
+        //    Restaurant currentRestaurant = _restaurantRepository.GetRestaurantById(id);
+        //    List<Table> tables = _restaurantRepository.GetRestaurantTablesById(id);
+        //    viewModel.Restaurant = currentRestaurant;
+        //    viewModel.Tables = tables;
+        //    return View(viewModel);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(ReservationViewModel viewModel)
-        {
-            _reservationRepository.CreateReservation(viewModel);
-            return View();
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(ReservationViewModel viewModel)
+        //{
+        //    _reservationRepository.CreateReservation(viewModel);
+        //    return View();
+        //}
 
         public ReservationViewModel GetReservation()
         {
