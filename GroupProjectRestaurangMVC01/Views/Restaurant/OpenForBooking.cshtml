@@ -5,18 +5,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>OpeningHours</h2>
+<h2>Opening hours</h2>
 <div class="col-md-12">
-    @using (Html.BeginForm())
+    @foreach (var openForBooking in Model.Restaurant.OpenForBookings)
     {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        <div class="col-md-7">
-            <div class="form-group">
-                @Html.LabelFor(c => c.Restaurant.OpenForBookings)
-                @Html.EnumDropDownListFor(c => c.WeekDay)
-            </div>
+        <div class="row"></div>
+        <div class="col-md-12">
+            <strong><small>@openForBooking.Day @openForBooking.StartTime - @openForBooking.EndTime</small></strong>
         </div>
-
     }
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Add Opening hours</h3>
+        @using (Html.BeginForm("OpenForBooking", "Restaurant", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="col-md-7">
+                <div class="form-group">
+                    @Html.LabelFor(c => c.WeekDay, new { @class = "control-label" })
+                    @Html.EnumDropDownListFor(c => c.WeekDay, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(c => c.WeekDay)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(c => c.StartTime, new { @class = "control-label" })
+                    <div class='input-group date' id='datetimepicker4'>
+                        @Html.TextBoxFor(c => c.StartTime, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                        @Html.ValidationMessageFor(c => c.StartTime)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(c => c.EndTime, new { @class = "control-label" })
+                    <div class='input-group date' id='datetimepicker4'>
+                        @Html.TextBoxFor(c => c.EndTime, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                        @Html.ValidationMessageFor(c => c.EndTime)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-info col-md-12" />
+                </div>
+            </div>
+        }
+    </div>
 </div>
