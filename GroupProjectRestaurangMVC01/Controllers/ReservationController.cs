@@ -54,6 +54,15 @@ namespace GroupProjectRestaurangMVC01.Controllers
                     }
                 }
                 reservationViewModel.Date = firstPartReservation.Date;
+                string dayOfWeek = reservationViewModel.Date.DayOfWeek.ToString();
+                var currentRestaurantOpeningTimes = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
+                var currentDayOfWeekOpenTimes = currentRestaurantOpeningTimes.Where(c => c.Day == dayOfWeek).FirstOrDefault();
+
+                reservationViewModel.openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
+                reservationViewModel.closeTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.EndTime.ToString());
+                TimeSpan totalOpeningHours = reservationViewModel.closeTime.TimeOfDay - reservationViewModel.openTime.TimeOfDay;
+                reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2;
+
                 return View("SecondCreate", reservationViewModel);
             }
             return View();
@@ -65,14 +74,19 @@ namespace GroupProjectRestaurangMVC01.Controllers
         {
             ReservationViewModel reservationViewModel = GetReservation();
             Restaurant currentRestaurant = reservationViewModel.Restaurant;
-            TimeSpan openHours;
-            TimeSpan openingTime;
-            DateTime closeningTime;
 
-            string dayOfWeek = reservationViewModel.Date.DayOfWeek.ToString();
+            //DateTime openTime;
+            //DateTime closeTime;
 
-            var apa = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
-            
+            //string dayOfWeek = reservationViewModel.Date.DayOfWeek.ToString();
+            //var currentRestaurantOpeningTimes = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
+            //var currentDayOfWeekOpenTimes = currentRestaurantOpeningTimes.Where(c => c.Day == dayOfWeek).FirstOrDefault();
+
+            //openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
+            //closeTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.EndTime.ToString());
+            //TimeSpan totalOpeningHours = closeTime.TimeOfDay - openTime.TimeOfDay;
+            //reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2;
+
 
             if (BtnPrevious != null)
             {

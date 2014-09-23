@@ -44,5 +44,9 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         public int TotalGuests { get; set; }
 
         public string Result { get; set; }
+
+        public int AmmountOfButtonsToGenerate { get; set; }
+        public DateTime OpenTime { get; set; }
+        public DateTime CloseTime { get; set; }
     }
 }

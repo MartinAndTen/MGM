@@ -33,18 +33,27 @@
         </div>
     </div>
 
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button type="button" class="btn btn-default">1</button>
-            <button type="button" class="btn btn-default">2</button>
-            <button type="button" class="btn btn-default">3</button>
+
+
+    <div class="col-md-12">
+        <div class="col-md-6">
+            @for (int i = 0; i < @Model.ammountOfButtonsToGenerate; i++)
+            {
+                <button type="button" class="btn btn-danger col-md-2">1</button>
+            }
         </div>
     </div>
 
+    @*<div class="btn-group">
+
+            <button type="button" class="btn btn-default">2</button>
+            <button type="button" class="btn btn-default">3</button>
+        </div>*@
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" name="BtnPrevious" value="Previous" class="btn btn-default" />
-            <input type="submit" name="BtnNext" value="Make the reservation" class="btn btn-default" />
+            <input type="submit" name="BtnPrevious" value="Previous" class="btn btn-info" />
+            <input type="submit" name="BtnNext" value="Make the reservation" class="btn btn-success" />
         </div>
     </div>
 }
