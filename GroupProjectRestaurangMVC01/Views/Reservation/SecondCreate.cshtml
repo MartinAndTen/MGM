@@ -1,4 +1,5 @@
-﻿@model GroupProjectRestaurangMVC01.ViewModels.ReservationViewModel
+﻿@using System.Web.UI.WebControls
+@model GroupProjectRestaurangMVC01.ViewModels.ReservationViewModel
 @{
     ViewBag.Title = "SecondCreate";
 }
@@ -33,13 +34,12 @@
         </div>
     </div>
 
-
-
     <div class="col-md-12">
         <div class="col-md-6">
             @for (int i = 0; i < @Model.ammountOfButtonsToGenerate; i++)
             {
-                <button type="button" class="btn btn-danger col-md-2"></button>
+                
+                <button type="button" class="btn btn-danger col-md-2">@Model.Buttonlist</button>
             }
         </div>
     </div>
