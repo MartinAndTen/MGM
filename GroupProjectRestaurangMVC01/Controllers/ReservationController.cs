@@ -124,7 +124,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 reservationViewModel.CustomerName = secondPartReservation.CustomerName;
                 reservationViewModel.CustomerPhoneNumber = secondPartReservation.CustomerPhoneNumber;
                 reservationViewModel.ContactEmail = secondPartReservation.ContactEmail;
-
+                //reservationViewModel.Date = secondPartReservation.ButtonList.Where(c => c.id)
                 using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
                     if (ModelState.IsValid)

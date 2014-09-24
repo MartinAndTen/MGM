@@ -35,22 +35,19 @@
     </div>
 
     <div class="col-md-12">
-        <div class="col-md-6 btn-group control-buttons" data-toggle="radio-button">
+        <div class="col-md-6 btn-group control-buttons" data-toggle="buttons">
             @for (int i = 0; i < @Model.ammountOfButtonsToGenerate; i++)
             {
-
-                <button type="button" class="btn btn-primary col-md-2 btn-martin" data-toggle="popover" title="Popover title" id="@Model.ButtonList.ElementAt(i)">@Model.ButtonList.ElementAt(i)</button>
+                <input name="TimeString"
+                       type="radio"
+                       class="btn btn-primary col-md-2 btn-martin"
+                       data-toggle="popover"
+                       title="Popover title"
+                       id="TimeString"
+                       value="@Model.ButtonList.ElementAt(i)" />
             }
-            
-            
         </div>
     </div>
-
-    @*<div class="btn-group">
-
-            <button type="button" class="btn btn-default">2</button>
-            <button type="button" class="btn btn-default">3</button>
-        </div>*@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -61,7 +58,7 @@
 }
 
 <script>
-    $(".btn-group > .btn").click(function(){
-    $(this).addClass("active").siblings().removeClass("active");
-});
+    $(".btn-group > .btn").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+    });
 </script>
