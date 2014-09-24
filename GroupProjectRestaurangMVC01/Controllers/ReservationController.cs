@@ -71,7 +71,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 }
 
                 TimeSpan totalOpeningHours = reservationViewModel.closeTime.TimeOfDay - reservationViewModel.openTime.TimeOfDay;
-                reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2 + 1;
+                reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2-1;
 
                 var ButtonStartTime = reservationViewModel.openTime;
 
