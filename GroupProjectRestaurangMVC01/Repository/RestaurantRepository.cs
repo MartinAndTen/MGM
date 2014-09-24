@@ -388,5 +388,35 @@ namespace GroupProjectRestaurangMVC01.Repository
                 return reservation;
             }
         }
+
+        public bool AddOpeningHour(int userId, RestaurantViewModel model)
+        {
+            bool returnValue = false;
+            try
+            {
+                Restaurant userRestaurant = GetRestaurantByUserId(userId);
+                using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                {
+                    OpenForBooking newBooking = new OpenForBooking();
+                    newBooking.RestaurantId = userRestaurant.Id;
+                    newBooking.Day = model.WeekDay.ToString();
+                    newBooking.StartTime = model.StartTime.TimeOfDay;
+                    newBooking.EndTime = model.EndTime.TimeOfDay;
+
+                    //Save to db
+                    db.OpenForBookings.Add(newBooking);
+                    db.SaveChanges();
+                    returnValue = true;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return returnValue;
+
+        }
     }
 }

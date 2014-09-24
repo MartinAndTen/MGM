@@ -253,6 +253,21 @@ namespace GroupProjectRestaurangMVC01.Controllers
         }
 
         [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OpenForBooking(RestaurantViewModel model)
+        {
+            if (Request.IsAuthenticated)
+            {
+                var userId = WebSecurity.CurrentUserId;
+                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
+                bool returnValue = _restaurantRepository.AddOpeningHour(userId, model);
+            }
+
+            return RedirectToAction("OpenForBooking", "Restaurant");
+        }
+
+        [Authorize]
         public ActionResult ClosedForBooking()
         {
             RestaurantViewModel viewModel = new RestaurantViewModel();
