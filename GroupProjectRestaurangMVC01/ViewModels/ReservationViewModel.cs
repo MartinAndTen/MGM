@@ -18,7 +18,7 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{yy/mm/dd}")]
         [Required(ErrorMessage = "A date is required")]
         public DateTime Date { get; set; }
-
+        public string TimeString { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
 

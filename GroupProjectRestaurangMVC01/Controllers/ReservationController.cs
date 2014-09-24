@@ -60,7 +60,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 var currentRestaurantOpeningTimes = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
                 var currentDayOfWeekOpenTimes = currentRestaurantOpeningTimes.FirstOrDefault(c => c.Day == dayOfWeek);
 
-
                 if (currentDayOfWeekOpenTimes != null)
                 {
                     reservationViewModel.openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
@@ -97,19 +96,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
             ReservationViewModel reservationViewModel = GetReservation();
             Restaurant currentRestaurant = reservationViewModel.Restaurant;
 
-            //DateTime openTime;
-            //DateTime closeTime;
-
-            //string dayOfWeek = reservationViewModel.Date.DayOfWeek.ToString();
-            //var currentRestaurantOpeningTimes = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
-            //var currentDayOfWeekOpenTimes = currentRestaurantOpeningTimes.Where(c => c.Day == dayOfWeek).FirstOrDefault();
-
-            //openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
-            //closeTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.EndTime.ToString());
-            //TimeSpan totalOpeningHours = closeTime.TimeOfDay - openTime.TimeOfDay;
-            //reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2;
-
-
             if (BtnPrevious != null)
             {
                 ReservationViewModel firstPartViewModel = new ReservationViewModel();
@@ -124,6 +110,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 reservationViewModel.CustomerName = secondPartReservation.CustomerName;
                 reservationViewModel.CustomerPhoneNumber = secondPartReservation.CustomerPhoneNumber;
                 reservationViewModel.ContactEmail = secondPartReservation.ContactEmail;
+                reservationViewModel.Date = reservationViewModel.Date.Add(TimeSpan.Parse(secondPartReservation.TimeString));
 
                 using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
