@@ -83,7 +83,11 @@ namespace GroupProjectRestaurangMVC01.Controllers
                   tempButtonList.Add(ButtonStartTime.ToString("HH:mm"));
                   ButtonStartTime = ButtonStartTime.AddMinutes(30);
                 }
+
                 reservationViewModel.ButtonList = tempButtonList;
+
+
+
                 return View("SecondCreate", reservationViewModel);
             }
             return View();
@@ -111,9 +115,13 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 reservationViewModel.CustomerPhoneNumber = secondPartReservation.CustomerPhoneNumber;
                 reservationViewModel.ContactEmail = secondPartReservation.ContactEmail;
                 reservationViewModel.Date = reservationViewModel.Date.Add(TimeSpan.Parse(secondPartReservation.TimeString));
-
+                List<Table> tableList = new List<Table>();
+                
                 using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
+                    tableList = db.Tables.Where(c => c.RestaurantId.Equals(reservationViewModel.Restaurant.Id) && c.Seats >= reservationViewModel.TotalGuests).ToList();
+                    
+
                     if (ModelState.IsValid)
                     {
                         Reservation reservation = new Reservation();
@@ -125,7 +133,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                         reservation.RestaurantId = reservationViewModel.Restaurant.Id;
                         reservation.Date = reservationViewModel.Date;
                         reservation.EndDate = reservationViewModel.Date.AddHours(1);
-
+                        
                         db.Reservations.Add(reservation);
                         db.SaveChanges();
                     }
