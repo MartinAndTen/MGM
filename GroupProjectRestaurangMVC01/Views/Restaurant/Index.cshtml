@@ -6,9 +6,7 @@
 }
 @if (Model.Restaurant != null)
 {
-    <div class="col-md-12"><strong>@Model.Restaurant.Name</strong>
-        <br />
-    <br/>
+    <div class="col-md-12"><h2><strong>@Model.Restaurant.Name</strong></h2>
         <div class="row">
             <div class="col-md-6">
                 <img src="@Model.Restaurant.Photo" class="RestaurantImageProfile" />
@@ -19,10 +17,10 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <table id="restaurantTable" class="table table-hover">
+                <table id="restaurantTable" class="table table-hover col-md-12">
                     <tr>
-                        <td><strong>Email:</strong></td>
-                        <td>@Model.Restaurant.Email</td>
+                        <td class="col-lg-6"><strong>Email:</strong></td>
+                        <td class="col-lg-6">@Model.Restaurant.Email</td>
                     </tr>
                     <tr>
                         <td><strong>Phone:</strong></td>
@@ -43,25 +41,17 @@
                 </table>
             </div>
             <div class="col-md-6">
-                <table id="restaurantTable" class="table table-hover">
-                    <tr>
-                        <td><strong>Total seats:</strong></td>
-                        <td>@Model.Restaurant.TotalSeats</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Capacity:</strong></td>
-                        <td>@Model.Restaurant.Capacity</td>
-                    </tr>
-                </table>
-                <p>Opening Hours</p>
-                <table class="table table-hover">
+                <div class="col-md-12">
+                    <strong>Days available for reservation</strong>
+                </div>
+                <table class="table table-hover col-md-12">
                     @foreach (var openForBooking in Model.Restaurant.OpenForBookings)
                     {
                         <tr>
-                            <td>
+                            <td class="col-lg-6">
                                 <strong><small>@openForBooking.Day</small></strong>
                             </td>
-                            <td>
+                            <td class="col-lg-6">
                                 <strong><small>@openForBooking.StartTime - @openForBooking.EndTime</small></strong>
                             </td>
                         </tr>
