@@ -337,3 +337,12 @@ transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
 }*/
 /*End Martin DatePicker*/
+
+.btn-martin {
+    margin-right: 5px !important;
+    margin-bottom: 5px !important;
+}
+
+.btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+border-radius: 4px !important;
+}

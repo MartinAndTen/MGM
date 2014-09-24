@@ -35,12 +35,14 @@
     </div>
 
     <div class="col-md-12">
-        <div class="col-md-6">
+        <div class="col-md-6 btn-group control-buttons" data-toggle="radio-button">
             @for (int i = 0; i < @Model.ammountOfButtonsToGenerate; i++)
             {
-                
-                <button type="button" class="btn btn-danger col-md-2">@Model.Buttonlist</button>
+
+                <button type="button" class="btn btn-primary col-md-2 btn-martin" data-toggle="popover" title="Popover title" id="@Model.ButtonList.ElementAt(i)">@Model.ButtonList.ElementAt(i)</button>
             }
+            
+            
         </div>
     </div>
 
@@ -57,3 +59,9 @@
         </div>
     </div>
 }
+
+<script>
+    $(".btn-group > .btn").click(function(){
+    $(this).addClass("active").siblings().removeClass("active");
+});
+</script>
