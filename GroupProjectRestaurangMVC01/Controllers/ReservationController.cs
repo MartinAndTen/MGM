@@ -60,6 +60,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
                 reservationViewModel.openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
                 reservationViewModel.closeTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.EndTime.ToString());
+
                 TimeSpan totalOpeningHours = reservationViewModel.closeTime.TimeOfDay - reservationViewModel.openTime.TimeOfDay;
                 reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2;
 
