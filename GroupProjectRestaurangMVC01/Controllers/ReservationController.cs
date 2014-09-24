@@ -58,10 +58,10 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 var currentRestaurantOpeningTimes = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
                 var currentDayOfWeekOpenTimes = currentRestaurantOpeningTimes.Where(c => c.Day == dayOfWeek).FirstOrDefault();
 
-                reservationViewModel.openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
-                reservationViewModel.closeTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.EndTime.ToString());
-                TimeSpan totalOpeningHours = reservationViewModel.closeTime.TimeOfDay - reservationViewModel.openTime.TimeOfDay;
-                reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2;
+                reservationViewModel.OpenTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
+                reservationViewModel.CloseTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.EndTime.ToString());
+                TimeSpan totalOpeningHours = reservationViewModel.CloseTime.TimeOfDay - reservationViewModel.OpenTime.TimeOfDay;
+                reservationViewModel.AmmountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2;
 
                 return View("SecondCreate", reservationViewModel);
             }
