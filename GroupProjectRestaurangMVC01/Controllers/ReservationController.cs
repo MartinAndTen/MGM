@@ -59,7 +59,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 string dayOfWeek = reservationViewModel.Date.DayOfWeek.ToString();
                 var currentRestaurantOpeningTimes = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
                 var currentDayOfWeekOpenTimes = currentRestaurantOpeningTimes.FirstOrDefault(c => c.Day == dayOfWeek);
-
                 if (currentDayOfWeekOpenTimes != null)
                 {
                     reservationViewModel.openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
@@ -85,9 +84,32 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 }
 
                 reservationViewModel.ButtonList = tempButtonList;
+                //List<Table> tableList = new List<Table>();
+                //List<ReservedTable> reservedTables = new List<ReservedTable>();
 
+            //    using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            //    {
+            //        //Lista över tables som har tillräckligt med platser för bokningen på den specifika restuarangen man ska gör en bokning på
+            //        tableList = db.Tables.Where(c => c.RestaurantId.Equals(reservationViewModel.Restaurant.Id) && c.Seats >= reservationViewModel.TotalGuests).ToList();
+            //        reservedTables = db.ReservedTables.ToList();
+                    
+            //        foreach (var table in reservedTables)
+            //        {
+            //            if (table.StartDate == )
+            //            {
+                            
+            //            }
+            //        }
 
-
+            //        foreach (var table in tableList)
+            //        {
+            //            var apa = table.ReservedTables.Where(c => c.TableId.Equals(table.Id)).First();
+            //            if (apa.EndDate > reservationViewModel.Date)
+            //            {
+            //                tableList.Remove(table);
+            //            }
+            //        }
+            //    }
                 return View("SecondCreate", reservationViewModel);
             }
             return View();
@@ -115,13 +137,9 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 reservationViewModel.CustomerPhoneNumber = secondPartReservation.CustomerPhoneNumber;
                 reservationViewModel.ContactEmail = secondPartReservation.ContactEmail;
                 reservationViewModel.Date = reservationViewModel.Date.Add(TimeSpan.Parse(secondPartReservation.TimeString));
-                List<Table> tableList = new List<Table>();
-                
+
                 using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
-                    tableList = db.Tables.Where(c => c.RestaurantId.Equals(reservationViewModel.Restaurant.Id) && c.Seats >= reservationViewModel.TotalGuests).ToList();
-                    
-
                     if (ModelState.IsValid)
                     {
                         Reservation reservation = new Reservation();
@@ -136,6 +154,16 @@ namespace GroupProjectRestaurangMVC01.Controllers
                         
                         db.Reservations.Add(reservation);
                         db.SaveChanges();
+
+                        ReservedTable reservedTable = new ReservedTable();
+                        reservedTable.ReservationId = reservationViewModel.Reservation.Id;
+                        reservedTable.StartDate = reservationViewModel.Date;
+                        reservedTable.EndDate = reservationViewModel.EndDate;
+                        //Ledig table ska hit
+                        //reservedTable.TableId = 
+
+                        //db.ReservedTables.Add(reservedTable);
+                        //db.SaveChanges();
                     }
                     RemoveReservation();
                     return View("Success");
