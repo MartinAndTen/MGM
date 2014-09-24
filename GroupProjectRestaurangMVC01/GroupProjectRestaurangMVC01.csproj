@@ -417,6 +417,7 @@
     <Content Include="Views\Restaurant\Reservations.cshtml" />
     <Content Include="Views\Restaurant\OpenForBooking.cshtml" />
     <Content Include="Views\Restaurant\ClosedForBooking.cshtml" />
+    <Content Include="Views\Reservation\success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
