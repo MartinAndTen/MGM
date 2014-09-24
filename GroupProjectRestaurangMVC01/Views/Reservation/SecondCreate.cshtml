@@ -3,62 +3,74 @@
 @{
     ViewBag.Title = "SecondCreate";
 }
-
-<h2>SecondCreate</h2>
-@using (@Html.BeginForm("SecondCreate", "Reservation", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <div class="form-group col-md-7">
-        @Html.LabelFor(c => c.CustomerName, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.CustomerName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.CustomerName)
-        </div>
+<div class="form-group col-md-7">
+    @Html.Label("Select a time")
     </div>
+    @using (@Html.BeginForm("SecondCreate", "Reservation", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
 
-    <div class="form-group col-md-7">
-        @Html.LabelFor(c => c.CustomerPhoneNumber, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.CustomerPhoneNumber, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.CustomerPhoneNumber)
+        <div class="col-md-12">
+            <div class="col-md-5 martin-div">
+
+
+                @foreach (var button in Model.ButtonList)
+                {
+                    <input type="radio"
+                           name="TimeString"
+                           class="btn-martin"
+                           id="@button"
+                           value="@button" /><label for="@button">@button</label>
+                }
+
+            </div>
         </div>
-    </div>
-
-    <div class="form-group col-md-7">
-        @Html.LabelFor(c => c.ContactEmail, new { @class = "col-md-3 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(c => c.ContactEmail, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.ContactEmail)
+        <br/>
+        <div class="form-group col-md-7">
+            @Html.LabelFor(c => c.CustomerName, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(c => c.CustomerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(c => c.CustomerName)
+            </div>
         </div>
-    </div>
 
-    <div class="col-md-12">
-        <div class="col-md-6 btn-group control-buttons" data-toggle="buttons">
-            @for (int i = 0; i < @Model.ammountOfButtonsToGenerate; i++)
-            {
-                <input name="TimeString"
-                       type="radio"
-                       class="btn btn-primary col-md-2 btn-martin"
-                       data-toggle="popover"
-                       title="Popover title"
-                       id="TimeString"
-                       value="@Model.ButtonList.ElementAt(i)" />
+        <div class="form-group col-md-7">
+            @Html.LabelFor(c => c.CustomerPhoneNumber, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(c => c.CustomerPhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(c => c.CustomerPhoneNumber)
+            </div>
+        </div>
+
+        <div class="form-group col-md-7">
+            @Html.LabelFor(c => c.ContactEmail, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(c => c.ContactEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(c => c.ContactEmail)
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="BtnPrevious" value="Previous" class="btn btn-info" />
+                <input type="submit" name="BtnNext" value="Make the reservation" class="btn btn-success" />
+            </div>
+        </div>
+    }
+
+    <script>
+        $('.no-checkedselector').on('change', 'input[type="radio"].toggle', function () {
+            if (this.checked) {
+                $('input[name="' + this.name + '"].checked').removeClass('checked');
+                $(this).addClass('checked');
+                // Force IE 8 to update the sibling selector immediately by
+                // toggling a class on a parent element
+                $('.toggle-container').addClass('xyz').removeClass('xyz');
             }
-        </div>
-    </div>
+        });
+        $('.no-checkedselector input[type="radio"].toggle:checked').addClass('checked');
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" name="BtnPrevious" value="Previous" class="btn btn-info" />
-            <input type="submit" name="BtnNext" value="Make the reservation" class="btn btn-success" />
-        </div>
-    </div>
-}
-
-<script>
-    $(".btn-group > .btn").click(function () {
-        $(this).addClass("active").siblings().removeClass("active");
-    });
-</script>
+    </script>
