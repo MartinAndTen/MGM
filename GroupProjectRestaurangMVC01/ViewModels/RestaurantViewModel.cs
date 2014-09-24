@@ -87,10 +87,10 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         public Day WeekDay { get; set; }
 
         [Display(Name = "Open")]
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
 
         [Display(Name = "Close")]
-        public DateTime EndTime { get; set; }
+        public TimeSpan EndTime { get; set; }
 
         public enum Day
         {
