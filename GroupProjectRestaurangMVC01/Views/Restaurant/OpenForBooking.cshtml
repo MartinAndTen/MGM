@@ -28,6 +28,13 @@
                     @Html.EnumDropDownListFor(c => c.WeekDay, new { @class = "form-control  " })
                     @Html.ValidationMessageFor(c => c.WeekDay)
                 </div>
+                @*<div class="input-group bootstrap-timepicker">
+                    <input id="timepicker" type="text" class="input-group-sm timepicker">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-time"></i>
+                    </span>
+                </div>*@
+
                 <div class="form-group">
                     @Html.LabelFor(c => c.StartTime, new { @class = "control-label" })
                     <div class='input-group date' id='datetimepicker4'>
@@ -35,8 +42,8 @@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
-                        @Html.ValidationMessageFor(c => c.StartTime)
                     </div>
+                    @Html.ValidationMessageFor(c => c.StartTime)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.EndTime, new { @class = "control-label" })
@@ -45,8 +52,8 @@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
-                        @Html.ValidationMessageFor(c => c.EndTime)
                     </div>
+                    @Html.ValidationMessageFor(c => c.EndTime)
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Add" class="btn btn-info col-md-12" />
@@ -58,12 +65,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.timepicker').timepicker({
-            minuteStep: 1,
-            template: 'modal',
-            appendWidgetTo: 'body',
-            showSeconds: true,
-            showMeridian: false,
-            defaultTime: false
-        });
+            minuteStep: 30,
+            showSeconds: false,
+            showMeridian: false
+    });
     });
 </script>

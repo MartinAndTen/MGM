@@ -400,8 +400,8 @@ namespace GroupProjectRestaurangMVC01.Repository
                     OpenForBooking newBooking = new OpenForBooking();
                     newBooking.RestaurantId = userRestaurant.Id;
                     newBooking.Day = model.WeekDay.ToString();
-                    newBooking.StartTime = model.StartTime.TimeOfDay;
-                    newBooking.EndTime = model.EndTime.TimeOfDay;
+                    newBooking.StartTime = model.StartTime;
+                    newBooking.EndTime = model.EndTime;
 
                     //Save to db
                     db.OpenForBookings.Add(newBooking);
