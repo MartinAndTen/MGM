@@ -8,4 +8,84 @@
 
 <h2>ClosedForBooking</h2>
 
-@Html.EditorFor(c => c.WeekDay)
+<div class="col-md-12">
+    @if (Model.Restaurant.ClosedForBookings.Count <= 0)
+    {
+
+    }
+    else
+    {
+        <div class="row"></div>
+    <div class="col-md-12">
+        <table class="table table-hover">
+            @foreach (var closedForBooking in Model.Restaurant.ClosedForBookings)
+            {
+                <tr>
+                    <td>
+                        <strong><small>@closedForBooking.Day</small></strong>
+                    </td>
+                    <td>
+                        <strong><small>@closedForBooking.StartTime - @closedForBooking.EndTime</small></strong>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Add Closing hours</h3>
+        @using (Html.BeginForm("ClosedForBooking", "Restaurant", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="col-md-7">
+                <div class="form-group">
+                    @Html.LabelFor(c => c.WeekDay, new { @class = "control-label" })
+                    @Html.EnumDropDownListFor(c => c.WeekDay, new { @class = "form-control  " })
+                    @Html.ValidationMessageFor(c => c.WeekDay)
+                </div>
+                @*<div class="input-group bootstrap-timepicker">
+                                            <input id="timepicker" type="text" class="input-group-sm timepicker">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-time"></i>
+                                            </span>
+                                        </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.StartTime, new { @class = "control-label" })
+                    <div class='input-group date' id='datetimepicker4'>
+                        @Html.TextBoxFor(c => c.StartTime, new { @class = "form-control timepicker" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(c => c.StartTime)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(c => c.EndTime, new { @class = "control-label" })
+                    <div class='input-group bootstrap-timepicker' id='datetimepicker4'>
+                        @Html.TextBoxFor(c => c.EndTime, new { @class = "form-control timepicker" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(c => c.EndTime)
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-info col-md-12" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.timepicker').timepicker({
+            minuteStep: 30,
+            showSeconds: false,
+            showMeridian: false
+        });
+    });
+</script>

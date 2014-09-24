@@ -260,7 +260,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
             if (Request.IsAuthenticated)
             {
                 var userId = WebSecurity.CurrentUserId;
-                Restaurant userRestaurant = _restaurantRepository.GetRestaurantByUserId(userId);
                 bool returnValue = _restaurantRepository.AddOpeningHour(userId, model);
             }
 
@@ -278,6 +277,20 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 viewModel.Restaurant = userRestaurant;
             }
             return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ClosedForBooking(RestaurantViewModel model)
+        {
+            if (Request.IsAuthenticated)
+            {
+                var userId = WebSecurity.CurrentUserId;
+                bool returnValue = _restaurantRepository.AddClosingHour(userId, model);
+            }
+
+            return RedirectToAction("ClosedForBooking", "Restaurant");
         }
     }
 }
