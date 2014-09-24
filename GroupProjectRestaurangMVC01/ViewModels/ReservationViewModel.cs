@@ -51,7 +51,7 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         
         public DateTime closeTime { get; set; }
 
-        public List<string> Buttonlist { get; set; }
+        public List<string> ButtonList { get; set; }
       
     }
 }

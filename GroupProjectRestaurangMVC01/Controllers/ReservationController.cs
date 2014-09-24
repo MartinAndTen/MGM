@@ -73,22 +73,18 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 }
 
                 TimeSpan totalOpeningHours = reservationViewModel.closeTime.TimeOfDay - reservationViewModel.openTime.TimeOfDay;
-                reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2;
+                reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2 + 1;
 
                 var ButtonStartTime = reservationViewModel.openTime;
 
+                List<string> tempButtonList = new List<string>();
+
                 for (int i = 0; i < reservationViewModel.ammountOfButtonsToGenerate; i++)
                 {
-                  firstPartReservation.Buttonlist.Add(ButtonStartTime.ToString("HH:mm"));
+                  tempButtonList.Add(ButtonStartTime.ToString("HH:mm"));
                   ButtonStartTime = ButtonStartTime.AddMinutes(30);
-
-
                 }
-
-
-
-
-
+                reservationViewModel.ButtonList = tempButtonList;
                 return View("SecondCreate", reservationViewModel);
             }
             return View();
