@@ -85,8 +85,10 @@ namespace GroupProjectRestaurangMVC01.ViewModels
 
         [Display(Name="Day")]
         public Day WeekDay { get; set; }
+
         [Display(Name = "Open")]
         public DateTime StartTime { get; set; }
+
         [Display(Name = "Close")]
         public DateTime EndTime { get; set; }
 
@@ -94,7 +96,7 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         {
             Monday,
             Tuesday,
-            Wendsday,
+            Wednesday,
             Thursday,
             Friday,
             Saturday,

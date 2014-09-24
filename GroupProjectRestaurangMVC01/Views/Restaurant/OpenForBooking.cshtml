@@ -25,13 +25,13 @@
             <div class="col-md-7">
                 <div class="form-group">
                     @Html.LabelFor(c => c.WeekDay, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(c => c.WeekDay, new { @class = "form-control" })
+                    @Html.EnumDropDownListFor(c => c.WeekDay, new { @class = "form-control  " })
                     @Html.ValidationMessageFor(c => c.WeekDay)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.StartTime, new { @class = "control-label" })
                     <div class='input-group date' id='datetimepicker4'>
-                        @Html.TextBoxFor(c => c.StartTime, new { @class = "form-control" })
+                        @Html.TextBoxFor(c => c.StartTime, new { @class = "form-control timepicker" })
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
@@ -40,8 +40,8 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.EndTime, new { @class = "control-label" })
-                    <div class='input-group date' id='datetimepicker4'>
-                        @Html.TextBoxFor(c => c.EndTime, new { @class = "form-control" })
+                    <div class='input-group bootstrap-timepicker' id='datetimepicker4'>
+                        @Html.TextBoxFor(c => c.EndTime, new { @class = "form-control timepicker" })
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
@@ -55,3 +55,15 @@
         }
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.timepicker').timepicker({
+            minuteStep: 1,
+            template: 'modal',
+            appendWidgetTo: 'body',
+            showSeconds: true,
+            showMeridian: false,
+            defaultTime: false
+        });
+    });
+</script>
