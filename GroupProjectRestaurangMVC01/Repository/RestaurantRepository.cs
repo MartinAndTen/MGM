@@ -418,5 +418,90 @@ namespace GroupProjectRestaurangMVC01.Repository
             return returnValue;
 
         }
+
+        public bool AddClosingHour(int userId, RestaurantViewModel model)
+        {
+            bool returnValue = false;
+            try
+            {
+                Restaurant userRestaurant = GetRestaurantByUserId(userId);
+                using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                {
+                    ClosedForBooking newBooking = new ClosedForBooking();
+                    newBooking.RestaurantId = userRestaurant.Id;
+                    newBooking.Day = model.WeekDay.ToString();
+                    newBooking.StartTime = model.StartTime;
+                    newBooking.EndTime = model.EndTime;
+
+                    //Save to db
+                    db.ClosedForBookings.Add(newBooking);
+                    db.SaveChanges();
+                    returnValue = true;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return returnValue;
+
+        }
+
+        public bool DeleteBooking(int userId, int id, string bookingType)
+        {
+            bool returnValue = false;
+
+            Restaurant userRestaurant = GetRestaurantByUserId(userId);
+            if (bookingType == "ClosedBooking")
+            {
+                ClosedForBooking bookingToDelete = GetClosedForBooking(id);
+                if (bookingToDelete != null && bookingToDelete.RestaurantId == userRestaurant.Id)
+                {
+                    using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                    {
+                        db.ClosedForBookings.Attach(bookingToDelete);
+                        db.ClosedForBookings.Remove(bookingToDelete);
+                        db.SaveChanges();
+                        returnValue = true;
+                    }
+                }
+            }
+            else if (bookingType == "OpenBooking")
+            {
+                OpenForBooking bookingToDelete = GetOpenForBookingById(id);
+                if (bookingToDelete != null && bookingToDelete.RestaurantId == userRestaurant.Id)
+                {
+                    using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                    {
+                        db.OpenForBookings.Attach(bookingToDelete);
+                        db.OpenForBookings.Remove(bookingToDelete);
+                        db.SaveChanges();
+                        returnValue = true;
+                    }
+                }
+            }
+
+            return returnValue;
+        }
+
+        private OpenForBooking GetOpenForBookingById(int id)
+        {
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                OpenForBooking result = db.OpenForBookings.FirstOrDefault(c => c.Id.Equals(id));
+                return result;
+            }
+        }
+
+        public ClosedForBooking GetClosedForBooking(int id)
+        {
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                ClosedForBooking result = db.ClosedForBookings.FirstOrDefault(c => c.Id.Equals(id));
+                return result;
+            }
+        }
     }
 }
