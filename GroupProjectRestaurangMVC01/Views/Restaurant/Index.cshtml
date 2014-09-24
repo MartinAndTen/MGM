@@ -19,7 +19,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <table id="restaurantTable">
+                <table id="restaurantTable" class="table table-hover">
                     <tr>
                         <td><strong>Email:</strong></td>
                         <td>@Model.Restaurant.Email</td>
@@ -33,7 +33,7 @@
                         <td>@Model.Restaurant.City</td>
                     </tr>
                     <tr>
-                        <td><strong>Address:</strong></td>
+                        <td><strong>Address:</strong></td>  
                         <td>@Model.Restaurant.Address</td>
                     </tr>
                     <tr>
@@ -43,7 +43,7 @@
                 </table>
             </div>
             <div class="col-md-6">
-                <table id="restaurantTable">
+                <table id="restaurantTable" class="table table-hover">
                     <tr>
                         <td><strong>Total seats:</strong></td>
                         <td>@Model.Restaurant.TotalSeats</td>
@@ -52,7 +52,20 @@
                         <td><strong>Capacity:</strong></td>
                         <td>@Model.Restaurant.Capacity</td>
                     </tr>
-
+                </table>
+                <p>Opening Hours</p>
+                <table class="table table-hover">
+                    @foreach (var openForBooking in Model.Restaurant.OpenForBookings)
+                    {
+                        <tr>
+                            <td>
+                                <strong><small>@openForBooking.Day</small></strong>
+                            </td>
+                            <td>
+                                <strong><small>@openForBooking.StartTime - @openForBooking.EndTime</small></strong>
+                            </td>
+                        </tr>
+                    }
                 </table>
                 
                 <br/>

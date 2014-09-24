@@ -7,11 +7,28 @@
 
 <h2>Opening hours</h2>
 <div class="col-md-12">
-    @foreach (var openForBooking in Model.Restaurant.OpenForBookings)
+    @if (Model.Restaurant.OpenForBookings.Count <= 0)
+    {
+        <strong><small>You dont have any open bookings</small></strong>
+    }
+    else
     {
         <div class="row"></div>
         <div class="col-md-12">
-            <strong><small>@openForBooking.Day @openForBooking.StartTime - @openForBooking.EndTime</small></strong>
+            <table class="table table-hover">
+                @foreach (var openForBooking in Model.Restaurant.ClosedForBookings)
+                {
+                    <tr>
+                        <td>
+                            <strong><small>@openForBooking.Day</small></strong>
+                        </td>
+                        <td>
+                            <strong><small>@openForBooking.StartTime - @openForBooking.EndTime</small></strong>
+                        </td>
+                        <td><strong><small>@Html.ActionLink("Delete", "DeleteBooking", "Restaurant", new{id=openForBooking.Id, bookingType="ClosedBooking"},null)</small></strong></td>
+                    </tr>
+                }
+            </table>
         </div>
     }
 </div>
