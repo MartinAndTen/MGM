@@ -1,4 +1,5 @@
-﻿using GroupProjectRestaurangMVC01.Models;
+﻿using System.Web.UI.WebControls;
+using GroupProjectRestaurangMVC01.Models;
 using GroupProjectRestaurangMVC01.Repository;
 using GroupProjectRestaurangMVC01.ViewModels;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Table = GroupProjectRestaurangMVC01.Models.Table;
 
 namespace GroupProjectRestaurangMVC01.Controllers
 {
@@ -56,13 +58,36 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 reservationViewModel.Date = firstPartReservation.Date;
                 string dayOfWeek = reservationViewModel.Date.DayOfWeek.ToString();
                 var currentRestaurantOpeningTimes = currentRestaurant.OpenForBookings.Where(c => c.RestaurantId == currentRestaurant.Id);
-                var currentDayOfWeekOpenTimes = currentRestaurantOpeningTimes.Where(c => c.Day == dayOfWeek).FirstOrDefault();
+                var currentDayOfWeekOpenTimes = currentRestaurantOpeningTimes.FirstOrDefault(c => c.Day == dayOfWeek);
 
-                reservationViewModel.openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
-                reservationViewModel.closeTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.EndTime.ToString());
+
+                if (currentDayOfWeekOpenTimes != null)
+                {
+                    reservationViewModel.openTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.StartTime.ToString());
+                    reservationViewModel.closeTime = Convert.ToDateTime(currentDayOfWeekOpenTimes.EndTime.ToString());
+                }
+                else
+                {
+                    reservationViewModel.Result = "This restaurant is not open for online booking this date";
+                    return View("FirstCreate", reservationViewModel);
+                }
 
                 TimeSpan totalOpeningHours = reservationViewModel.closeTime.TimeOfDay - reservationViewModel.openTime.TimeOfDay;
                 reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2;
+
+                var ButtonStartTime = reservationViewModel.openTime;
+
+                for (int i = 0; i < reservationViewModel.ammountOfButtonsToGenerate; i++)
+                {
+                  firstPartReservation.Buttonlist.Add(ButtonStartTime.ToString("HH:mm"));
+                  ButtonStartTime = ButtonStartTime.AddMinutes(30);
+
+
+                }
+
+
+
+
 
                 return View("SecondCreate", reservationViewModel);
             }
