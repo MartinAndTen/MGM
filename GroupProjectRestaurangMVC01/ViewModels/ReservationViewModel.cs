@@ -47,8 +47,6 @@ namespace GroupProjectRestaurangMVC01.ViewModels
 
         public int ammountOfButtonsToGenerate { get; set; }
 
-        //public List<DateTime> proppmedtider { get; set; }
-
         public DateTime openTime { get; set; }
         
         public DateTime closeTime { get; set; }
