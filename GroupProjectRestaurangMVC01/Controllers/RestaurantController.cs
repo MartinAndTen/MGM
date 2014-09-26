@@ -292,5 +292,17 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
             return RedirectToAction("ClosedForBooking", "Restaurant");
         }
+
+        public ActionResult DeleteBooking(int bookingId, string bookingType)
+        {
+            if (bookingType == "ClosedBooking")
+            {
+                return RedirectToAction("ClosedForBooking", "Restaurant");
+            }
+            else if(bookingType == "OpenBooking")
+            {
+                return RedirectToAction("OpenForBooking", "Restaurant");
+            }
+        }
     }
 }
