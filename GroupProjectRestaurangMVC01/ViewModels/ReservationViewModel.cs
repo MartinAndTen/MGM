@@ -15,6 +15,8 @@ namespace GroupProjectRestaurangMVC01.ViewModels
         public List<Reservation> Reservations { get; set; }
         public List<Table> Tables { get; set; }
 
+        public List<Table> BokBaraTables { get; set; }
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{yy/mm/dd}")]
         [Required(ErrorMessage = "A date is required")]
         public DateTime Date { get; set; }

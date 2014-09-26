@@ -51,7 +51,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 {
                     if (reservationViewModel.TotalGuests > currentRestaurant.MaxSeatPerBooking.Value)
                     {
-                        firstPartReservation.Result = currentRestaurant.Name + " allows a maximum of " + currentRestaurant.MaxSeatPerBooking.ToString() + " persons per reservation";
+                        firstPartReservation.Result = currentRestaurant.Name + " allows a maximum of " + currentRestaurant.MaxSeatPerBooking + " persons per reservation";
                         return View("FirstCreate", firstPartReservation);
                     }
                 }
@@ -93,7 +93,50 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
                 {
                     //Lista över tables som har tillräckligt med platser för bokningen på den specifika restuarangen man ska gör en bokning på
-                    tableList = db.Tables.Where(c => c.RestaurantId.Equals(reservationViewModel.Restaurant.Id) && c.Seats >= reservationViewModel.TotalGuests).ToList();
+                    tableList = db.Tables.Where(c => c.RestaurantId.Equals(reservationViewModel.Restaurant.Id) && c.Seats >= reservationViewModel.TotalGuests).OrderBy(c => c.Seats).ToList();
+
+                    reservationViewModel.BokBaraTables = tableList;
+
+                    //vet inte varför men vi behövde göra såhär
+                    List<string> tempButtonList2 = new List<string>();
+                    foreach (var tempButton in tempButtonList)
+                    {
+                        tempButtonList2.Add(tempButton);
+                    }
+                    
+                    foreach (var table in tableList)
+                    {
+                        ReservedTable newTable = new ReservedTable();
+                        newTable =  db.ReservedTables.FirstOrDefault(c => c.TableId.Equals(table.Id));
+                        if (newTable != null)
+                        {
+                            reservedTables.Add(newTable);
+                        }
+                    }
+                    List<string> buttonsToRemoveList = new List<string>();
+                    if (reservedTables.Count != 0)
+                    {
+                        foreach (var table in reservedTables)
+                        {
+                           buttonsToRemoveList.Add(table.StartDate.ToString("HH:mm"));
+                        }
+                        foreach (var item in tempButtonList2)
+                        {
+                            foreach (var button in buttonsToRemoveList)
+                            {
+                                if (button == item)
+                                {
+                                    TimeSpan item2 = TimeSpan.Parse(item);
+                                    TimeSpan item3 = new TimeSpan(0,30,0);
+                                    item2 = item2.Add(item3);
+                                    DateTime dateItem2 = new DateTime(item2.Ticks);
+                                    string finalItem = dateItem2.ToString("HH:mm");
+                                    reservationViewModel.ButtonList.Remove(item);
+                                    reservationViewModel.ButtonList.Remove(finalItem);
+                                }
+                            }
+                        }
+                    }
                 }
                 return View("SecondCreate", reservationViewModel);
             }

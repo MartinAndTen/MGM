@@ -28,16 +28,15 @@ namespace GroupProjectRestaurangMVC01.Repository
 
                 db.Reservations.Add(reservation);
                 db.SaveChanges();
-
-                //ReservedTable reservedTable = new ReservedTable();
-                //reservedTable.ReservationId = reservationViewModel.Reservation.Id;
-                //reservedTable.StartDate = reservationViewModel.Date;
-                //reservedTable.EndDate = reservationViewModel.EndDate;
+                
+                ReservedTable reservedTable = new ReservedTable();
+                reservedTable.ReservationId = reservation.Id;
+                reservedTable.StartDate = reservationViewModel.Date;
+                reservedTable.EndDate = reservationViewModel.Date.AddHours(1);
                 //Ledig table ska hit
-                //reservedTable.TableId = 
-
-                //db.ReservedTables.Add(reservedTable);
-                //db.SaveChanges();
+                reservedTable.TableId = reservationViewModel.BokBaraTables.First().Id;
+                db.ReservedTables.Add(reservedTable);
+                db.SaveChanges();
                 //}
             }
         }

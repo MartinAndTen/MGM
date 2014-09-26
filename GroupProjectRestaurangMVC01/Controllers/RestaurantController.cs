@@ -303,6 +303,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
             {
                 return RedirectToAction("OpenForBooking", "Restaurant");
             }
+                return View();
         }
     }
 }
