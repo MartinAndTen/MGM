@@ -46,6 +46,24 @@ namespace GroupProjectRestaurangMVC01.Controllers
             {
                 ReservationViewModel reservationViewModel = GetReservation();
                 Restaurant currentRestaurant = reservationViewModel.Restaurant;
+                List<Reservation> RestaurantsReservations =
+                        _reservationRepository.GetAllReservationsFromRestaurantId(currentRestaurant.Id, firstPartReservation.Date);
+
+                int currentRestaurantTotalGuests = 0;
+
+                foreach (var restaurantsReservation in RestaurantsReservations)
+                {
+                    currentRestaurantTotalGuests += restaurantsReservation.TotalGuests;
+                }
+
+                currentRestaurantTotalGuests += firstPartReservation.TotalGuests;
+
+                if (currentRestaurant.Capacity <= currentRestaurantTotalGuests)
+                {
+                    firstPartReservation.Result = "sry mange to many people this day already";
+                    return View("FirstCreate", firstPartReservation);
+                }
+
                 reservationViewModel.TotalGuests = firstPartReservation.TotalGuests;
                 if (currentRestaurant.MaxSeatPerBooking.HasValue)
                 {
@@ -103,16 +121,42 @@ namespace GroupProjectRestaurangMVC01.Controllers
                     {
                         tempButtonList2.Add(tempButton);
                     }
+
+
+                    //Här ska vi gå genom loopen reservedTables istället
+                    ///PGA Att vi ska ta bokade bord och lägga dem i en lista.
+                    /// Om vi gör foreach tablelist, gör vi de bara 1 gång
+                    /// om vi har 1bord i tables
+                    /// men 1 bord kan ha flera reservations
+                    /// därför måste de loopas fler än 1 gång 
+
                     
-                    foreach (var table in tableList)
+
+                        //db.Reservations.Where(c => c.RestaurantId.Equals(currentRestaurant.Id)).ToList();
+
+                    List<ReservedTable> newTable = new List<ReservedTable>();
+                    List<ReservedTable> newTables2 = new List<ReservedTable>();
+                    foreach (var reservation in RestaurantsReservations)
                     {
-                        ReservedTable newTable = new ReservedTable();
-                        newTable =  db.ReservedTables.FirstOrDefault(c => c.TableId.Equals(table.Id));
-                        if (newTable != null)
+                        foreach (var table in tableList)
                         {
-                            reservedTables.Add(newTable);
+                            newTable = db.ReservedTables.Where(c => c.TableId.Equals(table.Id)).ToList();
+                            if (newTable.Count != 0)
+                            {
+                                foreach (var tables in newTable)
+                                {
+                                    if (newTable != newTables2)
+                                    {
+                                        newTables2.Add(tables);
+                                    }
+                                }
+                            }
                         }
                     }
+
+                    reservedTables = newTables2;
+                    ////
+
                     List<string> buttonsToRemoveList = new List<string>();
                     if (reservedTables.Count != 0)
                     {

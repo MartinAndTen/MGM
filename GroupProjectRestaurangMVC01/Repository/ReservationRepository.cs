@@ -59,6 +59,27 @@ namespace GroupProjectRestaurangMVC01.Repository
             }
         }
 
+        public List<Reservation> GetAllReservationsFromRestaurantId(Guid id, DateTime date)
+        {
+
+
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                List<Reservation> result = db.Reservations.Where(c => c.RestaurantId.Equals(id)).ToList();
+                if (result.Count != 0)
+                {
+                    foreach (var reservation in result)
+                    {
+                        if (reservation.Date.Date != date.Date)
+                        {
+                            result.Remove(reservation);
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+
         //public Reservation CreateReservation(ReservationViewModel viewModel)
         //{
         //    Reservation reservation = new Reservation();
