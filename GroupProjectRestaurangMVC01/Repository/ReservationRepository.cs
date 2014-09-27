@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Postal;
 
 namespace GroupProjectRestaurangMVC01.Repository
 {
@@ -38,6 +39,10 @@ namespace GroupProjectRestaurangMVC01.Repository
                 db.ReservedTables.Add(reservedTable);
                 db.SaveChanges();
                 //}
+
+                dynamic email = new Email("BookingEmail");
+                email.To = reservation.ContactEmail;
+                email.Send();
             }
         }
 

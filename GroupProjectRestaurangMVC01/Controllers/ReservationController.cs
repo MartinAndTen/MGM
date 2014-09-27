@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Table = GroupProjectRestaurangMVC01.Models.Table;
+using Postal;
 
 namespace GroupProjectRestaurangMVC01.Controllers
 {
@@ -215,6 +216,7 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 }
                 RemoveReservation();
                 return View("Success");
+               
             }
             return View();
         }
