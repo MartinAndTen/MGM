@@ -295,15 +295,24 @@ namespace GroupProjectRestaurangMVC01.Controllers
 
         public ActionResult DeleteBooking(int bookingId, string bookingType)
         {
+            if (Request.IsAuthenticated)
+            {
+                int userId = WebSecurity.CurrentUserId;
+            
             if (bookingType == "ClosedBooking")
             {
+                bool result = _restaurantRepository.DeleteBooking(userId,bookingId, bookingType);
+
                 return RedirectToAction("ClosedForBooking", "Restaurant");
             }
             else if(bookingType == "OpenBooking")
             {
+                bool result = _restaurantRepository.DeleteBooking(userId, bookingId,bookingType);
                 return RedirectToAction("OpenForBooking", "Restaurant");
             }
+            }
                 return View();
+
         }
     }
 }

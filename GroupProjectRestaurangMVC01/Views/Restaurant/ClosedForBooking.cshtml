@@ -27,6 +27,7 @@
                     <td>
                         <strong><small>@closedForBooking.StartTime - @closedForBooking.EndTime</small></strong>
                     </td>
+                    <td><strong><small>@Html.ActionLink("Delete", "DeleteBooking", "Restaurant", new { bookingId = closedForBooking.Id, bookingType = "ClosedBooking" }, new { onclick = "return confirm('Are you sure you wish to delete this closing time?');" })</small></strong></td>
                 </tr>
             }
         </table>
