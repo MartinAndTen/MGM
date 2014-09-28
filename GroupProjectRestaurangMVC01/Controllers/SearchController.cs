@@ -13,12 +13,15 @@ namespace GroupProjectRestaurangMVC01.Controllers
     public class SearchController : Controller
     {
         private readonly SearchRepository _searchRepository = new SearchRepository();
+        private readonly RestaurantRepository _restaurantRepository = new RestaurantRepository();
         //
         // GET: /Search/
 
         public ActionResult Index()
         {
+
             RestaurantViewModel viewModel = new RestaurantViewModel();
+            viewModel.Restaurants = _restaurantRepository.GetAllRestaurantsToList();
 
             return View(viewModel);
         }
