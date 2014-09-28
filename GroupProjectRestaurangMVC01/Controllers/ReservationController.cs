@@ -17,7 +17,6 @@ namespace GroupProjectRestaurangMVC01.Controllers
         // GET: /Booking/
         private readonly ReservationRepository _reservationRepository = new ReservationRepository();
         private readonly RestaurantRepository _restaurantRepository = new RestaurantRepository();
-
         public ActionResult Index(Guid? id)
         {
             ReservationViewModel reservationViewModel = GetReservation();
@@ -32,12 +31,10 @@ namespace GroupProjectRestaurangMVC01.Controllers
             }
             else if (id.HasValue == false)
             {
-                //Felmedelande eller skicka anvädaren till att välja om restaurant eller nått här kanske?
+                reservationViewModel.Result = "Something went wrong, could not find which restaurant you selected. Please try again or contact the support!";
             }
-
             return View("FirstCreate", reservationViewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult FirstCreate(ReservationViewModel firstPartReservation, string BtnPrevious, string BtnNext, Guid? id)
@@ -69,71 +66,58 @@ namespace GroupProjectRestaurangMVC01.Controllers
                     reservationViewModel.Result = "This restaurant is not open for online booking this date";
                     return View("FirstCreate", reservationViewModel);
                 }
-
                 TimeSpan totalOpeningHours = reservationViewModel.closeTime.TimeOfDay - reservationViewModel.openTime.TimeOfDay;
-                reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2-1;
-
+                reservationViewModel.ammountOfButtonsToGenerate = (int)totalOpeningHours.TotalHours * 2 - 1;
                 var ButtonStartTime = reservationViewModel.openTime;
-
                 List<string> tempButtonList = new List<string>();
-
                 Dictionary<string, DateTime> buttonDictionary = new Dictionary<string, DateTime>();
-
                 for (int i = 0; i < reservationViewModel.ammountOfButtonsToGenerate; i++)
                 {
-                  tempButtonList.Add(ButtonStartTime.ToString("HH:mm"));
-                  //buttonDictionary.Add(ButtonStartTime.ToString("HH:mm"), datetimevärde);
-                  ButtonStartTime = ButtonStartTime.AddMinutes(30);
+                    tempButtonList.Add(ButtonStartTime.ToString("HH:mm"));
+                    //buttonDictionary.Add(ButtonStartTime.ToString("HH:mm"), datetimevärde);
+                    ButtonStartTime = ButtonStartTime.AddMinutes(30);
                 }
-
                 reservationViewModel.ButtonList = tempButtonList;
                 List<Table> tableList = new List<Table>();
                 List<ReservedTable> reservedTables = new List<ReservedTable>();
-
-                using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+                List<string> tempButtonList2 = new List<string>();
+                //Lista över tables som har tillräckligt med platser för bokningen på den specifika restuarangen man ska gör en bokning på
+                tableList = _reservationRepository.GetTablesWithEnoughSeatsPerRestaurantIDToList(reservationViewModel, tableList);
+                reservationViewModel.BokBaraTables = tableList;
+                //vet inte varför men vi behövde göra såhär
+                foreach (var tempButton in tempButtonList)
                 {
-                    //Lista över tables som har tillräckligt med platser för bokningen på den specifika restuarangen man ska gör en bokning på
-                    tableList = db.Tables.Where(c => c.RestaurantId.Equals(reservationViewModel.Restaurant.Id) && c.Seats >= reservationViewModel.TotalGuests).OrderBy(c => c.Seats).ToList();
-
-                    reservationViewModel.BokBaraTables = tableList;
-
-                    //vet inte varför men vi behövde göra såhär
-                    List<string> tempButtonList2 = new List<string>();
-                    foreach (var tempButton in tempButtonList)
+                    tempButtonList2.Add(tempButton);
+                }
+                foreach (var table in tableList)
+                {
+                    ReservedTable newTable = new ReservedTable();
+                    newTable = _reservationRepository.GetReservedTableByTableId(table, newTable);
+                    if (newTable != null)
                     {
-                        tempButtonList2.Add(tempButton);
+                        reservedTables.Add(newTable);
                     }
-                    
-                    foreach (var table in tableList)
+                }
+                List<string> buttonsToRemoveList = new List<string>();
+                if (reservedTables.Count != 0)
+                {
+                    foreach (var table in reservedTables)
                     {
-                        ReservedTable newTable = new ReservedTable();
-                        newTable =  db.ReservedTables.FirstOrDefault(c => c.TableId.Equals(table.Id));
-                        if (newTable != null)
-                        {
-                            reservedTables.Add(newTable);
-                        }
+                        buttonsToRemoveList.Add(table.StartDate.ToString("HH:mm"));
                     }
-                    List<string> buttonsToRemoveList = new List<string>();
-                    if (reservedTables.Count != 0)
+                    foreach (var item in tempButtonList2)
                     {
-                        foreach (var table in reservedTables)
+                        foreach (var button in buttonsToRemoveList)
                         {
-                           buttonsToRemoveList.Add(table.StartDate.ToString("HH:mm"));
-                        }
-                        foreach (var item in tempButtonList2)
-                        {
-                            foreach (var button in buttonsToRemoveList)
+                            if (button == item)
                             {
-                                if (button == item)
-                                {
-                                    TimeSpan item2 = TimeSpan.Parse(item);
-                                    TimeSpan item3 = new TimeSpan(0,30,0);
-                                    item2 = item2.Add(item3);
-                                    DateTime dateItem2 = new DateTime(item2.Ticks);
-                                    string finalItem = dateItem2.ToString("HH:mm");
-                                    reservationViewModel.ButtonList.Remove(item);
-                                    reservationViewModel.ButtonList.Remove(finalItem);
-                                }
+                                TimeSpan item2 = TimeSpan.Parse(item);
+                                TimeSpan item3 = new TimeSpan(0, 30, 0);
+                                item2 = item2.Add(item3);
+                                DateTime dateItem2 = new DateTime(item2.Ticks);
+                                string finalItem = dateItem2.ToString("HH:mm");
+                                reservationViewModel.ButtonList.Remove(item);
+                                reservationViewModel.ButtonList.Remove(finalItem);
                             }
                         }
                     }
@@ -167,41 +151,13 @@ namespace GroupProjectRestaurangMVC01.Controllers
                 reservationViewModel.Date = reservationViewModel.Date.Add(TimeSpan.Parse(secondPartReservation.TimeString));
                 if (ModelState.IsValid)
                 {
-                _reservationRepository.SaveReservationToDB(reservationViewModel);
+                    _reservationRepository.SaveReservationToDB(reservationViewModel);
                 }
                 RemoveReservation();
                 return View("Success");
             }
             return View();
         }
-
-
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Index(ReservationViewModel viewModel)
-        //{
-        //    //Skicka till nästa partial view här på nått sätt
-        //    return View();
-        //}
-
-        //public ActionResult Create(Guid id)
-        //{
-        //    ReservationViewModel viewModel = new ReservationViewModel();
-        //    Restaurant currentRestaurant = _restaurantRepository.GetRestaurantById(id);
-        //    List<Table> tables = _restaurantRepository.GetRestaurantTablesById(id);
-        //    viewModel.Restaurant = currentRestaurant;
-        //    viewModel.Tables = tables;
-        //    return View(viewModel);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(ReservationViewModel viewModel)
-        //{
-        //    _reservationRepository.CreateReservation(viewModel);
-        //    return View();
-        //}
 
         public ReservationViewModel GetReservation()
         {
