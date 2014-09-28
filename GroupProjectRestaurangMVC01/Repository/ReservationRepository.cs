@@ -5,31 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Postal;
 
 namespace GroupProjectRestaurangMVC01.Repository
 {
     public class ReservationRepository
     {
-        public ReservedTable GetReservedTableByTableId(Table table, ReservedTable newTable)
-        {
-            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
-            {
-                newTable = db.ReservedTables.FirstOrDefault(c => c.TableId.Equals(table.Id));
-                return newTable;
-            }
-        }
-        public List<Table> GetTablesWithEnoughSeatsPerRestaurantIDToList(ReservationViewModel reservationViewModel, List<Table> tableList)
-        {
-            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
-            {
-                tableList = db.Tables.Where(c => c.RestaurantId.Equals(reservationViewModel.Restaurant.Id) && c.Seats >= reservationViewModel.TotalGuests).OrderBy(c => c.Seats).ToList();
-                return tableList;
-            }
-        }
         public void SaveReservationToDB(ReservationViewModel reservationViewModel)
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
             {
+                //if (ModelState.IsValid)
+                //{
                 Reservation reservation = new Reservation();
                 reservation.Id = Guid.NewGuid();
                 reservation.CustomerName = reservationViewModel.CustomerName;
@@ -39,17 +26,26 @@ namespace GroupProjectRestaurangMVC01.Repository
                 reservation.RestaurantId = reservationViewModel.Restaurant.Id;
                 reservation.Date = reservationViewModel.Date;
                 reservation.EndDate = reservationViewModel.Date.AddHours(1);
+
                 db.Reservations.Add(reservation);
                 db.SaveChanges();
+                
                 ReservedTable reservedTable = new ReservedTable();
                 reservedTable.ReservationId = reservation.Id;
                 reservedTable.StartDate = reservationViewModel.Date;
                 reservedTable.EndDate = reservationViewModel.Date.AddHours(1);
+                //Ledig table ska hit
                 reservedTable.TableId = reservationViewModel.BokBaraTables.First().Id;
                 db.ReservedTables.Add(reservedTable);
                 db.SaveChanges();
+                //}
+
+                dynamic email = new Email("BookingEmail");
+                email.To = reservation.ContactEmail;
+                email.Send();
             }
         }
+
         public Reservation GetReservationsByID(Guid id)
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
@@ -58,6 +54,7 @@ namespace GroupProjectRestaurangMVC01.Repository
                 return result;
             }
         }
+
         public List<Reservation> GetAllReservationsToList()
         {
             using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
@@ -66,5 +63,41 @@ namespace GroupProjectRestaurangMVC01.Repository
                 return result;
             }
         }
+
+        public List<Reservation> GetAllReservationsFromRestaurantId(Guid id, DateTime date)
+        {
+
+
+            using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+            {
+                List<Reservation> result = db.Reservations.Where(c => c.RestaurantId.Equals(id)).ToList();
+                if (result.Count != 0)
+                {
+                    foreach (var reservation in result)
+                    {
+                        if (reservation.Date.Date != date.Date)
+                        {
+                            result.Remove(reservation);
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+
+        //public Reservation CreateReservation(ReservationViewModel viewModel)
+        //{
+        //    Reservation reservation = new Reservation();
+        //    using (RestaurantProjectMVC01Entities db = new RestaurantProjectMVC01Entities())
+        //    {
+        //        reservation.CustomerName = viewModel.CustomerName;
+        //        reservation.ContactEmail = viewModel.ContactEmail;
+        //        reservation.CustomerPhoneNumber = viewModel.CustomerPhoneNumber;
+        //        reservation.Date = viewModel.Date;
+        //        reservation.EndDate = viewModel.Date.AddHours(1);
+        //        reservation.RestaurantId = viewModel.Restaurant.Id;
+        //    }
+        //    return reservation;
+        //}
     }
 }
